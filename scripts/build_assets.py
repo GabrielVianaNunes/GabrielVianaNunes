@@ -558,21 +558,6 @@ def build_holster():
     return wrap_svg(24, 26, 2, outline.paths(), "", "An empty leather holster on a belt with cartridge loops")
 
 
-# ---------------------------------------------------------------- tech icons
-def build_powerbi():
-    """Power BI tile in the same look as the skillicons dark theme (that service has no Power BI icon)."""
-    parts = [
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Power BI">',
-        "<title>Power BI</title>",
-        '<rect width="48" height="48" rx="10" fill="#242938"/>',
-        '<rect x="11" y="26" width="7" height="12" rx="1.5" fill="#E8A800"/>',
-        '<rect x="20.5" y="18" width="7" height="20" rx="1.5" fill="#F2C811"/>',
-        '<rect x="30" y="10" width="7" height="28" rx="1.5" fill="#FFD84A"/>',
-        "</svg>",
-    ]
-    return chr(10).join(parts) + chr(10)
-
-
 # ---------------------------------------------------------------- heading icons
 def outlined(m, color="#1d1008"):
     out = Grid()
@@ -688,8 +673,7 @@ if __name__ == "__main__":
     for name, fn in [("banner.svg", build_banner), ("wanted.svg", build_wanted),
                      ("footer-dusk.svg", build_footer), ("divider.svg", build_divider),
                      ("holster.svg", build_holster), ("sheriff.svg", build_sheriff),
-                     ("saloon.svg", build_saloon), ("signpost.svg", build_signpost),
-                     ("powerbi.svg", build_powerbi)]:
+                     ("saloon.svg", build_saloon), ("signpost.svg", build_signpost)]:
         with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
             f.write(fn())
         print("wrote", name)
