@@ -36,8 +36,11 @@ I like code that does its job without making noise.
 ### The holster
 
 <p>
-<img src="https://skillicons.dev/icons?i=java,spring,angular,rust,js,html,css,git,github,powerbi&theme=dark" alt="Java, Spring, Angular, Rust, JavaScript, HTML, CSS, Git, GitHub, Power BI">
+<img src="https://skillicons.dev/icons?i=java,spring,py,rust,ts,js,react,angular,nodejs,postgres,git,githubactions,powerbi,aws&theme=dark" alt="Java, Spring, Python, Rust, TypeScript, JavaScript, React, Angular, Node.js, PostgreSQL, Git, GitHub Actions, Power BI, AWS">
 </p>
+
+**Focus:** full stack development, REST APIs, process automation, systems integration and software architecture.<br>
+**Spoken languages:** Portuguese (native), English (fluent), Spanish (advanced), German (A2).
 
 <img src="assets/divider.svg" alt="" width="100%">
 
