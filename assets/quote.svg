@@ -1,21 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 202" width="1000" height="202" role="img" aria-label="Courage is being scared to death, but saddling up anyway. John Wayne">
-<title>Courage is being scared to death, but saddling up anyway. (John Wayne)</title>
-<rect width="1000" height="202" fill="#3b2a1e"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 168" width="1000" height="168" role="img" aria-label="When the legend becomes fact, print the legend. Maxwell Scott">
+<title>When the legend becomes fact, print the legend. (Maxwell Scott)</title>
+<rect width="1000" height="168" fill="#3b2a1e"/>
 <rect x="0" y="40" width="1000" height="3" fill="#2e2017"/>
 <rect x="0" y="80" width="1000" height="3" fill="#2e2017"/>
 <rect x="0" y="120" width="1000" height="3" fill="#2e2017"/>
 <rect x="0" y="160" width="1000" height="3" fill="#2e2017"/>
-<rect x="0" y="200" width="1000" height="3" fill="#2e2017"/>
 <rect x="0" y="0" width="1000" height="8" fill="#c98b4a"/>
-<rect x="0" y="194" width="1000" height="8" fill="#c98b4a"/>
-<rect x="0" y="0" width="8" height="202" fill="#c98b4a"/>
-<rect x="992" y="0" width="8" height="202" fill="#c98b4a"/>
+<rect x="0" y="160" width="1000" height="8" fill="#c98b4a"/>
+<rect x="0" y="0" width="8" height="168" fill="#c98b4a"/>
+<rect x="992" y="0" width="8" height="168" fill="#c98b4a"/>
 <rect x="24" y="24" width="12" height="12" fill="#e6b36a"/>
 <rect x="964" y="24" width="12" height="12" fill="#e6b36a"/>
-<rect x="24" y="166" width="12" height="12" fill="#e6b36a"/>
-<rect x="964" y="166" width="12" height="12" fill="#e6b36a"/>
-<text x="68" y="64" font-family="'Courier New', Courier, monospace" font-size="24" font-weight="bold" fill="#f3e2c0">“Courage is being scared to death, but saddling up</text>
-<text x="68" y="98" font-family="'Courier New', Courier, monospace" font-size="24" font-weight="bold" fill="#f3e2c0">anyway.”</text>
-<text x="932" y="152" text-anchor="end" font-family="'Courier New', Courier, monospace" font-size="20" fill="#e0a85e">John Wayne</text>
-<text x="932" y="178" text-anchor="end" font-family="'Courier New', Courier, monospace" font-size="15" fill="#a6692f">Actor</text>
+<rect x="24" y="132" width="12" height="12" fill="#e6b36a"/>
+<rect x="964" y="132" width="12" height="12" fill="#e6b36a"/>
+<text x="68" y="64" font-family="'Courier New', Courier, monospace" font-size="24" font-weight="bold" fill="#f3e2c0">“When the legend becomes fact, print the legend.”</text>
+<text x="932" y="118" text-anchor="end" font-family="'Courier New', Courier, monospace" font-size="20" fill="#e0a85e">Maxwell Scott</text>
+<text x="932" y="144" text-anchor="end" font-family="'Courier New', Courier, monospace" font-size="15" fill="#a6692f">The Man Who Shot Liberty Valance (1962)</text>
 </svg>
