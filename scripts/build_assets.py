@@ -326,14 +326,10 @@ def draw_cowboy(g, ox, oy, iw=58, ih=58):
     shirt, shirt_hi, shirt_sh = "#b3a56c", "#cdbf86", "#8a7d4c"
     kerchief, kerchief_hi = "#1a1418", "#3a3038"
 
-    # scenery behind him: sky bands, mountains, ground, fence
+    # scenery behind him: sky bands, ground, fence
     r(0, 0, iw, ih, "#ecd8a3")
     r(0, 14, iw, 14, "#e8cf95")
     r(0, 28, iw, 30, "#e3c88f")
-    for x in range(iw):
-        h = max(max(0, 12 - abs(x - 9)), max(0, 17 - abs(x - 47)))
-        if h:
-            r(x, 42 - h, 1, h + 16, "#c4a46c")
     r(0, 48, iw, 10, "#b58f56")
     for x in (4, 12, 51, 54):
         r(x, 44, 1, 8, "#8a5a3a")

@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: profile-readme-assets
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,4 +28,5 @@ jobs:
           git add -A profile-3d-contrib
           git diff --cached --quiet && exit 0
           git commit -m "chore: update 3D contribution profile"
+          git pull --rebase origin main
           git push

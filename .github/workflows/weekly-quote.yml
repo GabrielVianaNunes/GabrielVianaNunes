@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: profile-readme-assets
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -25,4 +29,5 @@ jobs:
           git add assets/quote.svg
           git diff --cached --quiet && exit 0
           git commit -m "chore: quote of the week"
+          git pull --rebase origin main
           git push
