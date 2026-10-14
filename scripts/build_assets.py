@@ -451,15 +451,17 @@ def build_wanted():
 def build_footer():
     W, H = 200, 30
     bg = Grid()
-    bg.rect(0, 0, W, H, "#1b1030")
+    for y0, y1, c in [(0, 6, "#46225a"), (6, 12, "#7a2f5e"), (12, 17, "#b8465a"),
+                      (17, 21, "#e0675a"), (21, 22, "#f0905a")]:
+        bg.rect(0, y0 - 0, W, y1 - y0, c)       # dusk sky, light enough for the dark rider
     for y in range(22, 30):
         bg.rect(0, y, W, 1, "#c98b4a" if y < 24 else "#a6692f")
     rnd = random.Random(3)
     for _ in range(40):
         bg.set(rnd.randrange(W), rnd.randrange(24, 30), "#8a5624")
     txt = "HAPPY TRAILS"
-    bg.text(txt, (W - text_width(txt, 1)) // 2 + 1, 9, "#000000", 1)
-    bg.text(txt, (W - text_width(txt, 1)) // 2, 8, "#f7b867", 1)
+    bg.text(txt, (W - text_width(txt, 1)) // 2 + 1, 9, "#1b1030", 1)
+    bg.text(txt, (W - text_width(txt, 1)) // 2, 8, "#fff3d6", 1)
     body = [bg.paths(), f'<g transform="translate(100 22)">{rider_group("ride")}</g>']
     style = STYLE_COMMON + """
 .ride{animation:ride 22s linear infinite}
