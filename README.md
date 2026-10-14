@@ -59,4 +59,4 @@ I like code that does its job without making noise.
 <sub>A new one every Monday.</sub>
 </div>
 
-<img src="assets/footer.svg" alt="A cowboy rides away. Happy trails." width="100%">
+<img src="assets/footer-dusk.svg" alt="A cowboy rides away. Happy trails." width="100%">

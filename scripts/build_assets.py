@@ -671,7 +671,7 @@ def build_signpost():
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     for name, fn in [("banner.svg", build_banner), ("wanted.svg", build_wanted),
-                     ("footer.svg", build_footer), ("divider.svg", build_divider),
+                     ("footer-dusk.svg", build_footer), ("divider.svg", build_divider),
                      ("holster.svg", build_holster), ("sheriff.svg", build_sheriff),
                      ("saloon.svg", build_saloon), ("signpost.svg", build_signpost)]:
         with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
