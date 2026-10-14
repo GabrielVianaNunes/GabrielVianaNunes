@@ -8,7 +8,7 @@ A pixel art western profile README for GabrielVianaNunes. Everything you see on 
 |---|---|
 | Banner and footer | Pixel art SVG with a riding cowboy, drawn by `scripts/build_assets.py` |
 | Wanted poster | Pixel art SVG with the visitor counter badge below it |
-| Stack icons | skillicons.dev plus a custom Power BI tile |
+| Stack icons | One SVG (`assets/stack-row.svg`) with every icon, so the row scales as a unit on any screen |
 | The town | 3D contribution graph today, pixel art western town next |
 | Words to ride by | Quote card rebuilt every Monday from `data/quotes.json` |
 
