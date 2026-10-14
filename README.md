@@ -13,7 +13,7 @@
 <td width="300" align="center" valign="top">
 <img src="assets/wanted.svg" alt="Wanted poster for Gabriel Nunes, reward: one clean merge" width="280">
 <br>
-<img src="https://komarev.com/ghpvc/?username=GabrielVianaNunes&label=Riders+who+passed+by&color=c98b4a&style=for-the-badge" alt="Profile views">
+<img src="https://hits.sh/github.com/GabrielVianaNunes/GabrielVianaNunes.svg?style=for-the-badge&label=Riders%20who%20passed%20by&color=c98b4a&labelColor=3b2a1e" alt="Profile views">
 </td>
 <td valign="top">
 
