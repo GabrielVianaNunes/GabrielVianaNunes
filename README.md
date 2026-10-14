@@ -35,9 +35,7 @@ I like code that does its job without making noise.
 
 ### <img src="assets/holster.svg" width="38" align="absmiddle" alt=""> The holster
 
-<p>
-<img src="https://skillicons.dev/icons?i=java,spring,py,rust,ts,js,react,angular,nodejs,postgres,docker,git,githubactions,aws&theme=dark" alt="Java, Spring, Python, Rust, TypeScript, JavaScript, React, Angular, Node.js, PostgreSQL, Docker, Git, GitHub Actions, AWS"><img src="assets/powerbi.svg" width="48" height="48" alt="Power BI" hspace="4">
-</p>
+<img src="assets/stack-row.svg" width="840" alt="Java, Spring, Python, Rust, TypeScript, JavaScript, React, Angular, Node.js, PostgreSQL, Docker, Git, GitHub Actions, AWS, Power BI">
 
 **Focus:** full stack development, REST APIs, process automation, systems integration and software architecture.<br>
 **Spoken languages:** Portuguese (native), English (fluent), Spanish (advanced), German (A2).
