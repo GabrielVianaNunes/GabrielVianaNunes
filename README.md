@@ -47,7 +47,7 @@ I like code that does its job without making noise.
 ### <img src="assets/saloon.svg" width="38" align="absmiddle" alt=""> The town
 
 <div align="center">
-<img src="profile-3d-contrib/profile-night-view.svg" alt="3D view of my GitHub contributions" width="100%">
+<img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/profile-3d-contrib/profile-night-view.svg" alt="3D view of my GitHub contributions" width="100%">
 </div>
 
 <img src="assets/divider.svg" alt="" width="100%">
@@ -55,7 +55,7 @@ I like code that does its job without making noise.
 ### <img src="assets/signpost.svg" width="38" align="absmiddle" alt=""> Words to ride by
 
 <div align="center">
-<img src="assets/quote.svg" alt="Quote of the week" width="100%">
+<img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/quote.svg" alt="Quote of the week" width="100%">
 <sub>A new one every Monday.</sub>
 </div>
 
