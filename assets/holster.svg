@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="48" height="48" shape-rendering="crispEdges" role="img" aria-label="An empty leather holster">
-<title>An empty leather holster</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 26" width="48" height="52" shape-rendering="crispEdges" role="img" aria-label="An empty leather holster on a belt with cartridge loops">
+<title>An empty leather holster on a belt with cartridge loops</title>
 <style></style>
-<path fill="#5a3a22" d="M0 2h1v1h-1zM4 2h12v1h-12zM12 4h2v1h-2zM5 5h1v1h-1zM11 5h3v1h-3zM5 6h1v1h-1zM11 6h2v1h-2zM5 7h1v1h-1zM11 7h3v1h-3zM5 8h1v1h-1zM11 8h1v1h-1zM5 9h1v1h-1zM11 9h1v1h-1zM5 10h1v1h-1zM11 10h1v1h-1zM5 11h1v1h-1zM11 11h1v1h-1zM5 12h1v1h-1zM11 12h1v1h-1zM6 13h5v1h-5zM7 14h1v1h-1zM9 14h1v1h-1z"/>
-<path fill="#d9b873" d="M1 2h3v1h-3zM1 3h1v1h-1zM3 3h1v1h-1zM1 4h3v1h-3zM13 6h1v1h-1zM6 9h1v1h-1zM10 9h1v1h-1zM8 14h1v1h-1z"/>
-<path fill="#3b2414" d="M0 3h1v1h-1zM2 3h1v1h-1zM4 3h12v1h-12zM0 4h1v1h-1zM4 4h8v1h-8zM14 4h2v1h-2z"/>
-<path fill="#1a0f1c" d="M6 5h5v1h-5zM6 6h5v1h-5z"/>
-<path fill="#9a6a3c" d="M6 7h1v1h-1zM6 8h1v1h-1zM6 10h1v1h-1zM6 11h1v1h-1zM6 12h1v1h-1z"/>
-<path fill="#7a5230" d="M7 7h4v1h-4zM8 8h3v1h-3zM7 9h3v1h-3zM8 10h3v1h-3zM7 11h4v1h-4zM8 12h3v1h-3z"/>
-<path fill="#c98b4a" d="M7 8h1v1h-1zM7 10h1v1h-1zM7 12h1v1h-1z"/>
+<path fill="#1d1008" d="M1 0h22v1h-22zM0 1h1v1h-1zM23 1h1v1h-1zM0 2h1v1h-1zM23 2h1v1h-1zM0 3h1v1h-1zM23 3h1v1h-1zM0 4h1v1h-1zM23 4h1v1h-1zM0 5h1v1h-1zM23 5h1v1h-1zM1 6h6v1h-6zM18 6h1v1h-1zM21 6h2v1h-2zM6 7h1v1h-1zM18 7h1v1h-1zM21 7h1v1h-1zM6 8h1v1h-1zM18 8h1v1h-1zM21 8h1v1h-1zM6 9h1v1h-1zM18 9h1v1h-1zM21 9h1v1h-1zM6 10h1v1h-1zM18 10h1v1h-1zM21 10h1v1h-1zM7 11h1v1h-1zM18 11h1v1h-1zM21 11h1v1h-1zM7 12h1v1h-1zM18 12h1v1h-1zM21 12h1v1h-1zM7 13h1v1h-1zM18 13h1v1h-1zM21 13h1v1h-1zM7 14h1v1h-1zM18 14h3v1h-3zM7 15h1v1h-1zM17 15h1v1h-1zM7 16h1v1h-1zM17 16h1v1h-1zM7 17h1v1h-1zM17 17h1v1h-1zM8 18h1v1h-1zM16 18h1v1h-1zM8 19h1v1h-1zM16 19h1v1h-1zM9 20h1v1h-1zM15 20h1v1h-1zM9 21h1v1h-1zM15 21h1v1h-1zM10 22h1v1h-1zM13 22h2v1h-2zM10 23h1v1h-1zM13 23h1v1h-1zM9 24h1v1h-1zM11 24h2v1h-2zM14 24h1v1h-1zM10 25h1v1h-1zM13 25h1v1h-1z"/>
+<path fill="#5a3a22" d="M1 1h16v1h-16zM22 1h1v1h-1zM19 6h2v1h-2zM7 7h1v1h-1zM17 7h1v1h-1zM19 7h2v1h-2zM7 8h1v1h-1zM17 8h1v1h-1zM19 8h2v1h-2zM7 9h1v1h-1zM17 9h1v1h-1zM7 10h1v1h-1zM17 10h1v1h-1zM19 10h2v1h-2zM8 11h1v1h-1zM17 11h1v1h-1zM19 11h2v1h-2zM8 12h1v1h-1zM17 12h1v1h-1zM19 12h2v1h-2zM8 13h1v1h-1zM17 13h1v1h-1zM19 13h2v1h-2zM8 14h1v1h-1zM17 14h1v1h-1zM8 15h1v1h-1zM16 15h1v1h-1zM8 16h1v1h-1zM16 16h1v1h-1zM8 17h1v1h-1zM16 17h1v1h-1zM9 18h1v1h-1zM15 18h1v1h-1zM9 19h1v1h-1zM15 19h1v1h-1zM10 20h1v1h-1zM14 20h1v1h-1zM10 21h1v1h-1zM14 21h1v1h-1z"/>
+<path fill="#e0b95e" d="M17 1h5v1h-5zM17 2h1v1h-1zM21 2h1v1h-1zM2 3h2v1h-2zM5 3h2v1h-2zM8 3h2v1h-2zM11 3h2v1h-2zM17 3h1v1h-1zM19 3h1v1h-1zM21 3h1v1h-1zM2 4h2v1h-2zM5 4h2v1h-2zM8 4h2v1h-2zM11 4h2v1h-2zM17 4h1v1h-1zM21 4h1v1h-1zM17 5h5v1h-5zM19 9h1v1h-1zM8 10h1v1h-1zM16 10h1v1h-1z"/>
+<path fill="#3b2414" d="M1 2h1v1h-1zM4 2h1v1h-1zM7 2h1v1h-1zM10 2h1v1h-1zM13 2h4v1h-4zM18 2h3v1h-3zM22 2h1v1h-1zM1 3h1v1h-1zM4 3h1v1h-1zM7 3h1v1h-1zM10 3h1v1h-1zM13 3h4v1h-4zM18 3h1v1h-1zM20 3h1v1h-1zM22 3h1v1h-1zM1 4h1v1h-1zM4 4h1v1h-1zM7 4h1v1h-1zM10 4h1v1h-1zM13 4h4v1h-4zM18 4h3v1h-3zM22 4h1v1h-1zM1 5h1v1h-1zM3 5h1v1h-1zM5 5h1v1h-1zM7 5h1v1h-1zM9 5h1v1h-1zM11 5h1v1h-1zM13 5h1v1h-1zM15 5h1v1h-1zM22 5h1v1h-1z"/>
+<path fill="#b8873a" d="M2 2h2v1h-2zM5 2h2v1h-2zM8 2h2v1h-2zM11 2h2v1h-2zM20 9h1v1h-1z"/>
+<path fill="#c98b4a" d="M2 5h1v1h-1zM4 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM10 5h1v1h-1zM12 5h1v1h-1zM14 5h1v1h-1zM16 5h1v1h-1zM10 11h1v1h-1zM16 11h1v1h-1zM10 13h1v1h-1zM16 13h1v1h-1zM10 15h1v1h-1zM15 15h1v1h-1zM10 17h1v1h-1zM15 17h1v1h-1zM11 19h1v1h-1zM14 19h1v1h-1z"/>
+<path fill="#a67444" d="M7 6h11v1h-11zM8 7h1v1h-1zM8 8h1v1h-1zM8 9h1v1h-1zM9 11h1v1h-1zM9 12h1v1h-1zM9 13h1v1h-1zM9 14h1v1h-1zM9 15h1v1h-1zM9 16h1v1h-1zM9 17h1v1h-1zM10 18h1v1h-1zM10 19h1v1h-1zM11 20h1v1h-1zM11 21h1v1h-1z"/>
+<path fill="#120a0e" d="M9 7h7v1h-7zM9 8h7v1h-7zM9 9h7v1h-7z"/>
+<path fill="#7a5230" d="M16 7h1v1h-1zM16 8h1v1h-1zM16 9h1v1h-1zM9 10h7v1h-7zM11 11h5v1h-5zM10 12h7v1h-7zM11 13h5v1h-5zM10 14h7v1h-7zM11 15h4v1h-4zM10 16h6v1h-6zM11 17h4v1h-4zM11 18h4v1h-4zM12 19h2v1h-2zM12 20h2v1h-2zM12 21h2v1h-2z"/>
+<path fill="#e8d5a0" d="M11 22h2v1h-2zM11 23h2v1h-2zM10 24h1v1h-1zM13 24h1v1h-1z"/>
 </svg>

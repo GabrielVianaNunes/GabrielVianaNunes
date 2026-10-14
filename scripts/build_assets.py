@@ -486,38 +486,192 @@ def build_divider():
 
 # ---------------------------------------------------------------- holster icon
 def build_holster():
-    """A small empty leather holster on a belt, used next to the stack heading."""
-    g = Grid()
-    leather, leather_dk, leather_hi = "#7a5230", "#5a3a22", "#9a6a3c"
-    belt, belt_hi, brass, mouth = "#3b2414", "#5a3a22", "#d9b873", "#1a0f1c"
-    g.rect(0, 2, 16, 3, belt)
-    g.rect(0, 2, 16, 1, belt_hi)
-    g.rect(1, 2, 3, 3, brass)
-    g.rect(2, 3, 1, 1, belt)
-    # holster body hanging from the belt
-    for y in range(5, 13):
-        g.rect(5, y, 7, 1, leather)
-        g.set(5, y, leather_dk)
-        g.set(11, y, leather_dk)
-        g.set(6, y, leather_hi)
-    g.rect(6, 13, 5, 1, leather_dk)
-    g.rect(7, 14, 3, 1, leather_dk)
-    g.rect(6, 5, 5, 2, mouth)            # empty opening
-    g.rect(12, 4, 2, 4, leather_dk)      # retaining strap
-    g.set(13, 6, brass)
-    for x, y in [(7, 8), (7, 10), (7, 12)]:
-        g.set(x, y, "#c98b4a")           # stitching
-    g.set(6, 9, brass)
-    g.set(10, 9, brass)
-    g.set(8, 14, brass)                  # tie down string end
-    return wrap_svg(16, 16, 3, g.paths(), "", "An empty leather holster")
+    """An empty leather holster hanging from a belt with cartridge loops (no gun)."""
+    m = Grid()
+    leather, leather_dk, leather_hi = "#7a5230", "#5a3a22", "#a67444"
+    belt, belt_hi = "#3b2414", "#5a3a22"
+    brass, brass_dk, mouth, thread = "#e0b95e", "#b8873a", "#120a0e", "#e8d5a0"
+
+    # belt
+    m.rect(1, 1, 22, 5, belt)
+    m.rect(1, 1, 22, 1, belt_hi)
+    for x in range(2, 21, 2):
+        m.set(x, 5, "#c98b4a")           # stitching along the belt
+    # cartridge loops
+    for x in (2, 5, 8, 11):
+        m.rect(x, 2, 2, 1, brass_dk)
+        m.rect(x, 3, 2, 2, brass)
+    # buckle
+    m.rect(17, 1, 5, 5, brass)
+    m.rect(18, 2, 3, 3, belt)
+    m.set(19, 3, brass)
+
+    # holster body, narrowing toward the bottom
+    def span(y):
+        if y <= 10:
+            return 7, 17
+        if y <= 14:
+            return 8, 17
+        if y <= 17:
+            return 8, 16
+        if y <= 19:
+            return 9, 15
+        return 10, 14
+
+    for y in range(6, 22):
+        x0, x1 = span(y)
+        m.rect(x0, y, x1 - x0 + 1, 1, leather)
+        m.set(x0, y, leather_dk)
+        m.set(x0 + 1, y, leather_hi)
+        m.set(x1, y, leather_dk)
+    x0, x1 = span(6)
+    m.rect(x0, 6, x1 - x0 + 1, 1, leather_hi)       # rim
+    for y in range(7, 10):                           # empty opening
+        x0, x1 = span(y)
+        m.rect(x0 + 2, y, x1 - x0 - 3, 1, mouth)
+    for y in range(11, 20, 2):                       # stitching
+        x0, x1 = span(y)
+        m.set(x0 + 2, y, "#c98b4a")
+        m.set(x1 - 1, y, "#c98b4a")
+    # rivets
+    m.set(8, 10, brass)
+    m.set(16, 10, brass)
+    # side strap and stud
+    m.rect(19, 6, 2, 8, leather_dk)
+    m.set(19, 9, brass)
+    m.set(20, 9, brass_dk)
+    # tie down string
+    m.rect(11, 22, 2, 2, thread)
+    m.set(10, 24, thread)
+    m.set(13, 24, thread)
+
+    outline = Grid()
+    for (x, y) in list(m.px):
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            q = (x + dx, y + dy)
+            if q not in m.px:
+                outline.set(q[0], q[1], "#1d1008")
+    for k, v in m.px.items():
+        outline.px[k] = v
+    return wrap_svg(24, 26, 2, outline.paths(), "", "An empty leather holster on a belt with cartridge loops")
+
+
+# ---------------------------------------------------------------- heading icons
+def outlined(m, color="#1d1008"):
+    out = Grid()
+    for (x, y) in list(m.px):
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            q = (x + dx, y + dy)
+            if q not in m.px:
+                out.set(q[0], q[1], color)
+    out.px.update(m.px)
+    return out
+
+
+def build_sheriff():
+    """Sheriff star with ball tips, for the 'The brand' heading."""
+    import math
+    m = Grid()
+    brass, brass_hi, brass_dk = "#e0b95e", "#f3dc94", "#b8873a"
+    cx, cy, R, r = 12.0, 12.5, 10.5, 4.6
+    pts = []
+    for k in range(10):
+        ang = math.radians(-90 + 36 * k)
+        rad = R if k % 2 == 0 else r
+        pts.append((cx + rad * math.cos(ang), cy + rad * math.sin(ang)))
+
+    def inside(px, py):
+        c = False
+        j = len(pts) - 1
+        for i in range(len(pts)):
+            xi, yi = pts[i]
+            xj, yj = pts[j]
+            if (yi > py) != (yj > py) and px < (xj - xi) * (py - yi) / (yj - yi) + xi:
+                c = not c
+            j = i
+        return c
+
+    for y in range(24):
+        for x in range(24):
+            if inside(x + 0.5, y + 0.5):
+                m.set(x, y, brass_dk if x + 0.5 > cx + 1 else brass)
+    for k in range(0, 10, 2):
+        tx, ty = pts[k]
+        for y in range(24):
+            for x in range(24):
+                if (x + 0.5 - tx) ** 2 + (y + 0.5 - ty) ** 2 <= 2.1 ** 2:
+                    m.set(x, y, brass_hi)
+    for y in range(24):
+        for x in range(24):
+            d = (x + 0.5 - cx) ** 2 + (y + 0.5 - cy) ** 2
+            if d <= 2.6 ** 2:
+                m.set(x, y, "#7a5230")
+            elif d <= 3.6 ** 2:
+                m.set(x, y, brass_hi)
+    return wrap_svg(24, 24, 2, outlined(m).paths(), "", "Sheriff star")
+
+
+def build_saloon():
+    """Old west saloon facade, for the 'The town' heading."""
+    m = Grid()
+    wood, wood_dk, wood_hi = "#a6692f", "#7a4a22", "#c98b4a"
+    roof, light = "#5a3a22", "#f7b867"
+    m.rect(3, 6, 18, 2, roof)                   # false front, top
+    m.rect(7, 4, 10, 2, roof)
+    m.rect(9, 2, 6, 2, roof)
+    m.rect(3, 8, 18, 14, wood)
+    for x in (6, 9, 12, 15, 18):                # planks
+        m.rect(x, 8, 1, 14, wood_dk)
+    m.rect(3, 8, 18, 1, wood_hi)
+    m.rect(5, 9, 14, 3, "#e8d5a0")              # sign board
+    for x in range(6, 18, 2):
+        m.set(x, 10, "#5a3a22")
+    m.rect(1, 13, 22, 2, roof)                  # porch roof
+    m.rect(1, 15, 1, 7, wood_dk)
+    m.rect(22, 15, 1, 7, wood_dk)
+    m.rect(4, 16, 4, 4, light)                  # windows
+    m.rect(16, 16, 4, 4, light)
+    m.rect(5, 16, 1, 4, "#7a4a22")
+    m.rect(17, 16, 1, 4, "#7a4a22")
+    m.rect(9, 16, 6, 6, "#1d1008")              # doorway
+    m.rect(9, 17, 3, 4, wood_dk)                # swinging doors
+    m.rect(12, 17, 3, 4, wood)
+    m.rect(0, 22, 24, 2, "#c98b4a")             # boardwalk
+    return wrap_svg(24, 24, 2, outlined(m).paths(), "", "Old west saloon")
+
+
+def build_signpost():
+    """Wooden signpost with two arrows, for the 'Words to ride by' heading."""
+    m = Grid()
+    wood, wood_dk, wood_hi = "#a6692f", "#7a4a22", "#c98b4a"
+    m.rect(11, 4, 3, 19, wood_dk)
+    m.rect(11, 4, 1, 19, wood)
+    m.rect(8, 22, 9, 2, "#c98b4a")              # base mound
+    # arrow pointing right
+    m.rect(3, 5, 14, 5, wood)
+    for i in range(3):
+        m.rect(17 + i, 5 + i, 1, 5 - 2 * i, wood)
+    m.rect(3, 5, 14, 1, wood_hi)
+    for x in (5, 7, 9, 11):
+        m.set(x, 7, "#3b2414")
+    # arrow pointing left
+    m.rect(8, 13, 14, 5, wood)
+    for i in range(3):
+        m.rect(7 - i, 13 + i, 1, 5 - 2 * i, wood)
+    m.rect(8, 13, 14, 1, wood_hi)
+    for x in (12, 14, 16, 18):
+        m.set(x, 15, "#3b2414")
+    m.set(12, 6, "#d9b873")
+    m.set(12, 14, "#d9b873")
+    return wrap_svg(24, 24, 2, outlined(m).paths(), "", "Wooden signpost")
 
 
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     for name, fn in [("banner.svg", build_banner), ("wanted.svg", build_wanted),
                      ("footer.svg", build_footer), ("divider.svg", build_divider),
-                     ("holster.svg", build_holster)]:
+                     ("holster.svg", build_holster), ("sheriff.svg", build_sheriff),
+                     ("saloon.svg", build_saloon), ("signpost.svg", build_signpost)]:
         with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
             f.write(fn())
         print("wrote", name)

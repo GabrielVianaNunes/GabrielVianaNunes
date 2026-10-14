@@ -17,7 +17,7 @@
 </td>
 <td valign="top">
 
-### The brand
+### <img src="assets/sheriff.svg" width="38" align="absmiddle" alt=""> The brand
 
 Software engineering student from Goiânia, Brazil.
 
@@ -33,7 +33,7 @@ I like code that does its job without making noise.
 
 <img src="assets/divider.svg" alt="" width="100%">
 
-### <img src="assets/holster.svg" width="30" align="absmiddle" alt=""> The holster
+### <img src="assets/holster.svg" width="38" align="absmiddle" alt=""> The holster
 
 <p>
 <img src="https://skillicons.dev/icons?i=java,spring,py,rust,ts,js,react,angular,nodejs,postgres,docker,git,githubactions,powerbi,aws&theme=dark" alt="Java, Spring, Python, Rust, TypeScript, JavaScript, React, Angular, Node.js, PostgreSQL, Docker, Git, GitHub Actions, Power BI, AWS">
@@ -44,7 +44,7 @@ I like code that does its job without making noise.
 
 <img src="assets/divider.svg" alt="" width="100%">
 
-### The town
+### <img src="assets/saloon.svg" width="38" align="absmiddle" alt=""> The town
 
 <div align="center">
 <img src="profile-3d-contrib/profile-night-view.svg" alt="3D view of my GitHub contributions" width="100%">
@@ -52,7 +52,7 @@ I like code that does its job without making noise.
 
 <img src="assets/divider.svg" alt="" width="100%">
 
-### Words to ride by
+### <img src="assets/signpost.svg" width="38" align="absmiddle" alt=""> Words to ride by
 
 <div align="center">
 <img src="assets/quote.svg" alt="Quote of the week" width="100%">
