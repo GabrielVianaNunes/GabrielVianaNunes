@@ -33,10 +33,10 @@ I like code that does its job without making noise.
 
 <img src="assets/divider.svg" alt="" width="100%">
 
-### The holster
+### <img src="assets/holster.svg" width="30" align="absmiddle" alt=""> The holster
 
 <p>
-<img src="https://skillicons.dev/icons?i=java,spring,py,rust,ts,js,react,angular,nodejs,postgres,git,githubactions,powerbi,aws&theme=dark" alt="Java, Spring, Python, Rust, TypeScript, JavaScript, React, Angular, Node.js, PostgreSQL, Git, GitHub Actions, Power BI, AWS">
+<img src="https://skillicons.dev/icons?i=java,spring,py,rust,ts,js,react,angular,nodejs,postgres,docker,git,githubactions,powerbi,aws&theme=dark" alt="Java, Spring, Python, Rust, TypeScript, JavaScript, React, Angular, Node.js, PostgreSQL, Docker, Git, GitHub Actions, Power BI, AWS">
 </p>
 
 **Focus:** full stack development, REST APIs, process automation, systems integration and software architecture.<br>

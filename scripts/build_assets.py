@@ -484,10 +484,40 @@ def build_divider():
     return wrap_svg(W, H, 5, g.paths(), "", "Divider")
 
 
+# ---------------------------------------------------------------- holster icon
+def build_holster():
+    """A small empty leather holster on a belt, used next to the stack heading."""
+    g = Grid()
+    leather, leather_dk, leather_hi = "#7a5230", "#5a3a22", "#9a6a3c"
+    belt, belt_hi, brass, mouth = "#3b2414", "#5a3a22", "#d9b873", "#1a0f1c"
+    g.rect(0, 2, 16, 3, belt)
+    g.rect(0, 2, 16, 1, belt_hi)
+    g.rect(1, 2, 3, 3, brass)
+    g.rect(2, 3, 1, 1, belt)
+    # holster body hanging from the belt
+    for y in range(5, 13):
+        g.rect(5, y, 7, 1, leather)
+        g.set(5, y, leather_dk)
+        g.set(11, y, leather_dk)
+        g.set(6, y, leather_hi)
+    g.rect(6, 13, 5, 1, leather_dk)
+    g.rect(7, 14, 3, 1, leather_dk)
+    g.rect(6, 5, 5, 2, mouth)            # empty opening
+    g.rect(12, 4, 2, 4, leather_dk)      # retaining strap
+    g.set(13, 6, brass)
+    for x, y in [(7, 8), (7, 10), (7, 12)]:
+        g.set(x, y, "#c98b4a")           # stitching
+    g.set(6, 9, brass)
+    g.set(10, 9, brass)
+    g.set(8, 14, brass)                  # tie down string end
+    return wrap_svg(16, 16, 3, g.paths(), "", "An empty leather holster")
+
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     for name, fn in [("banner.svg", build_banner), ("wanted.svg", build_wanted),
-                     ("footer.svg", build_footer), ("divider.svg", build_divider)]:
+                     ("footer.svg", build_footer), ("divider.svg", build_divider),
+                     ("holster.svg", build_holster)]:
         with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
             f.write(fn())
         print("wrote", name)
