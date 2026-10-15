@@ -1,2 +1,12 @@
 assets/quote.svg
 profile-3d-contrib/
+
+# never commit secrets or raw API responses
+*.env
+.env*
+*.pem
+*.key
+*token*
+data/*.raw.json
+data/*.private.*
+*.tmp
