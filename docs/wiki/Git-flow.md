@@ -19,6 +19,10 @@ feature/name  ->  pull request to develop  ->  pull request from develop to main
 - Commit messages: short imperative title, optional body, no dashes
 - Commits are authored by the owner only, no co author trailers
 
+## Branch cleanup
+
+The workflow `delete-merged-branch.yml` deletes the head branch of a merged pull request when it starts with `feature/`, `hotfix/` or `bugfix/`. `develop`, `main` and `output` are never deleted.
+
 ## Generated files
 
 Workflows publish to `output`. `develop` does not need them.
