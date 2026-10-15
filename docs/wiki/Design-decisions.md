@@ -30,3 +30,51 @@ Protecting `main` with required pull requests blocks workflow pushes, and GitHub
 ## Quotes
 
 Only encouraging or humorous lines, with attribution that is widely credited. Anonymous sayings are labelled as such.
+
+## Western town 3D: data and mapping rules
+
+Decided in issue 1 (spike), from the real contribution calendar.
+
+### What the data looks like
+
+Measured on 2026-10-15 for the last year:
+
+| Fact | Value |
+|---|---|
+| Weeks returned by `contributionCalendar` | 53 (the last one is partial, 5 days) |
+| Weeks with zero contributions | 36 of 53 |
+| Busiest week | 238 |
+| Median of the non empty weeks | 39 |
+| Busiest single day | 84 |
+| Daily levels available | `NONE`, `FIRST` to `FOURTH_QUARTILE` |
+
+Consequences:
+
+- The distribution is very skewed, so a linear height scale would make one tower and many invisible shacks.
+- Most weeks are empty, so "empty" must look good on purpose.
+- The calendar only has counts and dates. It carries no repository names, so private work never leaks.
+
+### Decisions
+
+1. **Unit:** one lot per week, oldest on the left, newest on the right. 53 lots.
+2. **Height:** based on the quartiles of the non empty weeks, not on the maximum. This keeps a good mix of heights every year.
+3. **Empty weeks:** an empty lot with a cactus or a hitching post. Never a gap.
+4. **Types:** decided by height, with a stable alternate by week parity so the street does not change shape from day to day.
+5. **Landmarks:** the busiest week gets the water tower, and the current week gets a lit window.
+
+### Mapping table
+
+| Week total | Floors | Building |
+|---|---|---|
+| 0 | 0 | Empty lot with a cactus or hitching post |
+| 1 up to the 25th percentile | 1 | Shack or barn (even or odd week) |
+| up to the 50th percentile | 2 | Saloon or general store |
+| up to the 75th percentile | 3 | Hotel or sheriff office |
+| above the 75th percentile | 4 | Bank |
+
+Percentiles are computed from the non empty weeks only. With today's data they are about 10, 39 and 73.
+
+### Open risks, to check in the fetch issue
+
+- Private contributions are counted in the calendar only when the profile setting allows it. The token used by the Action may see a different total than a logged in user. If it does, the fallback is a personal access token stored as a secret.
+- The first and last weeks are partial. Both are kept, since showing the current week is the point.
