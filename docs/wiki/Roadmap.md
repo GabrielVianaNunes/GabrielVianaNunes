@@ -19,6 +19,10 @@ Budget: about 2 to 3 hours per week, ten small issues, due 31 Dec 2026.
 
 About 24 hours in total, with the last ten days of December as buffer.
 
+## Future improvements (not in v1)
+
+Cemetery, windmill, train on the horizon, a year selector for older towns and an isometric view. They are tracked as issues with the `future` label under the milestone "Western Town 3D later".
+
 ## Principles
 
 - Pure layout function, easy to test with a fixture

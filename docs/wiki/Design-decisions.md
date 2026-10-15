@@ -59,7 +59,7 @@ Consequences:
 1. **Unit:** one lot per week, oldest on the left, newest on the right. 53 lots.
 2. **Height:** based on the quartiles of the non empty weeks, not on the maximum. This keeps a good mix of heights every year.
 3. **Empty weeks:** an empty lot with a cactus or a hitching post. Never a gap.
-4. **Types:** decided by height, with a stable alternate by week parity so the street does not change shape from day to day.
+4. **Types:** decided by height, with a stable rotation by week position so the street does not change shape from day to day. Sheriff office and bank are unique, churches at most two.
 5. **Landmarks:** the busiest week gets the water tower, and the current week gets a lit window.
 
 ### Mapping table
@@ -67,10 +67,14 @@ Consequences:
 | Week total | Floors | Building |
 |---|---|---|
 | 0 | 0 | Empty lot with a cactus or hitching post |
-| 1 up to the 25th percentile | 1 | Shack or barn (even or odd week) |
-| up to the 50th percentile | 2 | Saloon or general store |
-| up to the 75th percentile | 3 | Hotel or sheriff office |
-| above the 75th percentile | 4 | Bank |
+| 1 up to the 25th percentile | 1 | Cabin (most common), barn, stable or shack (rotates by week position) |
+| up to the 50th percentile | 2 | Townhouse, saloon, general store or blacksmith |
+| up to the 75th percentile | 3 | Hotel, with at most 2 churches and only 1 sheriff office |
+| above the 75th percentile | 4 | Grand hotel, with only 1 bank |
+
+Old western houses are homes, so they live in the quiet and moderate tiers and never replace the hotel, church, sheriff office or bank.
+
+Unique buildings: sheriff office 1, bank 1, church up to 2, water tower 1. See `docs/town/DESIGN.md` for where each one is placed.
 
 Percentiles are computed from the non empty weeks only. With today's data they are about 10, 39 and 73.
 

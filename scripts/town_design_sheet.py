@@ -80,7 +80,7 @@ def cactus(g, x, base, pal):
     g.rect(x + 14, base - 7, 4, 2, c); g.rect(x + 16, base - 10, 2, 4, c)
 
 
-def building(g, x, base, tier, pal, s, idx):
+def building(g, x, base, tier, pal, s, idx, kind=""):
     """Rough placeholder: body, roof, windows, door. Final sprites come in issue 5."""
     if tier == 0:
         cactus(g, x, base, pal)
@@ -95,8 +95,15 @@ def building(g, x, base, tier, pal, s, idx):
     g.rect(x0 - 1, base - h - 3, w + 2, 3, roof)
     if tier >= 2:                                  # false front
         g.rect(x0 + 3, base - h - 7, w - 6, 4, roof)
-    if tier == 3 and idx % 3 == 2:                 # church steeple placeholder
+    if kind == "church":                           # steeple placeholder
         g.rect(x0 + w // 2 - 1, base - h - 14, 3, 11, roof)
+    if kind in ("cabin", "townhouse"):             # chimney placeholder for old homes
+        g.rect(x0 + w - 7, base - h - 9, 3, 7, darken("#7a4a22", pal["dim"]))
+    if kind == "sheriff":                          # brass star placeholder
+        g.rect(x0 + w // 2 - 1, base - h + 2, 3, 3, "#e0b95e")
+    if kind == "bank":                             # columns placeholder
+        for cx in (x0 + 3, x0 + w - 6):
+            g.rect(cx, base - h + 8, 3, h - 16, darken("#f3ead2", pal["dim"]))
     floors = max(1, tier)
     for f in range(floors):
         wy = base - h + 5 + int(f * FLOOR_H * s)
@@ -117,6 +124,37 @@ def tiers_for(weeks):
     return out, (p25, p50, p75)
 
 
+def assign_types(tiers):
+    """Building type for every lot, oldest first, following the uniqueness rules.
+
+    Sheriff office 1, bank 1, church up to 2. Everything else may repeat.
+    """
+    n = len(tiers)
+    kinds = [""] * n
+    for i, t in enumerate(tiers):
+        if t == 1:      # quiet weeks: mostly homes, plus barns and stables
+            kinds[i] = ("cabin", "barn", "cabin", "stable", "cabin", "shack")[i % 6]
+        elif t == 2:    # moderate weeks: townhouses mixed with trade buildings
+            kinds[i] = ("townhouse", "saloon", "store", "townhouse", "blacksmith")[i % 5]
+        elif t == 3:
+            kinds[i] = "hotel"
+        elif t == 4:
+            kinds[i] = "grand hotel"
+    t4 = [i for i, t in enumerate(tiers) if t == 4]
+    if t4:
+        kinds[t4[-1]] = "bank"
+    t3 = [i for i, t in enumerate(tiers) if t == 3]
+    if len(t3) >= 3:
+        kinds[t3[0]] = "church"
+        kinds[t3[-1]] = "church"
+    elif t3:
+        kinds[t3[0]] = "church"
+    pool = [i for i in t3 if kinds[i] == "hotel"] or [i for i, t in enumerate(tiers) if t == 2]
+    if pool:
+        kinds[min(pool, key=lambda i: abs(i - n // 2))] = "sheriff"
+    return kinds
+
+
 def panel(g, oy, pal, label):
     rnd = random.Random(5)
     sky(g, 0, oy, pal, 130)
@@ -125,14 +163,15 @@ def panel(g, oy, pal, label):
     mesas(g, oy, pal, oy + 130, rnd, pal["far"], 40, 80)
     mesas(g, oy, pal, oy + 130, rnd, pal["near"], 18, 40)
     tiers, _ = tiers_for(WEEKS)
+    kinds = assign_types(tiers)
     back, front = tiers[:26], tiers[26:]
     peak = WEEKS.index(max(WEEKS))
     g.rect(0, oy + 150, W, 4, pal["street"])
     g.rect(0, oy + 207, W, 8, pal["street"])
     for i, t in enumerate(back):
-        building(g, 8 + i * PITCH + 2, oy + 150, t, pal, 0.8, i)
+        building(g, 8 + i * PITCH + 2, oy + 150, t, pal, 0.8, i, kinds[i])
     for i, t in enumerate(front):
-        building(g, i * PITCH, oy + 207, t, pal, 1.0, i)
+        building(g, i * PITCH, oy + 207, t, pal, 1.0, i, kinds[26 + i])
     # water tower at the busiest week (placeholder)
     px = (peak - 26) * PITCH + 20
     wood = darken("#7a4a22", pal["dim"])
@@ -144,11 +183,12 @@ def panel(g, oy, pal, label):
 def legend(g, oy):
     g.rect(0, oy, W, 190, "#14101c")
     g.text("TIERS BY WEEKLY TOTAL, ROUGH SPRITES AT REAL SIZE", 10, oy + 8, "#f3e2c0", 1)
-    names = [(0, "0 EMPTY", "CACTUS"), (1, "1 SHACK", "BARN"), (2, "2 SALOON", "STORE"),
-             (3, "3 HOTEL", "SHERIFF CHURCH"), (4, "4 BANK", "")]
+    names = [(0, "", "0 EMPTY", "CACTUS WELL"), (1, "cabin", "1 CABIN", "BARN STABLE SHACK"),
+             (2, "townhouse", "2 TOWNHOUSE", "SALOON STORE SMITH"), (3, "hotel", "3 HOTEL", "CHURCH 2 SHERIFF 1"),
+             (4, "bank", "4 BANK 1", "GRAND HOTEL")]
     x = 20
-    for tier, a, b in names:
-        building(g, x, oy + 120, tier, DAY, 1.0, 2)
+    for tier, kind, a, b in names:
+        building(g, x, oy + 120, tier, DAY, 1.0, 2, kind)
         g.text(a, x - 4, oy + 130, "#f7b867", 1)
         if b:
             g.text(b, x - 4, oy + 142, "#c98b4a", 1)

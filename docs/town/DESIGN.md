@@ -26,10 +26,35 @@ Buildings by tier (decided by the weekly total, see the mapping table):
 | Tier | Floors | Buildings |
 |---|---|---|
 | 0, empty week | 0 | Empty lot with a cactus, hitching post, wagon, barrels or a well |
-| 1 | 1 | Shack, barn |
-| 2 | 2 | Saloon, general store |
-| 3 | 3 | Hotel, sheriff office, old church (rotates by week) |
-| 4 | 4 | Bank |
+| 1 | 1 | Old western cabin (most common), barn, stable, shack (all repeatable) |
+| 2 | 2 | Two story townhouse, saloon, general store, blacksmith (all repeatable) |
+| 3 | 3 | Hotel (repeatable), old church (at most 2), sheriff office (only 1) |
+| 4 | 4 | Bank (only 1), grand hotel (repeatable) |
+
+### Uniqueness rules
+
+A real western town has one sheriff and one bank, so those never repeat.
+
+| Building | How many | Where |
+|---|---|---|
+| Sheriff office | exactly 1 | The tier 3 lot closest to the middle of the town. Falls back to a tier 2 lot |
+| Bank | exactly 1 | The most recent tier 4 week |
+| Old church | up to 2 | The first and the last tier 3 lots, the edges of town. Only 1 if there are fewer than 3 tier 3 lots |
+| Water tower | exactly 1 | Behind the busiest week |
+| Everything else | any number | Rotates by week position so the street stays stable |
+
+### Where the old western houses go
+
+Houses are homes, so they follow quiet and moderate weeks and fill the outskirts of the street:
+
+| Tier | Share of the rotation | Look |
+|---|---|---|
+| 1 | 3 of 6 are cabins | Single story wood cabin, pitched roof, chimney, porch |
+| 2 | 2 of 5 are townhouses | Two story wood house, balcony, chimney, shutters |
+
+Busy weeks (tier 3 and 4) never become plain houses: they hold the hotel, church, sheriff office and bank, so the center of the street reads as the commercial heart of the town.
+
+Check with the real data of 2026-10-15: 1 sheriff, 1 bank, 2 churches, 4 barns, 1 stable, 3 stores, 1 blacksmith, 1 hotel and 3 grand hotels.
 
 Landmarks and scenery:
 
@@ -44,7 +69,7 @@ Landmarks and scenery:
 | Tumbleweed | Rolls along the street, as in the banner |
 | Train on the horizon | Optional, only if the size budget allows |
 
-Not planned for v1: cemetery, windmill, a second town. They can come after the first release.
+Not in v1, tracked as future improvements (issues with the `future` label): cemetery, windmill, a train on the horizon, a year selector for older towns and an isometric view.
 
 ## Canvas and sizes
 
@@ -83,7 +108,18 @@ The first rough sheet written pixel by pixel weighs 246 KB. That is too close to
 
 Target: under 120 KB for the daily file.
 
-## Decisions to confirm
+## Confirmed decisions
 
-1. Keep the 2.5D two street layout, or switch to isometric.
-2. Keep the old church as a rotating tier 3 type, or make it a fixed landmark.
+1. The 2.5D two street layout stays. Isometric is a future improvement.
+2. At most two churches, only one sheriff office and one bank. Repetition happens with hotels, stables, barns, stores and similar buildings.
+3. A stable is part of the set.
+
+## Future improvements
+
+| Idea | Why it waits |
+|---|---|
+| Train on the horizon | Needs size budget left over after the sprites |
+| Cemetery | New sprite and a rule for where it goes |
+| Windmill | Same, a tier 1 variant |
+| Year selector | Needs a second data fetch and a UI in the README |
+| Isometric view | A different renderer, only if 2.5D feels too flat |
