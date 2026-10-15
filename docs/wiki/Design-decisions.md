@@ -67,10 +67,12 @@ Consequences:
 | Week total | Floors | Building |
 |---|---|---|
 | 0 | 0 | Empty lot with a cactus or hitching post |
-| 1 up to the 25th percentile | 1 | Shack, barn or stable (rotates by week position) |
-| up to the 50th percentile | 2 | Saloon, general store or blacksmith |
+| 1 up to the 25th percentile | 1 | Cabin (most common), barn, stable or shack (rotates by week position) |
+| up to the 50th percentile | 2 | Townhouse, saloon, general store or blacksmith |
 | up to the 75th percentile | 3 | Hotel, with at most 2 churches and only 1 sheriff office |
 | above the 75th percentile | 4 | Grand hotel, with only 1 bank |
+
+Old western houses are homes, so they live in the quiet and moderate tiers and never replace the hotel, church, sheriff office or bank.
 
 Unique buildings: sheriff office 1, bank 1, church up to 2, water tower 1. See `docs/town/DESIGN.md` for where each one is placed.
 

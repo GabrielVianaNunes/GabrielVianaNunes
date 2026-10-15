@@ -97,6 +97,8 @@ def building(g, x, base, tier, pal, s, idx, kind=""):
         g.rect(x0 + 3, base - h - 7, w - 6, 4, roof)
     if kind == "church":                           # steeple placeholder
         g.rect(x0 + w // 2 - 1, base - h - 14, 3, 11, roof)
+    if kind in ("cabin", "townhouse"):             # chimney placeholder for old homes
+        g.rect(x0 + w - 7, base - h - 9, 3, 7, darken("#7a4a22", pal["dim"]))
     if kind == "sheriff":                          # brass star placeholder
         g.rect(x0 + w // 2 - 1, base - h + 2, 3, 3, "#e0b95e")
     if kind == "bank":                             # columns placeholder
@@ -130,10 +132,10 @@ def assign_types(tiers):
     n = len(tiers)
     kinds = [""] * n
     for i, t in enumerate(tiers):
-        if t == 1:
-            kinds[i] = ("barn", "shack", "stable")[i % 3]
-        elif t == 2:
-            kinds[i] = ("saloon", "store", "blacksmith")[i % 3]
+        if t == 1:      # quiet weeks: mostly homes, plus barns and stables
+            kinds[i] = ("cabin", "barn", "cabin", "stable", "cabin", "shack")[i % 6]
+        elif t == 2:    # moderate weeks: townhouses mixed with trade buildings
+            kinds[i] = ("townhouse", "saloon", "store", "townhouse", "blacksmith")[i % 5]
         elif t == 3:
             kinds[i] = "hotel"
         elif t == 4:
@@ -181,8 +183,8 @@ def panel(g, oy, pal, label):
 def legend(g, oy):
     g.rect(0, oy, W, 190, "#14101c")
     g.text("TIERS BY WEEKLY TOTAL, ROUGH SPRITES AT REAL SIZE", 10, oy + 8, "#f3e2c0", 1)
-    names = [(0, "", "0 EMPTY", "CACTUS WELL"), (1, "barn", "1 SHACK", "BARN STABLE"),
-             (2, "saloon", "2 SALOON", "STORE SMITH"), (3, "hotel", "3 HOTEL", "CHURCH 2 SHERIFF 1"),
+    names = [(0, "", "0 EMPTY", "CACTUS WELL"), (1, "cabin", "1 CABIN", "BARN STABLE SHACK"),
+             (2, "townhouse", "2 TOWNHOUSE", "SALOON STORE SMITH"), (3, "hotel", "3 HOTEL", "CHURCH 2 SHERIFF 1"),
              (4, "bank", "4 BANK 1", "GRAND HOTEL")]
     x = 20
     for tier, kind, a, b in names:

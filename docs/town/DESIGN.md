@@ -26,8 +26,8 @@ Buildings by tier (decided by the weekly total, see the mapping table):
 | Tier | Floors | Buildings |
 |---|---|---|
 | 0, empty week | 0 | Empty lot with a cactus, hitching post, wagon, barrels or a well |
-| 1 | 1 | Shack, barn, stable (repeatable) |
-| 2 | 2 | Saloon, general store, blacksmith (repeatable) |
+| 1 | 1 | Old western cabin (most common), barn, stable, shack (all repeatable) |
+| 2 | 2 | Two story townhouse, saloon, general store, blacksmith (all repeatable) |
 | 3 | 3 | Hotel (repeatable), old church (at most 2), sheriff office (only 1) |
 | 4 | 4 | Bank (only 1), grand hotel (repeatable) |
 
@@ -42,6 +42,17 @@ A real western town has one sheriff and one bank, so those never repeat.
 | Old church | up to 2 | The first and the last tier 3 lots, the edges of town. Only 1 if there are fewer than 3 tier 3 lots |
 | Water tower | exactly 1 | Behind the busiest week |
 | Everything else | any number | Rotates by week position so the street stays stable |
+
+### Where the old western houses go
+
+Houses are homes, so they follow quiet and moderate weeks and fill the outskirts of the street:
+
+| Tier | Share of the rotation | Look |
+|---|---|---|
+| 1 | 3 of 6 are cabins | Single story wood cabin, pitched roof, chimney, porch |
+| 2 | 2 of 5 are townhouses | Two story wood house, balcony, chimney, shutters |
+
+Busy weeks (tier 3 and 4) never become plain houses: they hold the hotel, church, sheriff office and bank, so the center of the street reads as the commercial heart of the town.
 
 Check with the real data of 2026-10-15: 1 sheriff, 1 bank, 2 churches, 4 barns, 1 stable, 3 stores, 1 blacksmith, 1 hotel and 3 grand hotels.
 
