@@ -19,6 +19,10 @@ feature/name  ->  pull request to develop  ->  pull request from develop to main
 - Commit messages: short imperative title, optional body, no dashes
 - Commits are authored by the owner only, no co author trailers
 
+## Long running work
+
+Larger pieces of work, like the western town, are built in small feature branches that merge into `develop`. They only go to `main` (and to `output`) when the whole thing is complete and verified. Until then the profile does not change.
+
 ## Branch cleanup
 
 The workflow `delete-merged-branch.yml` deletes the head branch of a merged pull request when it starts with `feature/`, `hotfix/` or `bugfix/`. `develop`, `main` and `output` are never deleted.
