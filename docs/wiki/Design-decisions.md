@@ -20,6 +20,8 @@ A quiet minimalist cowboy. The design talks, the text stays short. Western cultu
 - Every animation respects `prefers-reduced-motion`
 - Keep the page light: few sections, short text
 - The holster is always empty
+- Never put a fixed size image next to a scaling one: on phones the row shrinks and the fixed one looks huge, so related icons live in one SVG
+- When an image must change and the cache holds on, give the file a new name
 
 ## Why an output branch
 
