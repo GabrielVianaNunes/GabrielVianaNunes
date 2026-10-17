@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="Pixel art banner: a cowboy riding across a desert at sunset" width="100%">
+<img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/banner.svg" alt="Pixel art banner: a cowboy riding across a desert at sunset" width="100%">
 
 ### Talk low, ship clean.
 
@@ -11,7 +11,7 @@
 <table>
 <tr>
 <td width="300" align="center" valign="top">
-<img src="assets/wanted.svg" alt="Wanted poster for Gabriel Nunes, reward: one clean merge" width="280">
+<img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/wanted.svg" alt="Wanted poster for Gabriel Nunes, reward: one clean merge" width="280">
 <br>
 <img src="https://hits.sh/github.com/GabrielVianaNunes/GabrielVianaNunes.svg?style=for-the-badge&label=Riders%20who%20passed%20by&color=c98b4a&labelColor=3b2a1e" alt="Profile views">
 </td>
@@ -40,7 +40,7 @@ I like code that does its job without making noise.
 **Focus:** full stack development, REST APIs, process automation, systems integration and software architecture.<br>
 **Spoken languages:** Portuguese (native), English (fluent), Spanish (advanced), German (A2).
 
-<img src="assets/divider.svg" alt="" width="100%">
+<img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/divider-town.svg" alt="" width="100%">
 
 ### <img src="assets/saloon.svg" width="38" align="absmiddle" alt=""> The town
 
@@ -57,4 +57,4 @@ I like code that does its job without making noise.
 <sub>A new one every Monday.</sub>
 </div>
 
-<img src="assets/footer-dusk.svg" alt="A cowboy rides away. Happy trails." width="100%">
+<img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/footer.svg" alt="A cowboy rides away. Happy trails." width="100%">
