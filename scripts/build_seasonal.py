@@ -57,8 +57,10 @@ def check(name, svg):
         raise BuildError("%s has scripts or external references" % name)
 
 
-def build(season_id):
+def build(season_id, day=None):
     deco = season_art.get(season_id) if season_id else None
+    if deco is not None and day is not None:
+        deco = deco.with_date(day)
     files = {name: fn(deco) for name, fn in BUILDERS.items()}
     for name, svg in files.items():
         check(name, svg)
@@ -83,7 +85,7 @@ def main(argv=None):
         config = seasons.load_config()
         day = datetime.date.fromisoformat(args.date) if args.date else seasons.today_in_zone(config)
         season_id = choose(config, args.season, day)
-        files, deco = build(season_id)
+        files, deco = build(season_id, day)
     except (BuildError, seasons.ConfigError, ValueError, OSError) as e:
         print("error:", e, file=sys.stderr)
         return 1

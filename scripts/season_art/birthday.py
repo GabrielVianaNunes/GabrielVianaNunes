@@ -82,12 +82,13 @@ def cake(x, y_bottom):
     return body.paths() + '<g class="tw1">%s</g>' % flames.paths()
 
 
-def confetti_layer(seed, n, height, duration, delay=0, width=200):
+def confetti_layer(seed, n, height, duration, delay=0, width=200, colors=None):
     """Colored confetti falling; two stacked copies so the loop has no gap."""
     rnd = random.Random(seed)
     g = Grid()
+    palette = colors or CONFETTI
     for _ in range(n):
-        g.set(rnd.randrange(1, width - 1), rnd.randrange(0, height), rnd.choice(CONFETTI))
+        g.set(rnd.randrange(1, width - 1), rnd.randrange(0, height), rnd.choice(palette))
     return ('<g class="cf%d" style="animation-duration:%ds;animation-delay:-%ds">%s'
             '<g transform="translate(0 -%d)">%s</g></g>' % (height, duration, delay, g.paths(), height, g.paths()))
 

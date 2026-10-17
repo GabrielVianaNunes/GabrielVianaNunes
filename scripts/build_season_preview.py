@@ -6,6 +6,7 @@ Writes banner.svg, footer.svg, wanted.svg and strip.svg, plus the default look f
 under default/. Nothing here touches assets/ or the output branch.
 """
 import argparse
+import datetime
 import os
 import sys
 
@@ -27,11 +28,14 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("season")
     ap.add_argument("--out", required=True)
+    ap.add_argument("--date", help="YYYY-MM-DD for seasons whose art depends on the date (for example the New Year)")
     args = ap.parse_args(argv)
     deco = season_art.get(args.season, drafts=True)
     if deco is None:
         print("error: no art for season %r" % args.season, file=sys.stderr)
         return 1
+    if args.date:
+        deco = deco.with_date(datetime.date.fromisoformat(args.date))
     for sub, d in (("", deco), ("default", None)):
         folder = os.path.join(args.out, sub)
         os.makedirs(folder, exist_ok=True)

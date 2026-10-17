@@ -1,3 +1,4 @@
+import datetime
 import os
 import re
 import sys
@@ -242,6 +243,84 @@ class BirthdayDraft(unittest.TestCase):
         self.assertIn("#f4f8ff", banner)                                          # snow on the ground
 
     def test_every_asset_is_valid_and_within_budget(self):
+        for svg in (ba.build_banner(self.deco), ba.build_footer(self.deco), ba.build_wanted(self.deco), ba.build_strip(self.deco)):
+            parse(svg)
+            self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
+
+
+class NewYearDraft(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import season_art.newyear as ny
+        cls.ny = ny
+        cls.deco = season_art.get("new-year", drafts=True).with_date(datetime.date(2026, 12, 31))
+
+    def test_it_is_a_draft_until_approved(self):
+        self.assertIsNone(season_art.get("new-year"))
+        self.assertIsNotNone(season_art.get("new-year", drafts=True))
+
+    def test_the_number_is_the_year_that_begins(self):
+        n = self.ny.new_year_number
+        D = datetime.date
+        self.assertEqual(n(D(2026, 12, 31)), 2027)
+        self.assertEqual(n(D(2027, 1, 1)), 2027)
+        self.assertEqual(n(D(2099, 12, 31)), 2100)
+        self.assertEqual(n(D(2030, 6, 15)), 2030)
+
+    def test_the_date_reaches_the_art_without_touching_the_shared_object(self):
+        proto = season_art.get("new-year", drafts=True)
+        a = proto.with_date(datetime.date(2026, 12, 31))
+        b = proto.with_date(datetime.date(2027, 1, 1))
+        self.assertEqual((a.year, b.year), (2027, 2027))
+        c = proto.with_date(datetime.date(2099, 12, 31))
+        self.assertEqual(c.year, 2100)
+        self.assertEqual(a.year, 2027)                                          # an earlier copy is not changed
+
+    def test_the_year_is_written_in_the_assets(self):
+        self.assertIn("2027", self.deco.strip().label)
+        self.assertIn("2027", self.deco.banner().label)
+        self.assertGreater(len(self.ny.digits_grid(2027, 172, 4, self.ny.GOLD).px), 40)
+        self.assertLessEqual(172 + 4 * 6 - 1, 199)                                  # the number fits inside the banner
+
+    def test_every_glyph_is_rectangular_and_the_bunting_fits_the_divider(self):
+        for ch, rows in self.ny.GLYPHS.items():
+            self.assertEqual(len(rows), 5, ch)
+            self.assertEqual(len({len(r) for r in rows}), 1, ch)
+        for year in (2027, 2100, 2999):
+            items, total = self.ny.bunting_layout("HAPPY NEW YEAR %d" % year)
+            self.assertLessEqual(total, 150)
+            self.assertGreaterEqual(items[0][1], 2)
+            self.assertEqual(len(items), len("HAPPYNEWYEAR") + 4)
+
+    def test_the_gold_hat_replaces_the_cowboy_hat_and_stays_inside_the_footer(self):
+        hat, spark = self.ny.golden_hat_extra()
+        common = ba.rider()[0]
+        hat_pixels = {(x, y) for (x, y), c in common.px.items() if c == ba.INK and -22 <= y <= -20 and 4 <= x <= 10}
+        self.assertEqual(hat_pixels - set(hat.px), set())
+        dy = self.deco.footer().rider_dy
+        lowest_row = min(y for _, y in list(hat.px) + list(spark.px))
+        self.assertGreaterEqual(22 + dy + lowest_row - 1, 0)                         # the raised frame of the bob
+
+    def test_the_poster_portrait_gets_a_top_hat_instead_of_the_cowboy_hat(self):
+        default, ny = ba.Grid(), ba.Grid()
+        ba.draw_cowboy(default, 31, 35)
+        ba.draw_cowboy(ny, 31, 35, headwear=self.ny.top_hat_headwear)
+        tip = (31 + 29 - 19, 35 + 13)
+        self.assertEqual(default.px[tip], "#5a3a22")
+        self.assertNotEqual(ny.px[tip], "#5a3a22")
+
+    def test_the_strip_has_the_size_of_the_divider(self):
+        strip, divider = parse(ba.build_strip(self.deco)), parse(committed("divider.svg"))
+        for attr in ("width", "height", "viewBox"):
+            self.assertEqual(strip.get(attr), divider.get(attr))
+
+    def test_every_burst_has_five_frames_one_of_them_kept_for_reduced_motion(self):
+        svg = self.ny.fireworks([(24, 36, 0, 0)])
+        self.assertEqual(svg.count('class="fwf'), 5)
+        self.assertEqual(svg.count("fwlast"), 1)
+
+    def test_the_footer_says_happy_new_year_and_everything_is_valid(self):
+        self.assertIn("Happy new year", ba.build_footer(self.deco))
         for svg in (ba.build_banner(self.deco), ba.build_footer(self.deco), ba.build_wanted(self.deco), ba.build_strip(self.deco)):
             parse(svg)
             self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
