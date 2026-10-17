@@ -219,5 +219,138 @@ class Cli(unittest.TestCase):
             self.assertEqual(se.main(["--config", "does-not-exist.json"]), 1)
 
 
+def gauss_easter(year):
+    """Gauss's Easter algorithm with the Gregorian corrections. Independent of seasons.easter_date."""
+    a, b, c = year % 19, year % 4, year % 7
+    k = year // 100
+    p = (13 + 8 * k) // 25
+    q = k // 4
+    m = (15 - p + k - q) % 30
+    n = (4 + k - q) % 7
+    d = (19 * a + m) % 30
+    e = (2 * b + 4 * c + 6 * d + n) % 7
+    day = 22 + d + e
+    if d == 29 and e == 6:
+        return D(year, 4, 19)
+    if d == 28 and e == 6 and (11 * m + 11) % 30 < 19:
+        return D(year, 4, 18)
+    return D(year, 3, day) if day <= 31 else D(year, 4, day - 31)
+
+
+def oudin_easter(year):
+    """Oudin's 1940 formulation, a third and different way to the same date."""
+    c = year // 100
+    n = year - 19 * (year // 19)
+    k = (c - 17) // 25
+    i = c - c // 4 - (c - k) // 3 + 19 * n + 15
+    i = i % 30
+    i = i - (i // 28) * (1 - (i // 28) * (29 // (i + 1)) * ((21 - n) // 11))
+    j = (year + year // 4 + i + 2 - c + c // 4) % 7
+    l = i - j
+    month = 3 + (l + 40) // 44
+    day = l + 28 - 31 * (month // 4)
+    return D(year, month, day)
+
+
+def zeller_saturdays_of_july(year):
+    """Days of July that fall on a Saturday, using Zeller's congruence instead of the datetime module."""
+    out = []
+    for day in range(1, 32):
+        month, y = 7, year
+        k, j = y % 100, y // 100
+        h = (day + (13 * (month + 1)) // 5 + k + k // 4 + j // 4 + 5 * j) % 7
+        if h == 0:                       # 0 is Saturday in Zeller's convention
+            out.append(day)
+    return out
+
+
+def own_day_of_year(year, n):
+    """Month and day of the n-th day of the year, counting months by hand."""
+    leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+    lengths = [31, 29 if leap else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    for month, length in enumerate(lengths, 1):
+        if n <= length:
+            return D(year, month, n)
+        n -= length
+    return None
+
+
+class LongRange(unittest.TestCase):
+    """The moving dates are computed, so they must be right for every year, not only a sample."""
+
+    def test_three_independent_easter_algorithms_agree_from_1583_to_2400(self):
+        for year in range(1583, 2401):
+            e = se.easter_date(year)
+            self.assertEqual(e, gauss_easter(year), year)
+            self.assertEqual(e, oudin_easter(year), year)
+
+    def test_known_easter_dates_across_the_range(self):
+        known = {2000: D(2000, 4, 23), 2008: D(2008, 3, 23), 2011: D(2011, 4, 24), 2019: D(2019, 4, 21),
+                 2038: D(2038, 4, 25), 2049: D(2049, 4, 18), 2057: D(2057, 4, 22), 2078: D(2078, 4, 3),
+                 2099: D(2099, 4, 12)}
+        for year, expected in known.items():
+            self.assertEqual(se.easter_date(year), expected, year)
+
+    def test_easter_stays_inside_its_legal_range_to_2099(self):
+        for year in range(2025, 2100):
+            e = se.easter_date(year)
+            self.assertGreaterEqual(e, D(year, 3, 22))
+            self.assertLessEqual(e, D(year, 4, 25))
+            self.assertEqual(e.weekday(), 6)
+
+    def test_fourth_saturday_of_july_matches_zeller_for_every_year_to_2200(self):
+        for year in range(1900, 2201):
+            self.assertEqual(se.nth_weekday(year, 7, 5, 4).day, zeller_saturdays_of_july(year)[3], year)
+
+    def test_programmers_day_matches_hand_counted_months_for_every_year_to_2200(self):
+        for year in range(1900, 2201):
+            self.assertEqual(se.day_of_year(year, 256), own_day_of_year(year, 256), year)
+
+    def test_every_season_window_has_the_right_length_every_year_to_2099(self):
+        expected = {"halloween": 10, "christmas": 53, "birthday": 1, "new-year": 2,
+                    "easter": 7, "cowboy-day": 7, "programmers-day": 3}
+        c = cfg()
+        for year in range(2026, 2100):
+            for sid, start, end in se.windows_of_year(c, year):
+                with self.subTest("%s %d" % (sid, year)):
+                    self.assertEqual((end - start).days + 1, expected[sid])
+
+    def test_no_two_windows_overlap_in_any_year_to_2099(self):
+        c = cfg()
+        for year in range(2026, 2100):
+            wins = se.windows_of_year(c, year)
+            for i, (a, s1, e1) in enumerate(wins):
+                for b, s2, e2 in wins[i + 1:]:
+                    self.assertTrue(e1 < s2 or e2 < s1, "%s and %s overlap in %d" % (a, b, year))
+
+    def oracle(self, day):
+        """What the owner asked for, written with the independent helpers above."""
+        md = (day.month, day.day)
+        if (10, 24) <= md <= (11, 2):
+            return "halloween"
+        if (11, 3) <= md <= (12, 25):
+            return "christmas"
+        if md == (12, 28):
+            return "birthday"
+        if md in ((12, 31), (1, 1)):
+            return "new-year"
+        if abs((day - oudin_easter(day.year)).days) <= 3:
+            return "easter"
+        sat = D(day.year, 7, zeller_saturdays_of_july(day.year)[3])
+        if abs((day - sat).days) <= 3:
+            return "cowboy-day"
+        if abs((day - own_day_of_year(day.year, 256)).days) <= 1:
+            return "programmers-day"
+        return None
+
+    def test_every_single_day_from_2026_to_2099_matches_the_owner_rules(self):
+        c = cfg()
+        day = D(2026, 1, 1)
+        while day <= D(2099, 12, 31):
+            got = se.active_season(day, c)
+            self.assertEqual(got["id"] if got else None, self.oracle(day), day.isoformat())
+            day += datetime.timedelta(days=1)
+
+
 if __name__ == "__main__":
     unittest.main()
