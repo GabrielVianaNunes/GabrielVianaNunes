@@ -231,10 +231,14 @@ class Christmas(Decor):
                       label="Christmas decoration: falling snow, trees, presents, lights and a cowboy in a Santa cap")
 
     def footer(self):
-        ground = snow_ground(200, 9, 22) + tree(24, 27) + gift(36, 27, RED, GOLD) + gift(160, 28, "#2f8f55", RED)
-        front = snow_layer(6, 18, 30, 9) + light_string(200, 0, 2, 8)
+        # the string of lights is drawn behind the rider, so it never covers the cap
+        ground = (snow_ground(200, 9, 22) + tree(24, 27) + gift(36, 27, RED, GOLD) + gift(160, 28, "#2f8f55", RED)
+                  + light_string(200, 0, 2, 8))
+        front = snow_layer(6, 18, 30, 9)
+        # the rider bobs 1 pixel up on every step, so it is moved 1 pixel down: the cap's top row then stays
+        # inside the 30 pixel footer in both frames of the animation
         return Layers(text="MERRY TRAILS", ground=ground, front=front, rider_extra=santa_and_bells(),
-                      css=CSS + snow_css(30))
+                      rider_dy=1, css=CSS + snow_css(30))
 
     POSTER_W, POSTER_H = 120, 156
 

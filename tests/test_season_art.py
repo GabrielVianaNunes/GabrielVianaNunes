@@ -134,6 +134,20 @@ class ChristmasDraft(unittest.TestCase):
         # the rider stands at y 22 in the 30 pixel high footer, so row -22 is the top row, row 0
         self.assertGreaterEqual(min(y for _, y in cap.px), -22)
 
+    def test_the_cap_stays_inside_the_footer_in_both_frames_of_the_bob_animation(self):
+        """The rider moves up 1 pixel on every other step (the bob keyframes), so check that frame too."""
+        import re as _re
+        css = ba.STYLE_COMMON
+        bob = int(_re.search(r"@keyframes bob\{0%\{transform:translateY\(0\)\}50%\{transform:translateY\((-?\d+)px\)", css).group(1))
+        dy = self.deco.footer().rider_dy
+        top = 22 + dy + min(y for _, y in self.xm.santa_cap().px) + bob       # topmost pixel row, raised frame
+        self.assertGreaterEqual(top, 0)
+        self.assertLessEqual(22 + dy, 23)                                     # and the hooves still stand on the ground
+
+    def test_the_default_footer_rider_does_not_move(self):
+        self.assertIn('translate(100 22)', ba.build_footer())
+        self.assertIn('translate(100 23)', ba.build_footer(self.deco))
+
     def test_the_cap_replaces_the_cowboy_hat_instead_of_sitting_on_it(self):
         common = ba.rider()[0]
         hat_pixels = {(x, y) for (x, y), c in common.px.items() if c == ba.INK and -22 <= y <= -20 and 4 <= x <= 10}

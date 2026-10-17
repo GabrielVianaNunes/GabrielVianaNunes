@@ -502,7 +502,8 @@ def build_footer(deco=None):
         body.append(L.ground)
     if L and L.sky:
         body.append(L.sky)
-    body.append(f'<g transform="translate(100 22)">{rider_group("ride", L.rider_extra if L else "")}</g>')
+    dy = L.rider_dy if L else 0
+    body.append(f'<g transform="translate(100 {22 + dy})">{rider_group("ride", L.rider_extra if L else "")}</g>')
     if L and L.front:
         body.append(L.front)
     style = STYLE_COMMON + """

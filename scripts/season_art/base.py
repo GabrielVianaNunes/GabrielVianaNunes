@@ -19,12 +19,13 @@ class Layers:
     label        extra sentence for the accessible description
     draw         a callable that receives the poster's Grid, to add pixels to it
     headwear     a callable (r, p, cx) that replaces the cowboy hat in the poster's portrait
+    rider_dy     pixels to move the footer rider down, so that headwear is never clipped by the top edge
     width, height, scale, body  only for the strip asset
     """
 
     def __init__(self, **kw):
         defaults = dict(sun=None, sun_details=None, ground="", sky="", front="", rider_extra="",
-                        css="", text=None, label="", draw=None, headwear=None, width=0, height=0, scale=1, body="")
+                        css="", text=None, label="", draw=None, headwear=None, rider_dy=0, width=0, height=0, scale=1, body="")
         unknown = set(kw) - set(defaults)
         if unknown:
             raise TypeError("unknown layer fields: %s" % sorted(unknown))
