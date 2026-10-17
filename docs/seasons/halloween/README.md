@@ -11,7 +11,7 @@ Window: 24 Oct to 2 Nov (decided by the owner).
 | Banner | A big orange harvest moon with craters, three bats flying across with flapping wings, glowing jack o'lanterns (one large, four small) that flicker, two tombstones, low drifting fog, a cobweb in the top right corner, a spider that climbs up and down its thread, and a skeleton cowboy on a horse with a glowing eye and a pale ghostly trail |
 | Footer | "SPOOKY TRAILS" instead of "HAPPY TRAILS", two bats, two glowing pumpkins and the same skeleton rider |
 | Wanted poster | A cobweb in the top left corner, a spider on a thread, and a glowing jack o'lantern sitting on the corner of the portrait frame |
-| Strip above the 3D graph | A garland of orange, purple and bone colored flags with two glowing jack o'lanterns and a cobweb at each end |
+| Divider above "The town" | A garland of orange, purple and bone colored flags with two glowing lanterns and a cobweb at each end. It replaces the normal divider and has exactly its size, so the layout does not move. This is the "strip" of the design preview, made the same size as the divider and with small lanterns instead of pumpkins |
 
 What does not change: the name and role text, the cowboy portrait, the dusk sky, the colors of the rest of the page and the layout.
 
@@ -19,7 +19,7 @@ What does not change: the name and role text, the cowboy portrait, the dusk sky,
 
 | File | What |
 |---|---|
-| `banner.svg`, `footer.svg`, `wanted.svg`, `strip.svg` | The decorated assets |
+| `banner.svg`, `footer.svg`, `wanted.svg`, `strip.svg` | The decorated assets (the strip becomes `divider-town.svg` on `output`) |
 | `default/` | The default banner, footer and poster, for comparison |
 
 Regenerate with:
@@ -38,8 +38,8 @@ Open the SVGs in a browser, through an `img` tag, so the animation runs.
 
 ## Approval
 
-- [ ] Owner reviewed the preview
-- [ ] Owner commented "approved" on issue 45, or asked for changes
-- [ ] Window confirmed: 24 Oct to 2 Nov
+- [x] Owner reviewed the preview
+- [x] Owner approved on issue 45
+- [x] Window confirmed: 24 Oct to 2 Nov
 
-After the approval the build issue wires the season to the calendar engine and the daily workflow.
+Built in issue 46: the season is wired to the calendar engine and to the daily workflow `Seasonal assets`.

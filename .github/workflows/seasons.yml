@@ -1,0 +1,66 @@
+name: Seasonal assets
+
+# Decides today's season in America/Sao_Paulo, builds the banner, footer, wanted poster and the divider
+# above the 3D graph (decorated on special dates, the normal look otherwise) and publishes them to the
+# output branch. Tests and the build must pass before anything is published, so a failure leaves the
+# previous good files in place.
+on:
+  schedule:
+    - cron: "5 3 * * *"   # daily at 03:05 UTC, which is 00:05 in America/Sao_Paulo
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Branch to publish to. Use output-preview to try a season without touching the live files."
+        type: choice
+        default: output
+        options:
+          - output
+          - output-preview
+      season:
+        description: "Force a season id (for example halloween) to preview it. Leave empty to use today's date."
+        type: string
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-readme-assets
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TARGET: ${{ inputs.target || 'output' }}
+      SEASON: ${{ inputs.season || '' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Run the tests
+        run: python -m unittest discover -s tests
+
+      - name: Build the assets of the season
+        run: python scripts/build_seasonal.py --out "$RUNNER_TEMP/site" ${SEASON:+--season "$SEASON"}
+
+      - name: Publish to the target branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$TARGET" || true
+          if git show-ref --verify --quiet "refs/remotes/origin/$TARGET"; then
+            git checkout -q -f -B "$TARGET" "origin/$TARGET"
+          else
+            git checkout -q -f --orphan "$TARGET"
+            git rm -rfq . || true
+          fi
+          for f in banner.svg footer.svg wanted.svg divider-town.svg; do
+            cp "$RUNNER_TEMP/site/$f" "$f"
+          done
+          git add banner.svg footer.svg wanted.svg divider-town.svg
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: update seasonal assets"
+          git push origin "$TARGET"

@@ -186,11 +186,12 @@ class Halloween(Decor):
         return Layers(draw=draw, front=front, css=SELF_CSS)
 
     def strip(self):
+        """Replaces the divider above the 3D graph, so it has exactly the divider's size (160 by 10)."""
         g = Grid()
-        w = 168
+        w = 160
         pts = []
         for x in range(w):
-            y = 1 + int(round(3 * math.sin(math.pi * x / (w - 1))))
+            y = 1 + int(round(2 * math.sin(math.pi * x / (w - 1))))
             g.set(x, y, "#3b2414")
             pts.append((x, y))
         colors = ["#f28a1f", "#8e5bc0", "#e8e0d0"]
@@ -200,17 +201,19 @@ class Halloween(Decor):
             c = colors[n % 3]
             n += 1
             for r, width in enumerate((5, 3, 1)):
-                g.rect(x - width // 2 + 2 - 2, y + r, width, 1, c)
+                g.rect(x - width // 2, y + r, width, 1, c)
         lights = ""
         for x in (w // 4, 3 * w // 4):
-            body, face = pumpkin(x, pts[x][1] + 8)
-            g.px.update(body.px)
-            lights += '<g class="flk">%s</g>' % face.paths()
-        wl = web(0, 0, 1, 1, 12, "#8d8da0")
-        wr = web(w - 1, 0, -1, 1, 12, "#8d8da0")
+            y = pts[x][1] + 1
+            g.rect(x - 1, y, 3, 3, "#f28a1f")        # a small lantern hanging from the string
+            glow = Grid()
+            glow.set(x, y + 1, GLOW)
+            lights += '<g class="flk">%s</g>' % glow.paths()
+        wl = web(0, 0, 1, 1, 9, "#8d8da0")
+        wr = web(w - 1, 0, -1, 1, 9, "#8d8da0")
         body = g.paths() + lights + wl.paths() + wr.paths()
-        return Layers(width=w, height=13, scale=5, body=body, css=SELF_CSS,
-                      label="Halloween garland with flags, jack o'lanterns and cobwebs")
+        return Layers(width=w, height=10, scale=5, body=body, css=SELF_CSS,
+                      label="Halloween garland with flags, lanterns and cobwebs")
 
 
 DECOR = Halloween()

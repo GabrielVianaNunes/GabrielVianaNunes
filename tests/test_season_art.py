@@ -35,11 +35,8 @@ class DefaultLookIsUntouched(unittest.TestCase):
     def test_poster(self):
         self.assertEqual(ba.build_wanted(), committed("wanted.svg"))
 
-    def test_strip_is_empty_without_a_season(self):
-        svg = ba.build_strip(None)
-        root = parse(svg)
-        self.assertEqual(root.get("viewBox"), "0 0 1 1")
-        self.assertEqual(len(list(root.iter("{http://www.w3.org/2000/svg}path"))), 0)
+    def test_the_town_divider_is_the_normal_divider_without_a_season(self):
+        self.assertEqual(ba.build_strip(None), committed("divider.svg"))
 
     def test_a_season_with_no_layers_changes_nothing(self):
         class Quiet(season_art.Decor):
@@ -87,7 +84,7 @@ class HalloweenAssets(unittest.TestCase):
         self.assertNotEqual(self.svgs["banner"], committed("banner.svg"))
         self.assertNotEqual(self.svgs["footer"], committed("footer-dusk.svg"))
         self.assertNotEqual(self.svgs["poster"], committed("wanted.svg"))
-        self.assertGreater(len(self.svgs["strip"]), 200)
+        self.assertNotEqual(self.svgs["strip"], committed("divider.svg"))
 
     def test_the_banner_keeps_its_name_and_role_text(self):
         # the decoration must not cover the identity: the title paths are the same in both versions
@@ -108,10 +105,10 @@ class HalloweenAssets(unittest.TestCase):
         self.assertIn("#ffa63d", b)              # the harvest moon and the glowing horse eye
         self.assertIn("#f3ead2", b)              # the skull of the skeleton rider
 
-    def test_the_strip_has_the_expected_size(self):
-        root = parse(self.svgs["strip"])
-        self.assertEqual(root.get("width"), "840")
-        self.assertEqual(root.get("viewBox"), "0 0 168 13")
+    def test_the_strip_has_exactly_the_size_of_the_divider_it_replaces(self):
+        strip, divider = parse(self.svgs["strip"]), parse(committed("divider.svg"))
+        for attr in ("width", "height", "viewBox"):
+            self.assertEqual(strip.get(attr), divider.get(attr))
 
     def test_deterministic(self):
         d = season_art.get("halloween")
