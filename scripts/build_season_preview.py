@@ -28,7 +28,7 @@ def main(argv=None):
     ap.add_argument("season")
     ap.add_argument("--out", required=True)
     args = ap.parse_args(argv)
-    deco = season_art.get(args.season)
+    deco = season_art.get(args.season, drafts=True)
     if deco is None:
         print("error: no art for season %r" % args.season, file=sys.stderr)
         return 1

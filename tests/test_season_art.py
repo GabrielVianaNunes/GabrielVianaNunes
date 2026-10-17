@@ -49,8 +49,13 @@ class DefaultLookIsUntouched(unittest.TestCase):
 class Registry(unittest.TestCase):
     def test_known_and_unknown_seasons(self):
         self.assertEqual(season_art.get("halloween").id, "halloween")
-        self.assertEqual(season_art.get("christmas").id, "christmas")
         self.assertIsNone(season_art.get("easter"))
+        self.assertIsNone(season_art.get("easter", drafts=True))
+
+    def test_a_draft_can_be_previewed_but_is_never_live(self):
+        self.assertIsNone(season_art.get("christmas"))                       # not approved yet
+        self.assertEqual(season_art.get("christmas", drafts=True).id, "christmas")
+        self.assertFalse(set(season_art.MODULES) & set(season_art.DRAFT_MODULES))
         self.assertIsNone(season_art.get("nope"))
 
     def test_layers_reject_unknown_fields(self):
