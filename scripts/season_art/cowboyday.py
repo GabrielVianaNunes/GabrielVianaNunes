@@ -159,6 +159,7 @@ SELF_CSS = COMMON_CSS + REDUCED
 
 
 class CowboyDay(Decor):
+    status = "approved"
     id = "cowboy-day"
     name = "National Day of the Cowboy"
 
