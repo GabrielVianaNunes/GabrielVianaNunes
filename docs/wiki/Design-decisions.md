@@ -30,3 +30,55 @@ Protecting `main` with required pull requests blocks workflow pushes, and GitHub
 ## Quotes
 
 Only encouraging or humorous lines, with attribution that is widely credited. Anonymous sayings are labelled as such.
+
+## Western town 3D: data and mapping rules
+
+Decided in issue 1 (spike), from the real contribution calendar.
+
+### What the data looks like
+
+Measured on 2026-10-15 for the last year:
+
+| Fact | Value |
+|---|---|
+| Weeks returned by `contributionCalendar` | 53 (the last one is partial, 5 days) |
+| Weeks with zero contributions | 36 of 53 |
+| Busiest week | 238 |
+| Median of the non empty weeks | 39 |
+| Busiest single day | 84 |
+| Daily levels available | `NONE`, `FIRST` to `FOURTH_QUARTILE` |
+
+Consequences:
+
+- The distribution is very skewed, so a linear height scale would make one tower and many invisible shacks.
+- Most weeks are empty, so "empty" must look good on purpose.
+- The calendar only has counts and dates. It carries no repository names, so private work never leaks.
+
+### Decisions
+
+1. **Unit:** one lot per week, oldest on the left, newest on the right. 53 lots.
+2. **Height:** based on the quartiles of the non empty weeks, not on the maximum. This keeps a good mix of heights every year.
+3. **Empty weeks:** an empty lot with a cactus or a hitching post. Never a gap.
+4. **Types:** decided by height, with a stable rotation by week position so the street does not change shape from day to day. Sheriff office and bank are unique, churches at most two.
+5. **Landmarks:** the busiest week gets the water tower, and the current week gets a lit window.
+
+### Mapping table
+
+| Week total | Floors | Building |
+|---|---|---|
+| 0 | 0 | Empty lot with a cactus or hitching post |
+| 1 up to the 25th percentile | 1 | Cabin (most common), barn, stable or shack (rotates by week position) |
+| up to the 50th percentile | 2 | Townhouse, saloon, general store or blacksmith |
+| up to the 75th percentile | 3 | Hotel, with at most 2 churches and only 1 sheriff office |
+| above the 75th percentile | 4 | Grand hotel, with only 1 bank |
+
+Old western houses are homes, so they live in the quiet and moderate tiers and never replace the hotel, church, sheriff office or bank.
+
+Unique buildings: sheriff office 1, bank 1, church up to 2, water tower 1. See `docs/town/DESIGN.md` for where each one is placed.
+
+Percentiles are computed from the non empty weeks only. With today's data they are about 10, 39 and 73.
+
+### Risks, resolved in the fetch issue
+
+- **Private contributions and the Action token: not a problem.** With a real run on 2026-10-17 the API total for the owner (988) was identical to the total of the public contribution graph that an anonymous visitor sees (988). The profile setting that shows private activity as anonymous counts is on, so any viewer, including the built in `GITHUB_TOKEN`, sees the same numbers. No personal access token is needed.
+- **Partial weeks:** the first and last weeks are partial. Both are kept, since showing the current week is the point.

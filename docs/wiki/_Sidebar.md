@@ -4,8 +4,10 @@
 - [Architecture](Architecture)
 - [Design decisions](Design-decisions)
 - [Western town 3D roadmap](Roadmap)
+- [Western town design](Town-design)
 - [Security and privacy](Security)
 - [Git flow](Git-flow)
+- [Lessons learned](Lessons-learned)
 - [Regenerating assets](Regenerating-assets)
 
 **Links**
