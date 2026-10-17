@@ -129,6 +129,32 @@ class BirthdayDays(unittest.TestCase):
             self.assertIn("translate(100 24)", footer)
 
 
+class NewYearDays(unittest.TestCase):
+    def build(self, day):
+        d = tempfile.mkdtemp()
+        _, out, _ = run("--out", d, "--date", day)
+        return out.splitlines()[0].split(": ", 1)[1], d
+
+    def test_only_the_31st_and_the_1st_have_the_new_year_decoration(self):
+        for day, expected in (("2026-12-30", False), ("2026-12-31", True), ("2027-01-01", True), ("2027-01-02", False)):
+            with self.subTest(day):
+                what, _ = self.build(day)
+                self.assertEqual(what == "new-year decoration", expected, what)
+
+    def test_the_number_of_the_year_comes_from_the_date_through_the_whole_build(self):
+        for day, year in (("2026-12-31", "2027"), ("2027-01-01", "2027"), ("2027-12-31", "2028"), ("2028-01-01", "2028")):
+            with self.subTest(day):
+                _, d = self.build(day)
+                self.assertIn("New Year decoration for " + year, read(d, "banner.svg"))
+                self.assertIn("Happy New Year " + year + " bunting", read(d, "divider-town.svg"))
+
+    def test_the_footer_says_happy_new_year_and_the_rider_is_lowered(self):
+        _, d = self.build("2026-12-31")
+        footer = read(d, "footer.svg")
+        self.assertIn("Happy new year", footer)
+        self.assertIn("translate(100 24)", footer)
+
+
 class Forcing(unittest.TestCase):
     def test_forcing_a_season_wins_over_the_date(self):
         with tempfile.TemporaryDirectory() as d:

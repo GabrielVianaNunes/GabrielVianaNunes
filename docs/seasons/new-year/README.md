@@ -35,12 +35,14 @@ python scripts/build_season_preview.py new-year --date 2026-12-31 --out docs/sea
 ## Rules followed
 
 - With no season the builders return exactly the current assets (a test checks it).
-- It is a draft: the daily build ignores it until the owner approves.
+- It was a draft until the owner approved it.
 - No scripts and no external references. Animation stops with reduced motion, and one frame of each firework stays visible.
 - Every file is under 150 KB.
 
 ## Approval
 
-- [ ] Owner reviewed the preview
-- [ ] Owner commented "approved" on issue 51, or asked for changes
-- [ ] Window confirmed: 31 Dec and 1 Jan
+- [x] Owner reviewed the preview
+- [x] Owner approved on issue 51
+- [x] Window confirmed: 31 Dec and 1 Jan
+
+Built in issue 52: registered as an approved season, with the number of the year calculated from the date.
