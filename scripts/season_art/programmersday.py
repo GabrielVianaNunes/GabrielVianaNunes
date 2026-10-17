@@ -135,6 +135,7 @@ SELF_CSS = CSS + REDUCED
 class ProgrammersDay(Decor):
     id = "programmers-day"
     name = "Programmers' Day"
+    status = "approved"
 
     def banner(self):
         sign, cursor = lit_sign(58, 58)

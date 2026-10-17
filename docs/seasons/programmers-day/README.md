@@ -1,4 +1,4 @@
-# Programmers' Day design (for approval)
+# Programmers' Day design (approved)
 
 Issue 58. The default western look stays. This only adds a night where the town goes online. The cowboy keeps his hat and the horse is untouched.
 
@@ -31,7 +31,7 @@ python scripts/build_season_preview.py programmers-day --out docs/seasons/progra
 ## Rules followed
 
 - With no season the builders return exactly the current assets (a test checks it).
-- It is a draft: the daily build ignores it until the owner approves (a test checks that too).
+- It is approved: the daily build uses it only inside its window (a test checks it).
 - The horse is untouched. Everything on the rider stays inside the footer in the raised frame of the bob animation.
 - Falling digits stay in the free areas and never cross the name, the role or the footer text.
 - No scripts and no external references, all animation stops with reduced motion.
@@ -39,6 +39,6 @@ python scripts/build_season_preview.py programmers-day --out docs/seasons/progra
 
 ## Approval
 
-- [ ] Owner reviewed the preview
-- [ ] Owner commented "approved" on issue 58, or asked for changes
-- [ ] Window confirmed: day 256 with 1 day either side
+- [x] Owner reviewed the preview
+- [x] Owner commented "approved" on issue 58, or asked for changes
+- [x] Window confirmed: day 256 with 1 day either side

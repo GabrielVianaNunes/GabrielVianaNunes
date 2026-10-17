@@ -19,15 +19,17 @@ def committed(name):
         return f.read().replace("\r\n", "\n")
 
 
-class ProgrammersDayDraft(unittest.TestCase):
+class ProgrammersDay(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.deco = season_art.get("programmers-day", drafts=True)
 
-    def test_it_is_a_draft_until_approved_and_the_build_ignores_it(self):
-        self.assertEqual(self.deco.status, "draft")
-        self.assertIsNone(season_art.get("programmers-day"))
+    def test_it_is_an_approved_season_now_and_builds_inside_its_window(self):
+        self.assertEqual(self.deco.status, "approved")
         files, deco = bs.build("programmers-day", datetime.date(2027, 9, 13))
+        self.assertIsNotNone(deco)
+        self.assertNotEqual(files["banner.svg"], committed("banner.svg"))
+        files, deco = bs.build(None, datetime.date(2027, 9, 15))
         self.assertIsNone(deco)
         self.assertEqual(files["banner.svg"], committed("banner.svg"))
 

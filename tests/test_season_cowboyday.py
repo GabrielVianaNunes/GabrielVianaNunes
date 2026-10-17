@@ -26,12 +26,12 @@ class CowboyDayDraft(unittest.TestCase):
     def setUpClass(cls):
         cls.deco = season_art.get("cowboy-day", drafts=True)
 
-    def test_it_is_a_draft_until_approved_and_the_build_ignores_it(self):
-        self.assertEqual(self.deco.status, "draft")
-        self.assertIsNone(season_art.get("cowboy-day"))
+    def test_it_is_an_approved_season_now(self):
+        self.assertEqual(self.deco.status, "approved")
+        self.assertEqual(season_art.get("cowboy-day").id, "cowboy-day")
         files, deco = bs.build("cowboy-day", datetime.date(2027, 7, 24))
-        self.assertIsNone(deco)
-        self.assertEqual(files["banner.svg"], committed("banner.svg"))
+        self.assertIsNotNone(deco)
+        self.assertNotEqual(files["banner.svg"], committed("banner.svg"))
 
     def test_the_cowboy_keeps_his_hat_the_gold_band_only_recolors_part_of_it(self):
         common = ba.rider()[0]
@@ -105,6 +105,45 @@ class CowboyDayDraft(unittest.TestCase):
             self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
             self.assertIsNone(re.search(r"<script|<image|https?://(?!www\.w3\.org)", svg))
             self.assertIn("prefers-reduced-motion", svg)
+
+
+class CowboyDayWindowsThroughTheWholeBuild(unittest.TestCase):
+    """The decoration follows the 4th Saturday of July, which moves every year."""
+
+    @staticmethod
+    def fourth_saturday(year):
+        first = datetime.date(year, 7, 1)
+        return first + datetime.timedelta(days=(5 - first.weekday()) % 7 + 21)
+
+    @staticmethod
+    def decorated_as(day):
+        import seasons
+        sid = bs.choose(seasons.load_config(), "", day)
+        files, deco = bs.build(sid, day)
+        return sid, deco is not None
+
+    def test_the_window_is_three_days_either_side_of_the_fourth_saturday_for_many_years(self):
+        for year in list(range(2026, 2041)) + [2050, 2077, 2099]:
+            saturday = self.fourth_saturday(year)
+            for offset in range(-5, 6):
+                day = saturday + datetime.timedelta(days=offset)
+                sid, art = self.decorated_as(day)
+                with self.subTest("%d %+d" % (year, offset)):
+                    if -3 <= offset <= 3:
+                        self.assertEqual((sid, art), ("cowboy-day", True))
+                    else:
+                        self.assertNotEqual(sid, "cowboy-day")
+
+    def test_the_window_of_2027_is_21_to_27_july(self):
+        self.assertIsNone(self.decorated_as(datetime.date(2027, 7, 20))[0])
+        for d in range(21, 28):
+            self.assertEqual(self.decorated_as(datetime.date(2027, 7, d)), ("cowboy-day", True))
+        self.assertIsNone(self.decorated_as(datetime.date(2027, 7, 28))[0])
+
+    def test_the_footer_through_the_whole_build_says_happy_cowboy_day(self):
+        files, _ = bs.build("cowboy-day", datetime.date(2027, 7, 24))
+        self.assertIn("Happy cowboy day", files["footer.svg"])
+        self.assertIn("translate(100 24)", files["footer.svg"])
 
 
 if __name__ == "__main__":

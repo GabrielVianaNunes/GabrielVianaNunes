@@ -5,6 +5,7 @@ import os
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
@@ -43,10 +44,10 @@ class DefaultDays(unittest.TestCase):
             self.assertEqual(read(d, "divider-town.svg"), committed("divider.svg"))
 
     def test_an_active_season_without_art_still_gives_the_default_look(self):
-        with tempfile.TemporaryDirectory() as d:
-            code, out, _ = run("--out", d, "--date", "2027-07-24")      # National Day of the Cowboy has no art yet
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(bs.season_art, "get", return_value=None):
+            code, out, _ = run("--out", d, "--date", "2027-09-13")      # pretend Programmers' Day has no approved art
             self.assertEqual(code, 0)
-            self.assertIn("cowboy-day is active but has no art yet", out)
+            self.assertIn("programmers-day is active but has no art yet", out)
             self.assertEqual(read(d, "banner.svg"), committed("banner.svg"))
 
 
