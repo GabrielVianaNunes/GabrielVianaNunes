@@ -350,16 +350,19 @@ class EasterDraft(unittest.TestCase):
         self.assertIsNone(season_art.get("easter"))
 
     def test_the_bonnet_replaces_the_cowboy_hat_and_stays_inside_the_footer_in_the_raised_frame(self):
-        hat, ears, garland = self.ea.bonnet_and_ears()
+        hat, garland = self.ea.bonnet_and_garland()
         self.assertEqual(self.kit.covers_hat(hat.px, ba.rider()[0], ba.INK), set())
         dy = self.deco.footer().rider_dy
-        top = min(y for _, y in list(hat.px) + list(ears.px))
+        top = min(y for _, y in list(hat.px) + list(garland.px))
         self.assertGreaterEqual(22 + dy + top - 1, 0)                              # the raised frame of the bob animation
 
-    def test_the_horse_wears_long_bunny_ears(self):
-        _, ears, _ = self.ea.bonnet_and_ears()
-        self.assertEqual({x for x, _ in ears.px}, {15, 17})
-        self.assertEqual(max(y for _, y in ears.px) - min(y for _, y in ears.px), 4)    # five pixels tall
+    def test_the_horse_has_nothing_on_its_head_only_a_garland_on_its_neck(self):
+        """The owner asked for no bunny ears on the horse: nothing is drawn above the horse's head."""
+        hat, garland = self.ea.bonnet_and_garland()
+        head_zone = {(x, y) for x in range(14, 20) for y in range(-19, -13)}              # where the ears used to be
+        self.assertEqual(head_zone & set(garland.px), set())
+        self.assertEqual(head_zone & set(hat.px), set())
+        self.assertTrue(garland.px)                                                        # the neck garland stays
 
     def test_the_poster_portrait_gets_a_bonnet_instead_of_the_cowboy_hat(self):
         default, easter = ba.Grid(), ba.Grid()
