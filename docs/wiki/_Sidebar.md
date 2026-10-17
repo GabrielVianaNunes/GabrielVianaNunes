@@ -3,8 +3,6 @@
 - [Home](Home)
 - [Architecture](Architecture)
 - [Design decisions](Design-decisions)
-- [Western town 3D roadmap](Roadmap)
-- [Western town design](Town-design)
 - [Security and privacy](Security)
 - [Seasonal decorations](Seasonal-decorations)
 - [Git flow](Git-flow)

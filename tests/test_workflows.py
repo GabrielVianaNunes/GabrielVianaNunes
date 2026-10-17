@@ -57,20 +57,17 @@ class WorkflowRules(unittest.TestCase):
                     with self.subTest("%s:%d" % (os.path.basename(path), n)):
                         self.fail("expression inside a run script: " + stripped)
 
-    def test_the_town_workflow_publishes_only_to_allowed_branches(self):
-        text = read(os.path.join(ROOT, ".github", "workflows", "western-town.yml"))
-        self.assertIn("- output\n", text)
-        self.assertIn("- output-preview\n", text)
-        self.assertNotRegex(text, r"git push (origin )?(main|develop)")
+    def test_nothing_ever_pushes_to_main_or_develop(self):
+        for path in FILES:
+            with self.subTest(os.path.basename(path)):
+                self.assertNotRegex(read(path), r"git push (origin )?(main|develop)")
 
-    def test_the_town_workflow_tests_and_validates_before_publishing(self):
-        text = read(os.path.join(ROOT, ".github", "workflows", "western-town.yml"))
-        order = [text.index(s) for s in ("unittest", "fetch_contributions.py", "build_town.py", "git push")]
-        self.assertEqual(order, sorted(order))
-
-    def test_the_token_is_only_given_to_the_fetch_step(self):
-        text = read(os.path.join(ROOT, ".github", "workflows", "western-town.yml"))
-        self.assertEqual(text.count("secrets.GITHUB_TOKEN"), 1)
+    def test_workflows_only_publish_to_the_output_branch(self):
+        for path in FILES:
+            for line in read(path).splitlines():
+                if "git push" in line:
+                    with self.subTest(os.path.basename(path) + " " + line.strip()):
+                        self.assertRegex(line.strip(), r"^git push origin output$")
 
 
 if __name__ == "__main__":

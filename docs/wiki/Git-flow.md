@@ -21,7 +21,7 @@ feature/name  ->  pull request to develop  ->  pull request from develop to main
 
 ## Long running work
 
-Larger pieces of work, like the western town, are built in small feature branches that merge into `develop`. They only go to `main` (and to `output`) when the whole thing is complete and verified. Until then the profile does not change.
+Larger pieces of work are built in small feature branches that merge into `develop`. They only go to `main` (and to `output`) when the whole thing is complete and verified. Until then the profile does not change.
 
 ## Stacked work
 

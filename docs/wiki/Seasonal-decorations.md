@@ -26,14 +26,12 @@ For 2027 the moving dates are: Easter on 28 Mar (window 25 to 31 Mar), Cowboy Da
 
 A README is static, so it cannot know where the visitor is. Seasons are decided once a day in a fixed time zone and published as files. Everyone sees the same decoration, and it changes at midnight in Goiania. The daily workflow runs at 03:05 UTC, which is 00:05 in America/Sao_Paulo.
 
-This is different from the day and night look of the town, which follows the viewer's GitHub theme (light or dark) and does not depend on the clock. That behavior stays as it is.
-
 ## How it works
 
 ```
 data/seasons.json -> scripts/seasons.py (which season is active today)
                   -> season modules add decoration layers
-                  -> build_town / build_assets draw the default plus the layers
+                  -> build_assets draws the default plus the layers
                   -> daily workflow publishes to the output branch -> README
 ```
 
@@ -59,7 +57,7 @@ The birthday decoration makes the day and month of the birthday public. The year
 
 | Group | Issues |
 |---|---|
-| Infrastructure | 40 calendar engine, 41 town layers, 42 banner footer poster, 43 daily workflow, 44 previews and docs |
+| Infrastructure | 40 calendar engine, 41 layers for the banner, footer and poster, 42 strip above the 3D graph, 43 daily workflow, 44 previews and docs |
 | Halloween | 45 design, 46 build |
 | Christmas | 47 design, 48 build |
 | Birthday | 49 design, 50 build |
