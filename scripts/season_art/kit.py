@@ -49,6 +49,18 @@ def sprite(rows, colors, x, y_bottom):
     return g
 
 
+def outlined(grid, color="#1d1008"):
+    """The same sprite with a one pixel dark outline, so it stands out from ground of a similar color."""
+    out = Grid()
+    for (x, y) in list(grid.px):
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            q = (x + dx, y + dy)
+            if q not in grid.px:
+                out.set(q[0], q[1], color)
+    out.px.update(grid.px)
+    return out
+
+
 def text_layout(text, gap=4, width=160):
     """Where each flag of a bunting goes: ([(char, x)], total width). A flag is the letter plus one pixel of
     margin on each side, with one pixel between flags."""
@@ -65,7 +77,8 @@ def text_layout(text, gap=4, width=160):
 
 
 def bunting(text, flag_colors, text_color, width=160, gap=4, string=STRING):
-    """Flags with letters on a sagging string, sized for the 160 by 10 divider.
+    """Flags with letters on a sagging string, sized for the 160 by 10 divider. text_color may be one color or a
+    list that follows the flags, so red flags can carry white letters and white flags blue ones.
     Returns (grid, x of the first flag, x after the last flag, y of the string at each x)."""
     g = Grid()
     pts = []
@@ -74,17 +87,19 @@ def bunting(text, flag_colors, text_color, width=160, gap=4, string=STRING):
         g.set(x, y, string)
         pts.append((x, y))
     items, _ = text_layout(text, gap, width)
+    text_colors = list(text_color) if isinstance(text_color, (list, tuple)) else [text_color]
     for n, (ch, x) in enumerate(items):
         glyph = GLYPHS[ch]
         gw = len(glyph[0])
         top = pts[x + 1][1] + 1
         color = flag_colors[n % len(flag_colors)]
+        letter = text_colors[n % len(text_colors)]
         g.rect(x, top, gw + 2, 7, color)
         g.set(x + (gw + 2) // 2, top + 7, color)               # the pennant tip
         for r, row in enumerate(glyph):
             for c, bit in enumerate(row):
                 if bit == "1":
-                    g.set(x + 1 + c, top + 1 + r, text_color)
+                    g.set(x + 1 + c, top + 1 + r, letter)
     first = items[0][1]
     last = items[-1][1] + len(GLYPHS[items[-1][0]][0]) + 2
     return g, first, last, pts
