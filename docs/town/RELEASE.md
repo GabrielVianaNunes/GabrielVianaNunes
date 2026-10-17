@@ -40,9 +40,9 @@ Open the two raw files in a browser and check:
 2. Mark the draft pull request "Show the western town in the profile" as ready, merge it into `develop`, then release `develop` into `main`.
 3. Refresh the profile on desktop and on a phone, in light and in dark mode. Give GitHub a few minutes if an old image is cached.
 
-### 5. After a week
+### 5. The classic graph stays
 
-If the daily workflow succeeded every day, do the cleanup issue: delete the old 3D workflow and the `profile-3d-contrib` folder on `output`.
+The owner decided to keep both views: the western town on top and the classic 3D graph inside a collapsed section. The old 3D workflow keeps running and is not removed.
 
 ## If something goes wrong
 
