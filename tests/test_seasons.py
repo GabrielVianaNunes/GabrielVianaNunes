@@ -99,18 +99,14 @@ class OwnerWindows(unittest.TestCase):
         self.assertEqual(on(D(2027, 3, 31)), "easter")
         self.assertIsNone(on(D(2027, 4, 1)))
 
-    def test_cowboy_day_week(self):
-        self.assertIsNone(on(D(2027, 7, 20)))
-        self.assertEqual(on(D(2027, 7, 21)), "cowboy-day")
-        self.assertEqual(on(D(2027, 7, 24)), "cowboy-day")
-        self.assertEqual(on(D(2027, 7, 27)), "cowboy-day")
-        self.assertIsNone(on(D(2027, 7, 28)))
+    def test_cowboy_day_is_one_day(self):
+        self.assertEqual([on(D(2027, 7, d)) for d in (23, 24, 25)], [None, "cowboy-day", None])
 
     def test_programmers_day_follows_the_leap_year(self):
         self.assertEqual([on(D(2027, 9, d)) for d in (11, 12, 13, 14, 15)],
-                         [None, "programmers-day", "programmers-day", "programmers-day", None])
+                         [None, None, "programmers-day", None, None])
         self.assertEqual([on(D(2028, 9, d)) for d in (10, 11, 12, 13, 14)],
-                         [None, "programmers-day", "programmers-day", "programmers-day", None])
+                         [None, None, "programmers-day", None, None])
 
     def test_every_day_of_several_years_resolves_without_error(self):
         day = D(2024, 1, 1)
@@ -209,7 +205,7 @@ class Cli(unittest.TestCase):
         code, out = self.run_cli("--year", "2027")
         self.assertEqual(code, 0)
         self.assertIn("easter           2027-03-25 to 2027-03-31", out)
-        self.assertIn("cowboy-day       2027-07-21 to 2027-07-27", out)
+        self.assertIn("cowboy-day       2027-07-24 to 2027-07-24", out)
 
     def test_bad_input_is_an_error_not_a_crash(self):
         import io
@@ -308,7 +304,7 @@ class LongRange(unittest.TestCase):
 
     def test_every_season_window_has_the_right_length_every_year_to_2099(self):
         expected = {"halloween": 10, "christmas": 53, "birthday": 1, "new-year": 2,
-                    "easter": 7, "cowboy-day": 7, "programmers-day": 3}
+                    "easter": 7, "cowboy-day": 1, "programmers-day": 1}
         c = cfg()
         for year in range(2026, 2100):
             for sid, start, end in se.windows_of_year(c, year):
@@ -337,9 +333,9 @@ class LongRange(unittest.TestCase):
         if abs((day - oudin_easter(day.year)).days) <= 3:
             return "easter"
         sat = D(day.year, 7, zeller_saturdays_of_july(day.year)[3])
-        if abs((day - sat).days) <= 3:
+        if day == sat:
             return "cowboy-day"
-        if abs((day - own_day_of_year(day.year, 256)).days) <= 1:
+        if day == own_day_of_year(day.year, 256):
             return "programmers-day"
         return None
 
