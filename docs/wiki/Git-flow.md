@@ -23,6 +23,10 @@ feature/name  ->  pull request to develop  ->  pull request from develop to main
 
 Larger pieces of work, like the western town, are built in small feature branches that merge into `develop`. They only go to `main` (and to `output`) when the whole thing is complete and verified. Until then the profile does not change.
 
+## Stacked work
+
+When one piece needs the previous one, branch from it but still open the pull request against `develop`, and merge oldest first. Never target another feature branch: the cleanup workflow deletes that branch after its merge and GitHub does not retarget the pull request, which then gets stuck.
+
 ## Branch cleanup
 
 The workflow `delete-merged-branch.yml` deletes the head branch of a merged pull request when it starts with `feature/`, `hotfix/` or `bugfix/`. `develop`, `main` and `output` are never deleted.

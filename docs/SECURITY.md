@@ -39,6 +39,23 @@ The fetch step (issue 3) must follow these rules:
 | Least privilege `permissions` in workflows | `contents: write` only where a branch is pushed |
 | Untrusted values in shell | Passed through `env`, never interpolated into the script |
 
+## Guarded by tests
+
+The rules above are enforced by `tests/test_workflows.py`, which fails the build if:
+
+- any action is not pinned to a full commit SHA
+- a workflow uses `pull_request_target` or `workflow_run`
+- permissions are missing or broader than needed
+- an expression such as event data or an input is placed inside a shell script instead of an environment variable
+- the town workflow could push to `main` or `develop`, or publish before the tests, fetch and build have run
+- the token is given to any step other than the fetch step
+
+The fetch script has its own tests: it rejects out of range values, extra keys and non consecutive weeks, never includes the token or the response body in an error, and keeps the previous file on failure.
+
+## Safe testing before release
+
+The town workflow has a manual target `output-preview`. It publishes to a separate branch, so the live files are never touched while testing. Any failing step stops the run before anything is published.
+
 ## Visitor privacy
 
 Images are served through GitHub's image proxy, so third party services such as the visit counter only see the proxy and not the visitor's address or browser.
