@@ -58,7 +58,7 @@ Every step must succeed before anything is published, so a failure keeps the pre
 | Tests | Pull requests and pushes | `python -m unittest discover -s tests`, read only |
 | Western town | Daily 18:30 UTC, manual | Fetch, build and publish the town |
 | Weekly quote | Mondays 12:00 UTC, manual | Quote card to `output` |
-| Profile 3D contributions | Daily 18:00 UTC | Old graph, to be removed after the town runs for a week |
+| Profile 3D contributions | Daily 18:00 UTC | The classic graph, kept and shown in a collapsed section under the town |
 | Delete merged branch | Merged pull request | Deletes `feature/`, `hotfix/` and `bugfix/` branches |
 
 All third party actions are pinned to full commit SHAs and updated by Dependabot.

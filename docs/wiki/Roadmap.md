@@ -2,7 +2,7 @@
 
 Goal: replace the generic 3D contribution graph with a pixel art western town built from real contributions.
 
-Budget: about 2 to 3 hours per week, due 31 Dec 2026. The work was finished ahead of the plan and is waiting for review and release.
+Budget: about 2 to 3 hours per week, due 31 Dec 2026. The work was finished ahead of the plan and released. Only the README switch is still to be merged.
 
 ## Status
 
@@ -10,19 +10,19 @@ Budget: about 2 to 3 hours per week, due 31 Dec 2026. The work was finished ahea
 |---|---|---|---|
 | 19 Oct | 1. Spike: contribution data and mapping rules | 1 h | Done |
 | 26 Oct | 2. Design the town: palette, building set and sizes | 3 h | Done |
-| 2 Nov | 3. Fetch the contribution calendar through GraphQL | 2 h | Built, in review |
-| 9 Nov | 4. Layout engine: weeks to street plan | 3 h | Built, in review |
-| 16 Nov | 5. Draw the building sprites | 4 h | Built, in review |
-| 23 Nov | 6. Render the street as one SVG | 4 h | Built, in review |
-| 30 Nov | 7. Ambient animations | 3 h | Built, in review (same pull request as 6) |
-| 7 Dec | 8. Workflow: daily build, publish to output | 1 h | Built, in review |
-| 14 Dec | 9. README integration and fallback | 1 h | Draft pull request, merge last |
-| 21 Dec | 10. Documentation and wiki | 2 h | Built, in review |
-| After release plus a week | Retire the old 3D workflow | 0.5 h | Waiting |
+| 2 Nov | 3. Fetch the contribution calendar through GraphQL | 2 h | Done |
+| 9 Nov | 4. Layout engine: weeks to street plan | 3 h | Done |
+| 16 Nov | 5. Draw the building sprites | 4 h | Done |
+| 23 Nov | 6. Render the street as one SVG | 4 h | Done |
+| 30 Nov | 7. Ambient animations | 3 h | Done |
+| 7 Dec | 8. Workflow: daily build, publish to output | 1 h | Done |
+| 14 Dec | 9. README integration and fallback | 1 h | Ready, waiting to be merged |
+| 21 Dec | 10. Documentation and wiki | 2 h | Done |
+| Not planned | Retire the old 3D workflow | | Cancelled: the owner keeps both views |
 
 ## How it ships
 
-The town stays on `develop` until it is verified, then follows `docs/town/RELEASE.md`: release the code, try the workflow with `output-preview`, check the result, go live, and remove the old graph a week later.
+The town stayed on `develop` until it was verified, then followed `docs/town/RELEASE.md`: release the code, try the workflow with `output-preview`, check the result, go live. The classic graph stays under the town, collapsed.
 
 ## What the fallback means
 
