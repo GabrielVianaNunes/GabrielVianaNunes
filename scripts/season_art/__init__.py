@@ -6,6 +6,7 @@ from .base import Decor, Layers  # noqa: F401
 # season id (as in data/seasons.json) -> module name
 MODULES = {
     "halloween": "halloween",
+    "christmas": "christmas",
 }
 
 

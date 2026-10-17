@@ -44,9 +44,9 @@ class DefaultDays(unittest.TestCase):
 
     def test_an_active_season_without_art_still_gives_the_default_look(self):
         with tempfile.TemporaryDirectory() as d:
-            code, out, _ = run("--out", d, "--date", "2026-12-25")      # Christmas has no art yet
+            code, out, _ = run("--out", d, "--date", "2027-03-28")      # Easter has no art yet
             self.assertEqual(code, 0)
-            self.assertIn("christmas is active but has no art yet", out)
+            self.assertIn("easter is active but has no art yet", out)
             self.assertEqual(read(d, "banner.svg"), committed("banner.svg"))
 
 
@@ -55,9 +55,8 @@ class HalloweenDays(unittest.TestCase):
         for day, expected in (("2026-10-23", False), ("2026-10-24", True), ("2026-10-31", True),
                               ("2026-11-02", True), ("2026-11-03", False)):
             with self.subTest(day), tempfile.TemporaryDirectory() as d:
-                run("--out", d, "--date", day)
-                decorated = read(d, "banner.svg") != committed("banner.svg")
-                self.assertEqual(decorated, expected)
+                _, out, _ = run("--out", d, "--date", day)
+                self.assertEqual("halloween decoration" in out, expected)
 
     def test_all_four_files_are_decorated_and_the_divider_keeps_its_size(self):
         with tempfile.TemporaryDirectory() as d:

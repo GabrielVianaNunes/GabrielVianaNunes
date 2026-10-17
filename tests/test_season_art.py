@@ -49,7 +49,8 @@ class DefaultLookIsUntouched(unittest.TestCase):
 class Registry(unittest.TestCase):
     def test_known_and_unknown_seasons(self):
         self.assertEqual(season_art.get("halloween").id, "halloween")
-        self.assertIsNone(season_art.get("christmas"))
+        self.assertEqual(season_art.get("christmas").id, "christmas")
+        self.assertIsNone(season_art.get("easter"))
         self.assertIsNone(season_art.get("nope"))
 
     def test_layers_reject_unknown_fields(self):
