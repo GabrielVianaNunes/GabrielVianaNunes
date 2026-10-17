@@ -14,9 +14,9 @@ MODULES = {
     "halloween": "halloween",
     "christmas": "christmas",
     "birthday": "birthday",
+    "new-year": "newyear",
 }
 DRAFT_MODULES = {
-    "new-year": "newyear",
 }
 
 

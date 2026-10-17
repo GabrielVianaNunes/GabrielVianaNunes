@@ -255,8 +255,8 @@ class NewYearDraft(unittest.TestCase):
         cls.ny = ny
         cls.deco = season_art.get("new-year", drafts=True).with_date(datetime.date(2026, 12, 31))
 
-    def test_it_is_a_draft_until_approved(self):
-        self.assertIsNone(season_art.get("new-year"))
+    def test_it_is_an_approved_season_now(self):
+        self.assertEqual(season_art.get("new-year").id, "new-year")
         self.assertIsNotNone(season_art.get("new-year", drafts=True))
 
     def test_the_number_is_the_year_that_begins(self):
