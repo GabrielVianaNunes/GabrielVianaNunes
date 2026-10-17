@@ -31,13 +31,15 @@ python scripts/build_season_preview.py cowboy-day --out docs/seasons/cowboy-day
 ## Rules followed
 
 - With no season the builders return exactly the current assets (a test checks it).
-- It is a draft: the daily build ignores it until the owner approves (a test checks that too).
+- It was a draft until the owner approved it.
 - The horse is untouched. The lasso and everything on the rider stay inside the footer in the raised frame of the bob animation.
 - No scripts and no external references, all animation stops with reduced motion.
 - Every file is under 150 KB.
 
 ## Approval
 
-- [ ] Owner reviewed the preview
-- [ ] Owner commented "approved" on issue 57, or asked for changes
-- [ ] Window confirmed: the 4th Saturday of July with 3 days either side
+- [x] Owner reviewed the preview
+- [x] Owner approved on issue 57
+- [x] Window confirmed: the 4th Saturday of July with 3 days either side
+
+Built in issue 62: registered as an approved season, so the daily workflow publishes it in the 7 days around the 4th Saturday of July.
