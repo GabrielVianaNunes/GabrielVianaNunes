@@ -51,7 +51,7 @@ class Registry(unittest.TestCase):
     def test_known_and_unknown_seasons(self):
         self.assertEqual(season_art.get("halloween").id, "halloween")
         self.assertIsNone(season_art.get("easter"))
-        self.assertIsNone(season_art.get("easter", drafts=True))
+        self.assertIsNone(season_art.get("no-such-season", drafts=True))
 
     def test_a_draft_can_be_previewed_but_is_never_live(self):
         class Fake(season_art.Decor):                                   # stands in for a design waiting for approval
@@ -335,6 +335,75 @@ class NewYearDraft(unittest.TestCase):
         for svg in (ba.build_banner(self.deco), ba.build_footer(self.deco), ba.build_wanted(self.deco), ba.build_strip(self.deco)):
             parse(svg)
             self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
+
+
+class EasterDraft(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import season_art.easter as ea
+        import season_art.kit as kit
+        cls.ea, cls.kit = ea, kit
+        cls.deco = season_art.get("easter", drafts=True)
+
+    def test_it_is_a_draft_until_approved(self):
+        self.assertEqual(self.deco.status, "draft")
+        self.assertIsNone(season_art.get("easter"))
+
+    def test_the_bonnet_replaces_the_cowboy_hat_and_stays_inside_the_footer_in_the_raised_frame(self):
+        hat, ears, garland = self.ea.bonnet_and_ears()
+        self.assertEqual(self.kit.covers_hat(hat.px, ba.rider()[0], ba.INK), set())
+        dy = self.deco.footer().rider_dy
+        top = min(y for _, y in list(hat.px) + list(ears.px))
+        self.assertGreaterEqual(22 + dy + top - 1, 0)                              # the raised frame of the bob animation
+
+    def test_the_horse_wears_long_bunny_ears(self):
+        _, ears, _ = self.ea.bonnet_and_ears()
+        self.assertEqual({x for x, _ in ears.px}, {15, 17})
+        self.assertEqual(max(y for _, y in ears.px) - min(y for _, y in ears.px), 4)    # five pixels tall
+
+    def test_the_poster_portrait_gets_a_bonnet_instead_of_the_cowboy_hat(self):
+        default, easter = ba.Grid(), ba.Grid()
+        ba.draw_cowboy(default, 31, 35)
+        ba.draw_cowboy(easter, 31, 35, headwear=self.ea.bonnet_headwear)
+        tip = (31 + 29 - 19, 35 + 13)
+        self.assertEqual(default.px[tip], "#5a3a22")
+        self.assertNotEqual(easter.px[tip], "#5a3a22")
+
+    def test_the_poster_decorations_stay_clear_of_the_text(self):
+        for x, yb, base, accent, style in ((2, 118, self.ea.PINK, self.ea.LILAC, "stripe"), (3, 125, self.ea.BLUE, self.ea.YELLOW, "dots"),
+                                           (2, 132, self.ea.MINT, self.ea.PINK, "zig")):
+            self.assertLessEqual(max(px for px, _ in self.ea.egg(x, yb, base, accent, style).px), 8)      # the text starts at x 9
+        chick = self.ea.chick(82, 98).px
+        self.assertLess(max(y for _, y in chick), 101)                                  # the first line of text starts at y 101
+
+    def test_the_strip_has_the_size_of_the_divider_and_spells_the_greeting(self):
+        strip, divider = parse(ba.build_strip(self.deco)), parse(committed("divider.svg"))
+        for attr in ("width", "height", "viewBox"):
+            self.assertEqual(strip.get(attr), divider.get(attr))
+        items, total = self.kit.text_layout("HAPPY EASTER")
+        self.assertEqual(len(items), 11)
+        self.assertLessEqual(total, 150)
+
+    def test_every_glyph_used_exists_and_is_rectangular(self):
+        for ch in "HAPY EST R":
+            if ch != " ":
+                rows = self.kit.GLYPHS[ch]
+                self.assertEqual(len(rows), 5)
+                self.assertEqual(len({len(r) for r in rows}), 1)
+
+    def test_the_footer_says_happy_easter_and_everything_is_valid(self):
+        self.assertIn("Happy easter", ba.build_footer(self.deco))
+        for svg in (ba.build_banner(self.deco), ba.build_footer(self.deco), ba.build_wanted(self.deco), ba.build_strip(self.deco)):
+            parse(svg)
+            self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
+            self.assertIsNone(re.search(r"<script|<image|https?://(?!www\.w3\.org)", svg))
+
+    def test_it_never_goes_live_before_approval(self):
+        import tempfile
+        import build_seasonal as bs
+        files, deco = bs.build("easter", datetime.date(2027, 3, 28))
+        self.assertIsNone(deco)                                                         # the build ignores the draft
+        self.assertEqual(files["banner.svg"], committed("banner.svg"))
 
 
 if __name__ == "__main__":
