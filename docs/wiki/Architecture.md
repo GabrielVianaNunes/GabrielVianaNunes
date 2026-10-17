@@ -32,7 +32,7 @@ docs/wiki/            source of the wiki pages
 | `update_quote.py` | The quote of the week |
 | `seasons.py` | Which seasonal decoration is active on a date, with moving dates computed |
 | `build_seasonal.py` | Builds the four seasonal files for a date or a forced season |
-| `season_art/` | One module per season with its decoration (Halloween so far) |
+| `season_art/` | One module per season with its decoration. Seasons are found automatically, and each one has a status, `draft` until the owner approves the design and `approved` after, so nothing goes live by accident |
 | `build_season_preview.py` | Builds a season for review, with the default look next to it |
 
 ## Workflows

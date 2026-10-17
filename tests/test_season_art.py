@@ -54,13 +54,24 @@ class Registry(unittest.TestCase):
         self.assertIsNone(season_art.get("easter", drafts=True))
 
     def test_a_draft_can_be_previewed_but_is_never_live(self):
-        season_art.DRAFT_MODULES["draft-test"] = "christmas"            # stands in for a design waiting for approval
+        class Fake(season_art.Decor):                                   # stands in for a design waiting for approval
+            id = "draft-test"
+        season_art._load()["draft-test"] = Fake()
         try:
+            self.assertEqual(Fake.status, "draft")                              # the default is the safe one
             self.assertIsNone(season_art.get("draft-test"))                     # not approved: never built
-            self.assertEqual(season_art.get("draft-test", drafts=True).id, "christmas")
-            self.assertFalse(set(season_art.MODULES) & set(season_art.DRAFT_MODULES))
+            self.assertEqual(season_art.get("draft-test", drafts=True).id, "draft-test")
+            self.assertIn("draft-test", season_art.ids("draft"))
         finally:
-            del season_art.DRAFT_MODULES["draft-test"]
+            del season_art._load()["draft-test"]
+
+    def test_the_approved_seasons_are_exactly_the_ones_the_owner_approved(self):
+        self.assertEqual(season_art.ids("approved"), ["birthday", "christmas", "halloween", "new-year"])
+
+    def test_every_season_with_art_is_a_season_in_the_calendar(self):
+        import seasons
+        calendar_ids = {s["id"] for s in seasons.load_config()["seasons"]}
+        self.assertLessEqual(set(season_art.ids()), calendar_ids)
         self.assertIsNone(season_art.get("nope"))
 
     def test_layers_reject_unknown_fields(self):

@@ -149,6 +149,7 @@ POSTER_BALLOONS = [(2, 104, PINK, 152, 0), (3, 113, TEAL, 152, 2), (2, 122, YELL
 
 
 class Birthday(Decor):
+    status = "approved"
     id = "birthday"
     name = "Birthday"
 

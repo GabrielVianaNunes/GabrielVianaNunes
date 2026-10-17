@@ -38,6 +38,7 @@ class Decor:
 
     id = None
     name = None
+    status = "draft"        # "draft" until the owner approves the design, then "approved"
 
     def with_date(self, day):
         """A copy of the decoration for a given date. Most seasons do not depend on it."""

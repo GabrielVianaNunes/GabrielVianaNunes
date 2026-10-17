@@ -156,6 +156,7 @@ def ghost_rider_extra():
 
 
 class Halloween(Decor):
+    status = "approved"
     id = "halloween"
     name = "Halloween"
 
