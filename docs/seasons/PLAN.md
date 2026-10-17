@@ -88,7 +88,7 @@ The owner only reviews designs and approves.
 |---|---|---|
 | Halloween | Approved | Built, waiting for the release |
 | Christmas | Approved | Built, waiting for its window (3 Nov) |
-| Birthday | Not started | Not started |
+| Birthday | Preview ready, waiting for approval | Not started |
 | New Year | Not started | Not started |
 | Easter | Not started | Not started |
 | National Day of the Cowboy | Not started | Not started |

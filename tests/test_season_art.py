@@ -195,5 +195,57 @@ class ChristmasDraft(unittest.TestCase):
             self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
 
 
+class BirthdayDraft(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import season_art.birthday as bd
+        cls.bd = bd
+        cls.deco = season_art.get("birthday", drafts=True)
+
+    def test_it_is_a_draft_until_approved(self):
+        self.assertIsNone(season_art.get("birthday"))
+        self.assertIsNotNone(self.deco)
+
+    def test_the_crown_replaces_the_hat_and_stays_inside_the_footer_in_the_raised_frame(self):
+        crown, _ = self.bd.crown_and_horse_hat()
+        common = ba.rider()[0]
+        hat_pixels = {(x, y) for (x, y), c in common.px.items() if c == ba.INK and -22 <= y <= -20 and 4 <= x <= 10}
+        self.assertEqual(hat_pixels - set(crown.px), set())
+        dy = self.deco.footer().rider_dy
+        self.assertGreaterEqual(22 + dy + min(y for _, y in crown.px) - 1, 0)      # -1 is the raised frame of the bob
+
+    def test_the_strip_has_the_size_of_the_divider_and_spells_the_greeting(self):
+        strip, divider = parse(ba.build_strip(self.deco)), parse(committed("divider.svg"))
+        for attr in ("width", "height", "viewBox"):
+            self.assertEqual(strip.get(attr), divider.get(attr))
+        svg = ba.build_strip(self.deco)
+        for color in self.bd.FLAGS:
+            self.assertIn(color, svg)
+
+    def test_the_footer_says_happy_birthday(self):
+        self.assertIn("Happy birthday", ba.build_footer(self.deco))
+
+    def test_privacy_no_year_or_age_in_any_text_of_any_asset(self):
+        for svg in (ba.build_banner(self.deco), ba.build_footer(self.deco), ba.build_wanted(self.deco), ba.build_strip(self.deco)):
+            texts = re.findall(r'aria-label="([^"]*)"', svg) + re.findall(r"<title>([^<]*)</title>", svg)
+            for text in texts:
+                self.assertIsNone(re.search(r"\d", text), text)
+
+    def test_the_poster_balloons_stay_in_the_free_left_margin(self):
+        for x, y, color, string_to, delay in self.bd.POSTER_BALLOONS:
+            px = self.bd.balloon(x, y, color, string_to).px
+            self.assertLessEqual(max(px_x for px_x, _ in px), 8)                    # the text starts at x 9
+
+    def test_there_is_a_touch_of_christmas(self):
+        banner = ba.build_banner(self.deco)
+        self.assertIn("#2f6b3f", banner)                                          # the tree
+        self.assertIn("#f4f8ff", banner)                                          # snow on the ground
+
+    def test_every_asset_is_valid_and_within_budget(self):
+        for svg in (ba.build_banner(self.deco), ba.build_footer(self.deco), ba.build_wanted(self.deco), ba.build_strip(self.deco)):
+            parse(svg)
+            self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
+
+
 if __name__ == "__main__":
     unittest.main()
