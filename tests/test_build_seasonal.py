@@ -103,6 +103,58 @@ class ChristmasDays(unittest.TestCase):
             self.assertIn("translate(100 22)", committed("footer-dusk.svg"))   # the default one is untouched
 
 
+class BirthdayDays(unittest.TestCase):
+    def decorated_as(self, day):
+        with tempfile.TemporaryDirectory() as d:
+            _, out, _ = run("--out", d, "--date", day)
+            return out.splitlines()[0].split(": ", 1)[1]
+
+    def test_only_the_28th_has_the_birthday_decoration(self):
+        self.assertEqual(self.decorated_as("2026-12-28"), "birthday decoration")
+        self.assertEqual(self.decorated_as("2027-12-28"), "birthday decoration")
+        for day in ("2026-12-26", "2026-12-27", "2026-12-29", "2026-12-30"):
+            with self.subTest(day):
+                self.assertIn("default look", self.decorated_as(day))
+
+    def test_the_29th_goes_back_to_the_default_look_not_to_christmas(self):
+        with tempfile.TemporaryDirectory() as d:
+            run("--out", d, "--date", "2026-12-29")
+            self.assertEqual(read(d, "banner.svg"), committed("banner.svg"))
+
+    def test_the_birthday_footer_says_happy_birthday_and_shows_no_digits_in_its_text(self):
+        with tempfile.TemporaryDirectory() as d:
+            run("--out", d, "--date", "2026-12-28")
+            footer = read(d, "footer.svg")
+            self.assertIn("Happy birthday", footer)
+            self.assertIn("translate(100 24)", footer)
+
+
+class NewYearDays(unittest.TestCase):
+    def build(self, day):
+        d = tempfile.mkdtemp()
+        _, out, _ = run("--out", d, "--date", day)
+        return out.splitlines()[0].split(": ", 1)[1], d
+
+    def test_only_the_31st_and_the_1st_have_the_new_year_decoration(self):
+        for day, expected in (("2026-12-30", False), ("2026-12-31", True), ("2027-01-01", True), ("2027-01-02", False)):
+            with self.subTest(day):
+                what, _ = self.build(day)
+                self.assertEqual(what == "new-year decoration", expected, what)
+
+    def test_the_number_of_the_year_comes_from_the_date_through_the_whole_build(self):
+        for day, year in (("2026-12-31", "2027"), ("2027-01-01", "2027"), ("2027-12-31", "2028"), ("2028-01-01", "2028")):
+            with self.subTest(day):
+                _, d = self.build(day)
+                self.assertIn("New Year decoration for " + year, read(d, "banner.svg"))
+                self.assertIn("Happy New Year " + year + " bunting", read(d, "divider-town.svg"))
+
+    def test_the_footer_says_happy_new_year_and_the_rider_is_lowered(self):
+        _, d = self.build("2026-12-31")
+        footer = read(d, "footer.svg")
+        self.assertIn("Happy new year", footer)
+        self.assertIn("translate(100 24)", footer)
+
+
 class Forcing(unittest.TestCase):
     def test_forcing_a_season_wins_over_the_date(self):
         with tempfile.TemporaryDirectory() as d:
@@ -157,7 +209,7 @@ class EveryDayOfTheYearBuilds(unittest.TestCase):
             sid = bs.choose(config, "", day)
             if sid not in seen:
                 seen.add(sid)
-                bs.build(sid)
+                bs.build(sid, day)
             day += datetime.timedelta(days=1)
         self.assertGreaterEqual(len(seen), 8)              # default plus the seven seasons
 

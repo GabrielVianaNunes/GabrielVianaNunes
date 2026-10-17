@@ -1,27 +1,43 @@
-"""Seasonal decorations. Each season is a module with a DECOR object, looked up by its id.
+"""Seasonal decorations. Each season is a module in this package with a DECOR object.
 
-Two registries keep an unapproved design from going live by accident:
-  MODULES        seasons whose design the owner approved. Only these are used by the daily build.
-  DRAFT_MODULES  designs waiting for approval. They can be previewed but are never built for the profile.
-A season moves from DRAFT_MODULES to MODULES in its build issue, after the approval.
+Seasons are discovered automatically, so adding one never means editing a shared list. Each DECOR
+carries its season `id` (as in data/seasons.json) and a `status`:
+
+  "draft"     a design waiting for the owner's approval. It can be previewed but is never built for the profile.
+  "approved"  the owner approved it. The daily build uses it inside its window.
+
+`status` is "draft" by default, so a new season cannot go live by accident: its build issue changes the
+one word after the owner approves the design.
 """
 import importlib
+import pkgutil
 
 from .base import Decor, Layers  # noqa: F401
 
-# season id (as in data/seasons.json) -> module name
-MODULES = {
-    "halloween": "halloween",
-    "christmas": "christmas",
-}
-DRAFT_MODULES = {
-}
+_SKIP = {"base", "kit"}
+_ALL = {}
+
+
+def _load():
+    if not _ALL:
+        for info in pkgutil.iter_modules(__path__):
+            if info.name in _SKIP:
+                continue
+            decor = getattr(importlib.import_module("season_art." + info.name), "DECOR", None)
+            if decor is not None:
+                _ALL[decor.id] = decor
+    return _ALL
 
 
 def get(season_id, drafts=False):
-    """The decoration for a season id, or None when the season has no approved art. With drafts=True
-    designs that are still waiting for approval are included, for previews only."""
-    name = MODULES.get(season_id) or (DRAFT_MODULES.get(season_id) if drafts else None)
-    if not name:
+    """The decoration for a season id, or None when the season has no approved art. With drafts=True designs that
+    are still waiting for approval are included, for previews only."""
+    decor = _load().get(season_id)
+    if decor is None:
         return None
-    return importlib.import_module("season_art." + name).DECOR
+    return decor if (decor.status == "approved" or drafts) else None
+
+
+def ids(status=None):
+    """The season ids that have art, optionally only those with a given status."""
+    return sorted(i for i, d in _load().items() if status is None or d.status == status)
