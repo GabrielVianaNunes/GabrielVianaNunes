@@ -18,6 +18,15 @@ python scripts/build_stack.py
 
 Downloads the skillicons strip once and adds the custom Power BI tile, writing `assets/stack-row.svg`. This is the only script that needs network access. Edit the `IDS` list to change the icons.
 
+## Contribution data
+
+```bash
+GITHUB_TOKEN=... python scripts/fetch_contributions.py --user NAME --out data/contributions.json
+python -m unittest discover -s tests
+```
+
+Writes a reduced weekly list (start date and total). `data/contributions-fixture.json` is a committed copy of real data, used by tests and for drawing without the network. The script exits with an error and writes nothing if the data fails validation.
+
 ## Quote card
 
 ```bash
