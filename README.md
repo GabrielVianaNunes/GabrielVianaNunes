@@ -45,7 +45,12 @@ I like code that does its job without making noise.
 ### <img src="assets/saloon.svg" width="38" align="absmiddle" alt=""> The town
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/profile-3d-contrib/profile-night-view.svg" alt="3D view of my GitHub contributions" width="100%">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/western-town-night.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/western-town-day.svg">
+  <img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/western-town-day.svg" alt="Pixel art western town built from my GitHub contributions of the last year. Each lot is one week and busier weeks are bigger buildings." width="100%">
+</picture>
+<sub>One lot per week, oldest on the back street. Busier weeks grow bigger buildings. Rebuilt every day.</sub>
 </div>
 
 <img src="assets/divider.svg" alt="" width="100%">
