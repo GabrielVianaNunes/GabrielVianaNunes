@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 13" width="840" height="65" shape-rendering="crispEdges" role="img" aria-label="Halloween garland with flags, jack o'lanterns and cobwebs">
+<title>Halloween garland with flags, jack o'lanterns and cobwebs</title>
+<style>
+.flk{animation:flk 1.6s steps(1) infinite}
+.spd{animation:spd 4s ease-in-out infinite}
+@keyframes flk{0%,100%{opacity:1}30%{opacity:.55}55%{opacity:.9}75%{opacity:.5}}
+@keyframes spd{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<path fill="#3b2414" d="M0 1h9v1h-9zM159 1h9v1h-9zM9 2h19v1h-19zM140 2h19v1h-19zM28 3h25v1h-25zM115 3h25v1h-25zM53 4h62v1h-62z"/>
+<path fill="#f28a1f" d="M10 3h5v1h-5zM145 3h5v1h-5zM11 4h3v1h-3zM37 4h5v1h-5zM118 4h5v1h-5zM146 4h3v1h-3zM12 5h1v1h-1zM38 5h3v1h-3zM64 5h5v1h-5zM91 5h5v1h-5zM119 5h3v1h-3zM147 5h1v1h-1zM39 6h1v1h-1zM65 6h3v1h-3zM92 6h3v1h-3zM120 6h1v1h-1zM44 7h3v1h-3zM66 7h1v1h-1zM93 7h1v1h-1zM128 7h3v1h-3zM43 8h5v1h-5zM127 8h5v1h-5zM43 9h5v1h-5zM127 9h5v1h-5zM43 10h5v1h-5zM127 10h5v1h-5zM44 11h4v1h-4zM128 11h4v1h-4z"/>
+<path fill="#8e5bc0" d="M19 3h5v1h-5zM154 3h5v1h-5zM20 4h3v1h-3zM46 4h5v1h-5zM127 4h5v1h-5zM155 4h3v1h-3zM21 5h1v1h-1zM47 5h3v1h-3zM73 5h5v1h-5zM100 5h5v1h-5zM128 5h3v1h-3zM156 5h1v1h-1zM48 6h1v1h-1zM74 6h3v1h-3zM101 6h3v1h-3zM75 7h1v1h-1zM102 7h1v1h-1z"/>
+<path fill="#e8e0d0" d="M28 4h5v1h-5zM136 4h5v1h-5zM29 5h3v1h-3zM55 5h5v1h-5zM82 5h5v1h-5zM109 5h5v1h-5zM137 5h3v1h-3zM30 6h1v1h-1zM56 6h3v1h-3zM83 6h3v1h-3zM110 6h3v1h-3zM138 6h1v1h-1zM57 7h1v1h-1zM84 7h1v1h-1zM111 7h1v1h-1z"/>
+<path fill="#3b6b47" d="M45 6h1v1h-1zM129 6h1v1h-1z"/>
+<path fill="#ffb347" d="M43 7h1v1h-1zM127 7h1v1h-1zM42 8h1v1h-1zM126 8h1v1h-1zM42 9h1v1h-1zM126 9h1v1h-1zM42 10h1v1h-1zM126 10h1v1h-1z"/>
+<path fill="#c9610f" d="M47 7h1v1h-1zM131 7h1v1h-1zM48 8h1v1h-1zM132 8h1v1h-1zM48 9h1v1h-1zM132 9h1v1h-1zM48 10h1v1h-1zM132 10h1v1h-1zM43 11h1v1h-1zM127 11h1v1h-1z"/><g class="flk"><path fill="#ffe29a" d="M44 8h1v1h-1zM46 8h1v1h-1zM44 10h3v1h-3z"/></g><g class="flk"><path fill="#ffe29a" d="M128 8h1v1h-1zM130 8h1v1h-1zM128 10h3v1h-3z"/></g><path fill="#8d8da0" d="M0 0h13v1h-13zM0 1h5v1h-5zM7 1h1v1h-1zM11 1h1v1h-1zM0 2h4v1h-4zM5 2h3v1h-3zM11 2h1v1h-1zM0 3h4v1h-4zM6 3h4v1h-4zM11 3h1v1h-1zM0 4h2v1h-2zM4 4h1v1h-1zM6 4h1v1h-1zM10 4h2v1h-2zM0 5h1v1h-1zM2 5h1v1h-1zM5 5h2v1h-2zM10 5h1v1h-1zM0 6h1v1h-1zM2 6h1v1h-1zM4 6h3v1h-3zM9 6h1v1h-1zM0 7h4v1h-4zM7 7h1v1h-1zM9 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM8 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM6 9h2v1h-2zM0 10h1v1h-1zM4 10h3v1h-3zM0 11h5v1h-5zM0 12h1v1h-1z"/><path fill="#8d8da0" d="M155 0h13v1h-13zM156 1h1v1h-1zM160 1h1v1h-1zM163 1h5v1h-5zM156 2h1v1h-1zM160 2h3v1h-3zM164 2h4v1h-4zM156 3h1v1h-1zM158 3h4v1h-4zM164 3h4v1h-4zM156 4h2v1h-2zM161 4h1v1h-1zM163 4h1v1h-1zM166 4h2v1h-2zM157 5h1v1h-1zM161 5h2v1h-2zM165 5h1v1h-1zM167 5h1v1h-1zM158 6h1v1h-1zM161 6h3v1h-3zM165 6h1v1h-1zM167 6h1v1h-1zM158 7h1v1h-1zM160 7h1v1h-1zM164 7h4v1h-4zM159 8h1v1h-1zM164 8h1v1h-1zM167 8h1v1h-1zM160 9h2v1h-2zM164 9h1v1h-1zM167 9h1v1h-1zM161 10h3v1h-3zM167 10h1v1h-1zM163 11h5v1h-5zM167 12h1v1h-1z"/>
+</svg>

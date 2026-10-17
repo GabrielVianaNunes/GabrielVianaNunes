@@ -163,13 +163,15 @@ STYLE_COMMON = """
 """
 
 
-def rider_group(extra_class="ride"):
+def rider_group(extra_class="ride", extra=""):
+    """The riding cowboy. `extra` is optional seasonal markup drawn on top, moving with the rider."""
     common, a, b, dust = rider()
     return (
         f'<g class="{extra_class}"><g class="bob">'
         f'<g class="dust">{dust.paths()}</g>'
         f'{common.paths()}'
         f'<g class="fa">{a.paths()}</g><g class="fb">{b.paths()}</g>'
+        f'{extra}'
         f'</g></g>'
     )
 
@@ -184,7 +186,9 @@ def wrap_svg(w, h, scale, body, style, label):
 
 
 # ---------------------------------------------------------------- banner
-def build_banner():
+def build_banner(deco=None):
+    """The banner. `deco` is an optional seasonal decoration (see season_art), None gives the default look."""
+    L = deco.banner() if deco else None
     W, H = 200, 60
     rnd = random.Random(7)
     bg = Grid()
@@ -202,15 +206,17 @@ def build_banner():
                 c = bands[idx + 1][1]
             bg.set(x, y, c)
 
-    # sun
-    sx, sy, r = 150, 41, 10
-    for y in range(sy - 13, 51):
-        for x in range(sx - 13, sx + 14):
+    # sun (a season may swap it, for example for a big orange moon)
+    sx, sy, r, core, ring = (L.sun if L and L.sun else (150, 41, 10, "#ffe29a", "#f9c27a"))
+    for y in range(sy - r - 3, 51):
+        for x in range(sx - r - 3, sx + r + 4):
             d = (x - sx) ** 2 + (y - sy) ** 2
             if d <= r * r:
-                bg.set(x, y, "#ffe29a")
+                bg.set(x, y, core)
             elif d <= (r + 2) ** 2 and (x + y) % 2 == 0:
-                bg.set(x, y, "#f9c27a")
+                bg.set(x, y, ring)
+    if L and L.sun_details:
+        L.sun_details(bg)
 
     far = [(0, 22, 43), (22, 27, 41), (27, 48, 44), (60, 85, 42), (85, 92, 44), (92, 120, 45),
            (130, 150, 42), (150, 175, 44), (175, 200, 43)]
@@ -258,6 +264,8 @@ def build_banner():
     saguaro(88, 51, 7)
 
     body = [bg.paths()]
+    if L and L.ground:
+        body.append(L.ground)
 
     # stars
     for n, delay in ((0, "0s"), (1, "1.1s")):
@@ -274,6 +282,8 @@ def build_banner():
                 f'style="animation-duration:{dur}s;animation-delay:-{delay}s">{g.paths()}</g></g>')
 
     body += [cloud(10, 18, 70), cloud(31, 40, 95), cloud(5, 55, 120)]
+    if L and L.sky:
+        body.append(L.sky)
 
     # name and role
     title = Grid()
@@ -298,7 +308,9 @@ def build_banner():
     )
 
     # rider
-    body.append(f'<g transform="translate(100 51)">{rider_group("ride")}</g>')
+    body.append(f'<g transform="translate(100 51)">{rider_group("ride", L.rider_extra if L else "")}</g>')
+    if L and L.front:
+        body.append(L.front)
 
     style = STYLE_COMMON + """
 .ride{animation:ride 18s linear infinite}
@@ -309,9 +321,11 @@ def build_banner():
 @keyframes weed{from{transform:translateX(212px)}to{transform:translateX(-14px)}}
 @keyframes cloud{from{transform:translateX(-14px)}to{transform:translateX(214px)}}
 @keyframes star{0%{opacity:1}50%{opacity:.25}}
-"""
-    return wrap_svg(W, H, 5, "\n".join(body), style,
-                    "Pixel art banner: a cowboy riding a horse across a desert at sunset")
+""" + (L.css if L else "")
+    label = "Pixel art banner: a cowboy riding a horse across a desert at sunset"
+    if L and L.label:
+        label += ". " + L.label
+    return wrap_svg(W, H, 5, "\n".join(body), style, label)
 
 
 # ---------------------------------------------------------------- wanted poster
@@ -423,7 +437,9 @@ def draw_cowboy(g, ox, oy, iw=58, ih=58):
     r(cx - 15, 17, 30, 1, hat_sh)       # brim underside
 
 
-def build_wanted():
+def build_wanted(deco=None):
+    """The wanted poster. `deco` is an optional seasonal decoration, None gives the default look."""
+    L = deco.poster() if deco else None
     W, H = 120, 156
     g = Grid()
     paper, edge, ink = "#e9d5a1", "#6b4423", "#3b2412"
@@ -453,12 +469,18 @@ def build_wanted():
     center("REWARD:", 127, "#a8322a")
     center("ONE CLEAN MERGE", 138, ink)
 
+    if L and L.draw:
+        L.draw(g)
     body = g.paths().replace('fill="#00000000"', 'fill="none"')
-    return wrap_svg(W, H, 3, body, "", "Wanted poster for Gabriel Nunes, software engineer")
+    if L and L.front:
+        body += L.front
+    return wrap_svg(W, H, 3, body, (L.css if L else ""), "Wanted poster for Gabriel Nunes, software engineer")
 
 
 # ---------------------------------------------------------------- footer
-def build_footer():
+def build_footer(deco=None):
+    """The footer. `deco` is an optional seasonal decoration, None gives the default look."""
+    L = deco.footer() if deco else None
     W, H = 200, 30
     bg = Grid()
     for y0, y1, c in [(0, 6, "#46225a"), (6, 12, "#7a2f5e"), (12, 17, "#b8465a"),
@@ -469,15 +491,32 @@ def build_footer():
     rnd = random.Random(3)
     for _ in range(40):
         bg.set(rnd.randrange(W), rnd.randrange(24, 30), "#8a5624")
-    txt = "HAPPY TRAILS"
+    txt = (L.text if L and L.text else "HAPPY TRAILS")
     bg.text(txt, (W - text_width(txt, 1)) // 2 + 1, 9, "#1b1030", 1)
     bg.text(txt, (W - text_width(txt, 1)) // 2, 8, "#fff3d6", 1)
-    body = [bg.paths(), f'<g transform="translate(100 22)">{rider_group("ride")}</g>']
+    body = [bg.paths()]
+    if L and L.ground:
+        body.append(L.ground)
+    if L and L.sky:
+        body.append(L.sky)
+    body.append(f'<g transform="translate(100 22)">{rider_group("ride", L.rider_extra if L else "")}</g>')
+    if L and L.front:
+        body.append(L.front)
     style = STYLE_COMMON + """
 .ride{animation:ride 22s linear infinite}
 @keyframes ride{from{transform:translateX(-130px)}to{transform:translateX(115px)}}
-"""
-    return wrap_svg(W, H, 5, "\n".join(body), style, "A cowboy rides away. Happy trails.")
+""" + (L.css if L else "")
+    label = "A cowboy rides away. " + ("Happy trails." if not (L and L.text) else L.text.capitalize() + ".")
+    return wrap_svg(W, H, 5, "\n".join(body), style, label)
+
+
+# ---------------------------------------------------------------- seasonal strip
+def build_strip(deco=None):
+    """A slim decorative strip above the 3D graph. Empty (one transparent pixel) when no season is active."""
+    L = deco.strip() if deco else None
+    if not L:
+        return wrap_svg(1, 1, 1, "", "", "")
+    return wrap_svg(L.width, L.height, L.scale, L.body, L.css, L.label)
 
 
 # ---------------------------------------------------------------- divider
