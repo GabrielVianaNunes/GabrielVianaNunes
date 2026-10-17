@@ -111,13 +111,13 @@ def light_string(width, y0=0, sag=3, step=6):
 
 def santa_cap():
     """The rider's Santa cap, in the rider's own coordinates. It REPLACES the cowboy hat: it covers the
-    hat's pixels exactly (crown x5 to 9 on rows -22 and -21, brim x4 to 10 on row -20) and never goes
-    above row -22, which is the top edge of the footer, so it is never cut off."""
+    hat's pixels exactly (crown x5 to 9 on rows -22 and -21, brim x4 to 10 on row -20). The pompom reaches
+    row -23, so the footer rider is moved down 2 pixels to keep it inside the picture."""
     cap = Grid()
     cap.rect(4, -20, 8, 1, SNOW)         # white fur band, wider than the head like a real cap
     cap.rect(5, -21, 6, 1, RED)
     cap.rect(5, -22, 5, 1, RED)
-    cap.rect(10, -22, 2, 2, SNOW)        # the pompom, hanging to the side
+    cap.rect(6, -23, 3, 2, SNOW)         # the white pompom on top of the cap, 3 wide and 2 tall
     return cap
 
 
@@ -235,10 +235,10 @@ class Christmas(Decor):
         ground = (snow_ground(200, 9, 22) + tree(24, 27) + gift(36, 27, RED, GOLD) + gift(160, 28, "#2f8f55", RED)
                   + light_string(200, 0, 2, 8))
         front = snow_layer(6, 18, 30, 9)
-        # the rider bobs 1 pixel up on every step, so it is moved 1 pixel down: the cap's top row then stays
-        # inside the 30 pixel footer in both frames of the animation
+        # the rider bobs 1 pixel up on every step, so it is moved 2 pixels down: the pompom on top of the cap
+        # (row -23) then stays inside the 30 pixel footer in both frames of the animation
         return Layers(text="MERRY TRAILS", ground=ground, front=front, rider_extra=santa_and_bells(),
-                      rider_dy=1, css=CSS + snow_css(30))
+                      rider_dy=2, css=CSS + snow_css(30))
 
     POSTER_W, POSTER_H = 120, 156
 

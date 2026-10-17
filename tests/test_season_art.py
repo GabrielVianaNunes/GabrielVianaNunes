@@ -132,7 +132,7 @@ class ChristmasDraft(unittest.TestCase):
     def test_the_santa_cap_is_never_cut_off_by_the_top_of_the_footer(self):
         cap = self.xm.santa_cap()
         # the rider stands at y 22 in the 30 pixel high footer, so row -22 is the top row, row 0
-        self.assertGreaterEqual(min(y for _, y in cap.px), -22)
+        self.assertGreaterEqual(min(y for _, y in cap.px), -23)
 
     def test_the_cap_stays_inside_the_footer_in_both_frames_of_the_bob_animation(self):
         """The rider moves up 1 pixel on every other step (the bob keyframes), so check that frame too."""
@@ -142,11 +142,11 @@ class ChristmasDraft(unittest.TestCase):
         dy = self.deco.footer().rider_dy
         top = 22 + dy + min(y for _, y in self.xm.santa_cap().px) + bob       # topmost pixel row, raised frame
         self.assertGreaterEqual(top, 0)
-        self.assertLessEqual(22 + dy, 23)                                     # and the hooves still stand on the ground
+        self.assertLessEqual(22 + dy, 24)                                     # and the hooves are at most 2 pixels into the sand
 
     def test_the_default_footer_rider_does_not_move(self):
         self.assertIn('translate(100 22)', ba.build_footer())
-        self.assertIn('translate(100 23)', ba.build_footer(self.deco))
+        self.assertIn('translate(100 24)', ba.build_footer(self.deco))
 
     def test_the_cap_replaces_the_cowboy_hat_instead_of_sitting_on_it(self):
         common = ba.rider()[0]

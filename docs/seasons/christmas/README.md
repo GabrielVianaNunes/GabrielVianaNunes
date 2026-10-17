@@ -9,7 +9,7 @@ Window: 3 Nov (right after the Halloween decoration ends) to 25 Dec (decided by 
 | Asset | Decoration |
 |---|---|
 | Banner | Snow falling in two layers, snow on the mesas, on the roofs of the little town and on the ground, two Christmas trees with a gold star and twinkling ornaments, three presents, colored lights on the rooftops, a string of twinkling lights along the top edge, and the cowboy in a red Santa cap with jingling bells on the horse. The cap replaces the cowboy hat |
-| Footer | "MERRY TRAILS" instead of "HAPPY TRAILS", falling snow, snow on the ground, a tree, two presents, a string of lights and the Santa cap rider. The rider sits 1 pixel lower than in the default footer, because it bobs up by 1 pixel on every step, so the cap stays fully inside the footer in both frames of the ride |
+| Footer | "MERRY TRAILS" instead of "HAPPY TRAILS", falling snow, snow on the ground, a tree, two presents, a string of lights and the Santa cap rider. The rider sits 2 pixels lower than in the default footer, because it bobs up by 1 pixel on every step, so the cap and its white pompom on top stay fully inside the footer in both frames of the ride |
 | Wanted poster | A pine garland all around the border of the poster with red, gold and blue ornaments, twinkling lights, snow on the top edge and a red bow in each corner. The cowboy portrait wears a full Santa cap instead of the cowboy hat. The garland stays on the border and never touches the text or the portrait |
 | Divider above "The town" | A pine garland with red, gold and blue ornaments, twinkling lights, snow and a red bow at each end. It replaces the normal divider and has exactly its size, so the layout does not move |
 
