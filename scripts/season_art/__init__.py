@@ -14,7 +14,7 @@ import pkgutil
 
 from .base import Decor, Layers  # noqa: F401
 
-_SKIP = {"base"}
+_SKIP = {"base", "kit"}
 _ALL = {}
 
 
@@ -23,8 +23,9 @@ def _load():
         for info in pkgutil.iter_modules(__path__):
             if info.name in _SKIP:
                 continue
-            decor = importlib.import_module("season_art." + info.name).DECOR
-            _ALL[decor.id] = decor
+            decor = getattr(importlib.import_module("season_art." + info.name), "DECOR", None)
+            if decor is not None:
+                _ALL[decor.id] = decor
     return _ALL
 
 
