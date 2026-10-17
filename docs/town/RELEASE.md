@@ -4,7 +4,7 @@ The town is built on `develop` and reaches the profile only when everything work
 
 ## Before you start
 
-- All town pull requests are merged into `develop` (they were stacked, so merge them in order and GitHub retargets each one for you).
+- All town pull requests are merged into `develop` (they were built as a stack, but every pull request targets `develop`, so merge them in order, oldest first).
 - The Tests workflow is green on `develop`.
 - The draft pull request that switches the README is still a draft and still unmerged.
 

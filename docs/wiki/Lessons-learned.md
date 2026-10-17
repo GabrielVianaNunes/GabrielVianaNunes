@@ -41,6 +41,6 @@ Things that cost time on this project, so they do not cost it twice.
 
 ## Process
 
-- Stack branches (each issue from the previous one) when the next piece needs the last one, and open each pull request against the previous branch. GitHub retargets them as they merge.
+- Stack branches (each issue from the previous one) when the next piece needs the last one, but point every pull request at `develop` from the start. A pull request whose base branch is deleted by a workflow is NOT retargeted by GitHub (only its own auto delete does that) and gets stuck as conflicting. Merge them oldest first.
 - Keep the pull request that switches the README as a draft until the files it points to exist.
 - Write the security rules as tests. The workflow guard tests fail if an action is unpinned or an untrusted expression reaches a shell script.
