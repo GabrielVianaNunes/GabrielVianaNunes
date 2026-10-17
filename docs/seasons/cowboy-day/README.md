@@ -2,7 +2,7 @@
 
 Issue 57. The default western look stays. This only adds a rodeo night on top of it. The cowboy keeps his hat: it is his day.
 
-Window: 7 days, the 4th Saturday of July with 3 days either side, calculated every year (21 to 27 Jul in 2027). This is the owner's accepted proposal, to be confirmed here.
+Window: 1 day, the 4th Saturday of July, calculated every year (24 Jul in 2027). The owner changed it from 7 days to the exact day.
 
 ## What is added
 
@@ -40,6 +40,6 @@ python scripts/build_season_preview.py cowboy-day --out docs/seasons/cowboy-day
 
 - [x] Owner reviewed the preview
 - [x] Owner approved on issue 57
-- [x] Window confirmed: the 4th Saturday of July with 3 days either side
+- [x] Window confirmed: the 4th Saturday of July, that day only
 
-Built in issue 62: registered as an approved season, so the daily workflow publishes it in the 7 days around the 4th Saturday of July.
+Built in issue 62: registered as an approved season, so the daily workflow publishes it only on the 4th Saturday of July.

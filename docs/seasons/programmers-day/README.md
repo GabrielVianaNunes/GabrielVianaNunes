@@ -2,7 +2,7 @@
 
 Issue 58. The default western look stays. This only adds a night where the town goes online. The cowboy keeps his hat and the horse is untouched.
 
-Window: 3 days, day 256 of the year with 1 day either side, calculated every year (12 to 14 Sep in 2027). This is a proposal, to be confirmed here.
+Window: 1 day, day 256 of the year, calculated every year (13 Sep in 2027, 12 Sep in leap years). The owner chose the exact day only.
 
 ## What is added
 
@@ -41,4 +41,4 @@ python scripts/build_season_preview.py programmers-day --out docs/seasons/progra
 
 - [x] Owner reviewed the preview
 - [x] Owner commented "approved" on issue 58, or asked for changes
-- [x] Window confirmed: day 256 with 1 day either side
+- [x] Window confirmed: day 256, that day only

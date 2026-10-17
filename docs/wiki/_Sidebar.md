@@ -5,6 +5,7 @@
 - [Design decisions](Design-decisions)
 - [Security and privacy](Security)
 - [Seasonal decorations](Seasonal-decorations)
+- [Seasonal gallery](Seasonal-gallery)
 - [Git flow](Git-flow)
 - [Lessons learned](Lessons-learned)
 - [Regenerating assets](Regenerating-assets)

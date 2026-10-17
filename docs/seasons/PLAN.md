@@ -15,12 +15,12 @@ All dates are in the America/Sao_Paulo time zone.
 | Birthday | 28 Dec only | Only that day, with a touch of Christmas allowed. 26 and 27 Dec use the default look |
 | New Year | 31 Dec and 1 Jan | 29 and 30 Dec use the default look, and so does 2 Jan |
 | Easter | 7 days: 3 days before to 3 days after Easter Sunday | Computed for every year, never a fixed date |
-| National Day of the Cowboy | 7 days: 4th Saturday of July, 3 days either side | Window is a proposal to confirm |
-| Programmers' Day | 3 days: day 256 of the year, 1 day either side | 13 Sep, or 12 Sep in leap years. A proposal to confirm |
+| National Day of the Cowboy | 1 day: the 4th Saturday of July only | Computed for every year (24 Jul in 2027) |
+| Programmers' Day | 1 day: day 256 of the year only | 13 Sep, or 12 Sep in leap years |
 
 Declined by the owner: Carnival and Festa Junina.
 
-For 2027 the moving dates are: Easter on 28 Mar (window 25 to 31 Mar), Cowboy Day on 24 Jul (window 21 to 27 Jul) and Programmers' Day on 13 Sep (window 12 to 14 Sep).
+For 2027 the moving dates are: Easter on 28 Mar (window 25 to 31 Mar), Cowboy Day on 24 Jul and Programmers' Day on 13 Sep, both for that single day.
 
 ## One time zone for everyone
 
@@ -91,7 +91,9 @@ The owner only reviews designs and approves.
 | Birthday | Approved | Built, waiting for its day (28 Dec) |
 | New Year | Approved | Built, waiting for its days (31 Dec and 1 Jan) |
 | Easter | Approved | Built, waiting for its window (25 to 31 Mar 2027) |
-| National Day of the Cowboy | Approved | Built, waiting for its window (21 to 27 Jul 2027) |
-| Programmers' Day | Approved | Built, waiting for its window (12 to 14 Sep 2027) |
+| National Day of the Cowboy | Approved | Built, waiting for its day (24 Jul 2027) |
+| Programmers' Day | Approved | Built, waiting for its day (13 Sep 2027) |
 
 How a release works, step by step: `docs/seasons/RELEASE.md`.
+
+To show a design to friends on any day of the year, use the gallery: `docs/seasons/GALLERY.md` in the repository and the Seasonal gallery wiki page. It only shows pictures, so the profile itself still decorates only inside each window.
