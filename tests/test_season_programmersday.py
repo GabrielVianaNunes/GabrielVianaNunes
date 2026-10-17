@@ -63,8 +63,8 @@ class ProgrammersDay(unittest.TestCase):
         e = pd.coffee_extra()
         self.assertIn("steam", e)
 
-    def test_the_window_is_three_days_around_day_256(self):
-        for day, expected in ((datetime.date(2027, 9, 12), True), (datetime.date(2027, 9, 14), True), (datetime.date(2027, 9, 15), False)):
+    def test_the_window_is_only_day_256(self):
+        for day, expected in ((datetime.date(2027, 9, 12), False), (datetime.date(2027, 9, 13), True), (datetime.date(2027, 9, 14), False)):
             self.assertEqual(bs.choose(seasons.load_config(), None, day) == "programmers-day", expected, day)
 
 

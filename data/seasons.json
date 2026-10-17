@@ -12,8 +12,8 @@
     {"id": "easter", "name": "Easter", "priority": 10,
      "rule": {"kind": "easter", "before": 3, "after": 3}},
     {"id": "cowboy-day", "name": "National Day of the Cowboy", "priority": 10,
-     "rule": {"kind": "nth_weekday", "month": 7, "weekday": "saturday", "n": 4, "before": 3, "after": 3}},
+     "rule": {"kind": "nth_weekday", "month": 7, "weekday": "saturday", "n": 4, "before": 0, "after": 0}},
     {"id": "programmers-day", "name": "Programmers' Day", "priority": 10,
-     "rule": {"kind": "day_of_year", "day": 256, "before": 1, "after": 1}}
+     "rule": {"kind": "day_of_year", "day": 256, "before": 0, "after": 0}}
   ]
 }

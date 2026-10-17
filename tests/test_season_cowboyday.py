@@ -122,23 +122,22 @@ class CowboyDayWindowsThroughTheWholeBuild(unittest.TestCase):
         files, deco = bs.build(sid, day)
         return sid, deco is not None
 
-    def test_the_window_is_three_days_either_side_of_the_fourth_saturday_for_many_years(self):
+    def test_the_window_is_only_the_fourth_saturday_for_many_years(self):
         for year in list(range(2026, 2041)) + [2050, 2077, 2099]:
             saturday = self.fourth_saturday(year)
             for offset in range(-5, 6):
                 day = saturday + datetime.timedelta(days=offset)
                 sid, art = self.decorated_as(day)
                 with self.subTest("%d %+d" % (year, offset)):
-                    if -3 <= offset <= 3:
+                    if offset == 0:
                         self.assertEqual((sid, art), ("cowboy-day", True))
                     else:
                         self.assertNotEqual(sid, "cowboy-day")
 
-    def test_the_window_of_2027_is_21_to_27_july(self):
-        self.assertIsNone(self.decorated_as(datetime.date(2027, 7, 20))[0])
-        for d in range(21, 28):
-            self.assertEqual(self.decorated_as(datetime.date(2027, 7, d)), ("cowboy-day", True))
-        self.assertIsNone(self.decorated_as(datetime.date(2027, 7, 28))[0])
+    def test_the_window_of_2027_is_only_24_july(self):
+        for d in (22, 23, 25, 26):
+            self.assertIsNone(self.decorated_as(datetime.date(2027, 7, d))[0])
+        self.assertEqual(self.decorated_as(datetime.date(2027, 7, 24)), ("cowboy-day", True))
 
     def test_the_footer_through_the_whole_build_says_happy_cowboy_day(self):
         files, _ = bs.build("cowboy-day", datetime.date(2027, 7, 24))
