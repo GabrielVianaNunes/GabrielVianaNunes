@@ -35,13 +35,15 @@ python scripts/build_season_preview.py birthday --out docs/seasons/birthday
 ## Rules followed
 
 - With no season the builders return exactly the current assets (a test checks it).
-- It is a draft: the daily build ignores it until the owner approves.
+- It was a draft until the owner approved it.
 - No scripts and no external references, all animation stops with reduced motion.
 - Every file is under 150 KB.
 
 ## Approval
 
 - [x] The owner confirmed that publishing the day and month is fine
-- [ ] Owner reviewed the preview
-- [ ] Owner commented "approved" on issue 49, or asked for changes
-- [ ] Window confirmed: 28 Dec only
+- [x] Owner reviewed the preview
+- [x] Owner approved on issue 49
+- [x] Window confirmed: 28 Dec only
+
+Built in issue 50: registered as an approved season. On 29 Dec the page returns to the default look, not to Christmas.

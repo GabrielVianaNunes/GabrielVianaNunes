@@ -13,9 +13,9 @@ from .base import Decor, Layers  # noqa: F401
 MODULES = {
     "halloween": "halloween",
     "christmas": "christmas",
+    "birthday": "birthday",
 }
 DRAFT_MODULES = {
-    "birthday": "birthday",
 }
 
 
