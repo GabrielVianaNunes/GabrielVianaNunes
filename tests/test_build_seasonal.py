@@ -44,9 +44,9 @@ class DefaultDays(unittest.TestCase):
 
     def test_an_active_season_without_art_still_gives_the_default_look(self):
         with tempfile.TemporaryDirectory() as d:
-            code, out, _ = run("--out", d, "--date", "2026-12-25")      # Christmas has no art yet
+            code, out, _ = run("--out", d, "--date", "2027-03-28")      # Easter has no art yet
             self.assertEqual(code, 0)
-            self.assertIn("christmas is active but has no art yet", out)
+            self.assertIn("easter is active but has no art yet", out)
             self.assertEqual(read(d, "banner.svg"), committed("banner.svg"))
 
 
@@ -55,9 +55,8 @@ class HalloweenDays(unittest.TestCase):
         for day, expected in (("2026-10-23", False), ("2026-10-24", True), ("2026-10-31", True),
                               ("2026-11-02", True), ("2026-11-03", False)):
             with self.subTest(day), tempfile.TemporaryDirectory() as d:
-                run("--out", d, "--date", day)
-                decorated = read(d, "banner.svg") != committed("banner.svg")
-                self.assertEqual(decorated, expected)
+                _, out, _ = run("--out", d, "--date", day)
+                self.assertEqual("halloween decoration" in out, expected)
 
     def test_all_four_files_are_decorated_and_the_divider_keeps_its_size(self):
         with tempfile.TemporaryDirectory() as d:
@@ -77,6 +76,31 @@ class HalloweenDays(unittest.TestCase):
             run("--out", b, "--date", "2026-10-31")
             for name in bs.BUILDERS:
                 self.assertEqual(read(a, name), read(b, name))
+
+
+class ChristmasDays(unittest.TestCase):
+    def decorated_as(self, day):
+        with tempfile.TemporaryDirectory() as d:
+            _, out, _ = run("--out", d, "--date", day)
+            return out.splitlines()[0].split(": ", 1)[1]
+
+    def test_the_window_from_halloween_to_the_25th(self):
+        self.assertEqual(self.decorated_as("2026-11-02"), "halloween decoration")
+        self.assertEqual(self.decorated_as("2026-11-03"), "christmas decoration")
+        self.assertEqual(self.decorated_as("2026-12-01"), "christmas decoration")
+        self.assertEqual(self.decorated_as("2026-12-25"), "christmas decoration")
+
+    def test_the_default_look_returns_on_the_26th_and_27th(self):
+        self.assertIn("default look", self.decorated_as("2026-12-26"))
+        self.assertIn("default look", self.decorated_as("2026-12-27"))
+
+    def test_the_christmas_footer_says_merry_trails_and_the_rider_is_lowered(self):
+        with tempfile.TemporaryDirectory() as d:
+            run("--out", d, "--date", "2026-12-10")
+            footer = read(d, "footer.svg")
+            self.assertIn("Merry trails", footer)
+            self.assertIn("translate(100 24)", footer)
+            self.assertIn("translate(100 22)", committed("footer-dusk.svg"))   # the default one is untouched
 
 
 class Forcing(unittest.TestCase):

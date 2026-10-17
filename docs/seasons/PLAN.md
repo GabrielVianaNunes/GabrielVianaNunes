@@ -87,7 +87,7 @@ The owner only reviews designs and approves.
 | Season | Design | Build |
 |---|---|---|
 | Halloween | Approved | Built, waiting for the release |
-| Christmas | Not started | Not started |
+| Christmas | Approved | Built, waiting for its window (3 Nov) |
 | Birthday | Not started | Not started |
 | New Year | Not started | Not started |
 | Easter | Not started | Not started |
