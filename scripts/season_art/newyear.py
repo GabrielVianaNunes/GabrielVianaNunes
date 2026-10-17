@@ -196,6 +196,7 @@ SELF_CSS = CSS + "@media (prefers-reduced-motion: reduce){*{animation:none!impor
 
 
 class NewYear(Decor):
+    status = "approved"
     id = "new-year"
     name = "New Year"
 
