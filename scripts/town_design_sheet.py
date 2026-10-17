@@ -11,6 +11,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from build_assets import FONT, Grid, text_width  # noqa: E402
+from town_layout import build_layout  # noqa: E402
+import json  # noqa: E402
 
 DIGITS = {
     "0": ["01110", "10001", "10011", "10101", "11001", "10001", "01110"],
@@ -28,8 +30,10 @@ FONT.update(DIGITS)
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "town", "design-sheet.svg")
 
-# Weekly totals of the last 53 weeks, oldest first (measured 2026-10-15, see issue 1).
-WEEKS = [0] * 33 + [4, 0, 0, 6, 26, 79, 2, 61, 13, 1, 28, 95, 66, 79, 39, 0, 31, 238, 73, 69]
+# Real weekly totals, committed as a fixture by the fetch script (issue 3).
+FIXTURE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "contributions-fixture.json")
+with open(FIXTURE, encoding="utf-8") as _f:
+    LAYOUT = build_layout(json.load(_f)["weeks"])
 
 W, PANEL_H = 840, 215
 PITCH, BODY_W = 30, 26
@@ -114,47 +118,6 @@ def building(g, x, base, tier, pal, s, idx, kind=""):
     g.rect(x0 + w // 2 - 2, base - int(8 * s), 4, int(8 * s), darken("#3b2414", pal["dim"]))
 
 
-def tiers_for(weeks):
-    nz = sorted(x for x in weeks if x)
-    q = lambda p: nz[min(len(nz) - 1, int(p * len(nz)))]
-    p25, p50, p75 = q(0.25), q(0.5), q(0.75)
-    out = []
-    for v in weeks:
-        out.append(0 if v == 0 else 1 if v <= p25 else 2 if v <= p50 else 3 if v <= p75 else 4)
-    return out, (p25, p50, p75)
-
-
-def assign_types(tiers):
-    """Building type for every lot, oldest first, following the uniqueness rules.
-
-    Sheriff office 1, bank 1, church up to 2. Everything else may repeat.
-    """
-    n = len(tiers)
-    kinds = [""] * n
-    for i, t in enumerate(tiers):
-        if t == 1:      # quiet weeks: mostly homes, plus barns and stables
-            kinds[i] = ("cabin", "barn", "cabin", "stable", "cabin", "shack")[i % 6]
-        elif t == 2:    # moderate weeks: townhouses mixed with trade buildings
-            kinds[i] = ("townhouse", "saloon", "store", "townhouse", "blacksmith")[i % 5]
-        elif t == 3:
-            kinds[i] = "hotel"
-        elif t == 4:
-            kinds[i] = "grand hotel"
-    t4 = [i for i, t in enumerate(tiers) if t == 4]
-    if t4:
-        kinds[t4[-1]] = "bank"
-    t3 = [i for i, t in enumerate(tiers) if t == 3]
-    if len(t3) >= 3:
-        kinds[t3[0]] = "church"
-        kinds[t3[-1]] = "church"
-    elif t3:
-        kinds[t3[0]] = "church"
-    pool = [i for i in t3 if kinds[i] == "hotel"] or [i for i, t in enumerate(tiers) if t == 2]
-    if pool:
-        kinds[min(pool, key=lambda i: abs(i - n // 2))] = "sheriff"
-    return kinds
-
-
 def panel(g, oy, pal, label):
     rnd = random.Random(5)
     sky(g, 0, oy, pal, 130)
@@ -162,18 +125,19 @@ def panel(g, oy, pal, label):
     g.rect(W - 120, oy + 22, 18, 18, pal["celestial"])             # sun or moon
     mesas(g, oy, pal, oy + 130, rnd, pal["far"], 40, 80)
     mesas(g, oy, pal, oy + 130, rnd, pal["near"], 18, 40)
-    tiers, _ = tiers_for(WEEKS)
-    kinds = assign_types(tiers)
-    back, front = tiers[:26], tiers[26:]
-    peak = WEEKS.index(max(WEEKS))
+    tiers = [lot["tier"] for lot in LAYOUT["lots"]]
+    kinds = [lot["kind"] for lot in LAYOUT["lots"]]
+    nb = LAYOUT["back_count"]
+    back, front = tiers[:nb], tiers[nb:]
+    peak = LAYOUT["peak"]
     g.rect(0, oy + 150, W, 4, pal["street"])
     g.rect(0, oy + 207, W, 8, pal["street"])
     for i, t in enumerate(back):
         building(g, 8 + i * PITCH + 2, oy + 150, t, pal, 0.8, i, kinds[i])
     for i, t in enumerate(front):
-        building(g, i * PITCH, oy + 207, t, pal, 1.0, i, kinds[26 + i])
+        building(g, i * PITCH, oy + 207, t, pal, 1.0, i, kinds[nb + i])
     # water tower at the busiest week (placeholder)
-    px = (peak - 26) * PITCH + 20
+    px = ((peak - nb) if peak is not None and peak >= nb else 3) * PITCH + 20
     wood = darken("#7a4a22", pal["dim"])
     g.rect(px, oy + 207 - 52, 18, 12, wood)
     g.rect(px + 2, oy + 207 - 40, 2, 40, wood); g.rect(px + 14, oy + 207 - 40, 2, 40, wood)
