@@ -1,20 +1,25 @@
-name: Western town
+name: Seasonal assets
 
-# Rebuilds the western town from my contribution calendar and publishes the two SVG files
-# (day and night) to the output branch. Every step must succeed before anything is published,
-# so a failure leaves the previous good files in place.
+# Decides today's season in America/Sao_Paulo, builds the banner, footer, wanted poster and the divider
+# above the 3D graph (decorated on special dates, the normal look otherwise) and publishes them to the
+# output branch. Tests and the build must pass before anything is published, so a failure leaves the
+# previous good files in place.
 on:
   schedule:
-    - cron: "30 18 * * *"   # daily at 18:30 UTC
+    - cron: "5 3 * * *"   # daily at 03:05 UTC, which is 00:05 in America/Sao_Paulo
   workflow_dispatch:
     inputs:
       target:
-        description: "Branch to publish to. Use output-preview to test without touching the live files."
+        description: "Branch to publish to. Use output-preview to try a season without touching the live files."
         type: choice
         default: output
         options:
           - output
           - output-preview
+      season:
+        description: "Force a season id (for example halloween) to preview it. Leave empty to use today's date."
+        type: string
+        default: ""
 
 permissions:
   contents: write
@@ -28,6 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TARGET: ${{ inputs.target || 'output' }}
+      SEASON: ${{ inputs.season || '' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
@@ -37,14 +43,8 @@ jobs:
       - name: Run the tests
         run: python -m unittest discover -s tests
 
-      - name: Fetch the contribution calendar
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: ${{ github.repository_owner }}
-        run: python scripts/fetch_contributions.py --user "$USERNAME" --out "$RUNNER_TEMP/contributions.json"
-
-      - name: Build the town
-        run: python scripts/build_town.py --input "$RUNNER_TEMP/contributions.json" --out "$RUNNER_TEMP/town"
+      - name: Build the assets of the season
+        run: python scripts/build_seasonal.py --out "$RUNNER_TEMP/site" ${SEASON:+--season "$SEASON"}
 
       - name: Publish to the target branch
         run: |
@@ -57,9 +57,10 @@ jobs:
             git checkout -q -f --orphan "$TARGET"
             git rm -rfq . || true
           fi
-          cp "$RUNNER_TEMP/town/western-town-day.svg" western-town-day.svg
-          cp "$RUNNER_TEMP/town/western-town-night.svg" western-town-night.svg
-          git add western-town-day.svg western-town-night.svg
+          for f in banner.svg footer.svg wanted.svg divider-town.svg; do
+            cp "$RUNNER_TEMP/site/$f" "$f"
+          done
+          git add banner.svg footer.svg wanted.svg divider-town.svg
           git diff --cached --quiet && exit 0
-          git commit -m "chore: update western town"
+          git commit -m "chore: update seasonal assets"
           git push origin "$TARGET"

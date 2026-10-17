@@ -6,9 +6,10 @@ This repository is public, its Action logs are public and anything written to th
 
 | Item | Detail |
 |---|---|
-| Weekly contribution totals | Counts and dates only, the same numbers the profile graph already shows |
-| Quotes, pixel art, scripts | Content and code of this repository |
+| Pixel art, quotes, scripts, docs | Content and code of this repository |
+| The 3D contribution graph | Counts and dates only, generated from the public contribution calendar |
 | Commit author name | Gabriel Nunes, with the GitHub noreply address |
+| Birthday decoration (planned) | Day and month only, never the year or the age, and only with the owner's explicit OK |
 
 ## What must never become public
 
@@ -17,17 +18,6 @@ This repository is public, its Action logs are public and anything written to th
 - Raw API responses that include restricted fields
 - Tokens, keys and any value from a secret store
 - A personal email address in commit metadata
-
-## Rules for the western town data
-
-The fetch step (issue 3) must follow these rules:
-
-1. Ask the GraphQL API only for `contributionCalendar` (dates and counts). Never request repositories, issue titles or commit messages.
-2. Never print the API response or the token in logs. Print totals only.
-3. Do not commit raw API responses. Only the reduced weekly list may be stored, and only as a fixture.
-4. Use the built in `GITHUB_TOKEN` first. If private contributions are not visible, use a fine grained personal access token with the minimum read permission, stored as a repository secret.
-5. Run only on `schedule` and `workflow_dispatch`. No `pull_request_target`, no fork triggered runs, so a stranger can never reach the secret.
-6. Validate the data before drawing: expect integers from 0 up to a sane limit and fail closed if not.
 
 ## Supply chain
 
@@ -41,24 +31,19 @@ The fetch step (issue 3) must follow these rules:
 
 ## Guarded by tests
 
-The rules above are enforced by `tests/test_workflows.py`, which fails the build if:
+The rules are enforced by `tests/test_workflows.py`, which fails the build if:
 
 - any action is not pinned to a full commit SHA
 - a workflow uses `pull_request_target` or `workflow_run`
 - permissions are missing or broader than needed
 - an expression such as event data or an input is placed inside a shell script instead of an environment variable
-- the town workflow could push to `main` or `develop`, or publish before the tests, fetch and build have run
-- the token is given to any step other than the fetch step
+- a workflow pushes anywhere other than the `output` branch
 
-The fetch script has its own tests: it rejects out of range values, extra keys and non consecutive weeks, never includes the token or the response body in an error, and keeps the previous file on failure.
-
-## Safe testing before release
-
-The town workflow has a manual target `output-preview`. It publishes to a separate branch, so the live files are never touched while testing. Any failing step stops the run before anything is published.
+The season calendar validates its configuration and fails closed: a malformed `data/seasons.json` is an error, not a guess.
 
 ## Visitor privacy
 
-Images are served through GitHub's image proxy, so third party services such as the visit counter only see the proxy and not the visitor's address or browser.
+Images are served through GitHub's image proxy, so third party services such as the visit counter only see the proxy and not the visitor's address or browser. For the same reason the counter counts image loads, not people, and nobody can be identified through it.
 
 ## Commit identity
 

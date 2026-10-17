@@ -57,20 +57,37 @@ class WorkflowRules(unittest.TestCase):
                     with self.subTest("%s:%d" % (os.path.basename(path), n)):
                         self.fail("expression inside a run script: " + stripped)
 
-    def test_the_town_workflow_publishes_only_to_allowed_branches(self):
-        text = read(os.path.join(ROOT, ".github", "workflows", "western-town.yml"))
-        self.assertIn("- output\n", text)
-        self.assertIn("- output-preview\n", text)
-        self.assertNotRegex(text, r"git push (origin )?(main|develop)")
+    def test_nothing_ever_pushes_to_main_or_develop(self):
+        for path in FILES:
+            with self.subTest(os.path.basename(path)):
+                self.assertNotRegex(read(path), r"git push (origin )?(main|develop)")
 
-    def test_the_town_workflow_tests_and_validates_before_publishing(self):
-        text = read(os.path.join(ROOT, ".github", "workflows", "western-town.yml"))
-        order = [text.index(s) for s in ("unittest", "fetch_contributions.py", "build_town.py", "git push")]
+    def test_workflows_only_publish_to_the_output_branch(self):
+        """A push goes to `output`, or to a variable TARGET that the workflow restricts to a choice of
+        `output` and `output-preview`. Nothing else is allowed."""
+        for path in FILES:
+            text = read(path)
+            for line in text.splitlines():
+                if "git push" in line:
+                    with self.subTest(os.path.basename(path) + " " + line.strip()):
+                        stripped = line.strip()
+                        if stripped == 'git push origin "$TARGET"':
+                            self.assertRegex(text, r"options:\n\s+- output\n\s+- output-preview\n(?!\s+- )")
+                            self.assertIn("type: choice", text)
+                        else:
+                            self.assertEqual(stripped, "git push origin output")
+
+    def test_the_season_input_is_only_passed_through_the_environment(self):
+        text = read(os.path.join(ROOT, ".github", "workflows", "seasons.yml"))
+        self.assertIn("SEASON: ${{ inputs.season || '' }}", text)
+        self.assertEqual(text.count("inputs.season"), 1)
+        self.assertNotRegex(text, r"run:.*\$\{\{")
+
+    def test_the_seasonal_workflow_tests_and_builds_before_publishing(self):
+        text = read(os.path.join(ROOT, ".github", "workflows", "seasons.yml"))
+        order = [text.index(s) for s in ("unittest discover", "build_seasonal.py", "git push")]
         self.assertEqual(order, sorted(order))
-
-    def test_the_token_is_only_given_to_the_fetch_step(self):
-        text = read(os.path.join(ROOT, ".github", "workflows", "western-town.yml"))
-        self.assertEqual(text.count("secrets.GITHUB_TOKEN"), 1)
+        self.assertNotIn("secrets.", text)                 # it needs no token beyond the built in one
 
 
 if __name__ == "__main__":

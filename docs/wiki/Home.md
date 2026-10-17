@@ -1,28 +1,30 @@
 # Western profile README
 
-A pixel art western profile README for GabrielVianaNunes. Everything you see on the overview is generated from code, so it can be tweaked and rebuilt.
+A pixel art western profile README for GabrielVianaNunes. Almost everything on the overview is generated from code, so it can be tweaked and rebuilt.
 
 ## What is in the profile
 
 | Section | How it is made |
 |---|---|
 | Banner and footer | Pixel art SVG with a riding cowboy, drawn by `scripts/build_assets.py` |
-| Wanted poster | Pixel art SVG with the visitor counter badge below it |
-| Stack icons | One SVG (`assets/stack-row.svg`) with every icon, so the row scales as a unit on any screen |
-| The town | Pixel art western town built from contributions, with the classic 3D graph in a collapsed section |
+| Wanted poster | Pixel art SVG, with the visit counter badge below it |
+| Stack icons | One SVG (`assets/stack-row.svg`), so the row scales as a unit on any screen |
+| The town | The 3D contribution graph, generated daily by a GitHub Action |
 | Words to ride by | Quote card rebuilt every Monday from `data/quotes.json` |
-| Visit counter | One compact badge under the wanted poster with views today and total |
+
+## Current project
+
+**Seasonal decorations.** On special dates (Halloween, Christmas, the owner's birthday, New Year, Easter, National Day of the Cowboy and Programmers' Day) the overview gets extra western themed decoration for a window of days, then goes back to the default look. See [Seasonal decorations](Seasonal-decorations).
 
 ## Pages
 
 - [Architecture](Architecture)
 - [Design decisions](Design-decisions)
-- [Western town 3D roadmap](Roadmap)
-- [Western town design](Town-design)
-- [Security and privacy](Security)
-- [Lessons learned](Lessons-learned)
+- [Seasonal decorations](Seasonal-decorations)
 - [Git flow](Git-flow)
+- [Security and privacy](Security)
 - [Regenerating assets](Regenerating-assets)
+- [Lessons learned](Lessons-learned)
 
 ## Quick facts
 

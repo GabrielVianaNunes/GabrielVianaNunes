@@ -1,6 +1,6 @@
 # Regenerating assets
 
-Requires Python 3.12. Only `build_stack.py` and `fetch_contributions.py` need the network.
+Requires Python 3.12. Only `build_stack.py` needs the network.
 
 ## Run the tests
 
@@ -33,33 +33,27 @@ python scripts/update_quote.py --index 3  # force one, useful for previews
 
 To add a quote, append an object with `text`, `author` and `context` to `data/quotes.json` and check the attribution first.
 
-## Western town
+## Seasons
 
 ```bash
-# 1. fetch real data (needs a token, never print it)
-GITHUB_TOKEN=... python scripts/fetch_contributions.py --user NAME --out data/contributions.json
-
-# 2. build both SVGs from any weekly file, the committed fixture works offline
-python scripts/build_town.py --input data/contributions-fixture.json --out dist
-
-# 3. look at the sprites and the design
-python scripts/town_contact_sheet.py     # docs/town/sprites-sheet.svg
-python scripts/town_design_sheet.py      # docs/town/design-sheet.svg
+python scripts/seasons.py                    # the season for today in America/Sao_Paulo
+python scripts/seasons.py --date 2026-12-28  # for a given day
+python scripts/seasons.py --year 2027        # every window of a year
 ```
 
-Open the SVGs in a browser. Load animated ones through an `img` tag so the CSS animation runs.
+To change a window, edit `data/seasons.json`. No code change is needed. The tests check the moving dates for every year up to 2099.
 
-## Changing the town
+## Seasonal assets
 
-| I want to change | Edit |
-|---|---|
-| How weeks become buildings | `scripts/town_layout.py` and its tests |
-| How a building looks | `scripts/town_sprites.py`, then regenerate the contact sheet |
-| Colors | `scripts/town_palette.py` |
-| Scenery or animation | `scripts/build_town.py` |
+```bash
+python scripts/build_seasonal.py --out dist                     # today's season
+python scripts/build_seasonal.py --out dist --date 2026-10-31   # a given day
+python scripts/build_seasonal.py --out dist --season halloween  # force a season
+python scripts/build_season_preview.py halloween --out docs/seasons/halloween  # design preview
+```
 
-Always run the tests. They check the unique building rules, the size budget (120 KB per file), that no sprite floats, that the files have no external references and that reduced motion is respected.
+Writes `banner.svg`, `footer.svg`, `wanted.svg` and `divider-town.svg`. Everything is checked before anything is written.
 
-## Trying the daily workflow safely
+## Previewing
 
-In Actions, run "Western town" with target `output-preview`. See `docs/town/RELEASE.md` for the full procedure.
+Open an SVG in a browser. Load animated ones through an `img` tag so the CSS animation runs.
