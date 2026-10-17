@@ -38,6 +38,8 @@ Open the SVGs in a browser, through an `img` tag, so the animation runs.
 
 ## Approval
 
-- [ ] Owner reviewed the preview
-- [ ] Owner commented "approved" on issue 47, or asked for changes
-- [ ] Window confirmed: 3 Nov to 25 Dec
+- [x] Owner reviewed the preview
+- [x] Owner approved on issue 47
+- [x] Window confirmed: 3 Nov to 25 Dec
+
+Built in issue 48: registered as an approved season, so the daily workflow publishes it from 3 Nov to 25 Dec.
