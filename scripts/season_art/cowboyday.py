@@ -33,6 +33,8 @@ BARREL = ("bbbbb", "iiiii", "bbbbb", "bbbbb", "iiiii", "bbbbb")
 HORSESHOE = ("gg.gg", "g...g", "g...g", "gg.gg", ".ggg.")
 TROPHY = ("g.ggg.g", "ggggggg", ".ggggg.", "..ggg..", "...g...", "..ggg..", ".bbbbb.")
 STAR = ("..g..", ".ggg.", "ggggg", ".ggg.", ".g.g.")
+STAR_X_MIRROR = 67      # the portrait is centered on x 59.5, so the mirror of the star (x 52) is 67
+ROSETTE_Y = 80
 HAYBALE = ("hhhhhhhh", "hdhdhdhd", "hhhhhhhh", "hdhdhdhd")
 
 
@@ -117,9 +119,10 @@ def rider_extra():
 
 
 def star_and_rosette(g):
-    """On the poster portrait: a gold sheriff star on the vest and a blue ribbon rosette, in absolute poster pixels."""
-    g.px.update(gold_star(50, 85).px)                # on the vest, left of the neckerchief
-    cx, cy = 80, 40
+    """On the poster portrait: a gold sheriff star on one side of the chest and a blue ribbon rosette on the other,
+    in absolute poster pixels. The star is on the left of the neckerchief and the rosette mirrors it on the right."""
+    g.px.update(gold_star(50, 85).px)                # centered on x 52
+    cx, cy = STAR_X_MIRROR, ROSETTE_Y
     for dx, dy in ((-2, -3), (-1, -3), (0, -3), (1, -3), (2, -3), (-3, -2), (3, -2), (-3, -1), (3, -1), (-3, 0), (3, 0),
                    (-3, 1), (3, 1), (-2, 2), (-1, 3), (0, 3), (1, 3), (2, 2), (-2, -2), (2, -2), (-2, 2)):
         g.set(cx + dx, cy + dy, "#3a6ad8")

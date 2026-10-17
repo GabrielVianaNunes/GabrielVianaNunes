@@ -60,6 +60,20 @@ class CowboyDayDraft(unittest.TestCase):
         for x, yb in ((3, 150), (113, 150)):
             self.assertGreater(min(y for _, y in cd.horseshoe(x, yb).px), 144)          # below the last line of text
 
+    def test_the_rosette_is_on_the_opposite_side_of_the_chest_from_the_star(self):
+        star = cd.gold_star(50, 85).px
+        star_x = sum(x for x, _ in star) / float(len(star))
+        g = ba.Grid()
+        cd.star_and_rosette(g)
+        blue = [x for (x, y), c in g.px.items() if c == "#3a6ad8"]
+        rosette_x = sum(blue) / float(len(blue))
+        centre = 31 + 29 - 0.5                                                          # the middle of the portrait
+        self.assertLess(star_x, centre)
+        self.assertGreater(rosette_x, centre)
+        self.assertAlmostEqual(centre - star_x, rosette_x - centre, delta=1.5)          # a mirror image
+        ys = [y for (x, y), c in g.px.items() if c == "#3a6ad8"]
+        self.assertGreaterEqual(min(ys), 70)                                            # on the chest, no longer next to the hat
+
     def test_the_strip_has_the_size_of_the_divider_and_spells_the_greeting_in_patriotic_colors(self):
         svg = ba.build_strip(self.deco)
         strip, divider = ET.fromstring(svg), ET.fromstring(committed("divider.svg"))

@@ -10,7 +10,7 @@ Window: 7 days, the 4th Saturday of July with 3 days either side, calculated eve
 |---|---|
 | Banner | Three spotlights sweeping the sky, red white and blue bunting between two wooden posts, a rodeo fence with a bull behind it, three barrel racing barrels, a hay bale, a gold trophy, lucky horseshoes that twinkle, red white blue and gold stars falling, and the cowboy with a gold band on his hat and a lasso that spins in his hand |
 | Footer | "HAPPY COWBOY DAY" instead of "HAPPY TRAILS", a string of red white and blue flags along the top, two spotlights, barrels, hay, horseshoes, falling stars and the lasso rider (2 pixels lower than the default, so the lasso stays inside the picture) |
-| Wanted poster | A gold sheriff star on the vest, a blue ribbon rosette with red and white tails next to the hat, bunting along the top edge, a lucky horseshoe in each bottom corner and a few stars in the free spaces. The hat is the cowboy's own |
+| Wanted poster | A gold sheriff star on one side of the chest and a blue ribbon rosette with red and white tails on the other side, bunting along the top edge, a lucky horseshoe in each bottom corner and a few stars in the free spaces. The hat is the cowboy's own |
 | Divider above "The town" | "HAPPY COWBOY DAY" on red, white and blue bunting with gold and red confetti and a gold star at each end. It replaces the normal divider and has exactly its size, so the layout does not move |
 
 What does not change: the name and role text, the dusk sky, the horse and the layout.
