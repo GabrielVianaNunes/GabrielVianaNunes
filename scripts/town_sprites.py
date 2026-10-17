@@ -29,6 +29,8 @@ STAR = ("00100", "01110", "11111", "01110", "01010")
 class Painter:
     def __init__(self):
         self.px = {}
+        self.windows = []       # (x, y, w, h) of windows, so the renderer can make some of them flicker
+        self.marks = {}         # named anchor points, for example where a chimney lets smoke out
 
     def rect(self, x, y, w, h, c):
         for yy in range(y, y + h):
@@ -60,6 +62,7 @@ class Painter:
                     self.pix(x + k, y + 4 - r, c)
 
     def window(self, x, y, w, h, cross=True):
+        self.windows.append((x, y, w, h))
         self.rect(x, y, w, h, "glass")
         if cross and w >= 4 and h >= 4:
             self.rect(x + w // 2, y, 1, h, "plank")
@@ -115,6 +118,7 @@ def cabin():
     p.rect(1, 14, 24, 1, "roofhi")
     p.rect(18, 20, 4, 7, "stone")
     p.rect(18, 20, 1, 7, "stonedk")
+    p.marks["smoke"] = (19, 28)
     p.rect(11, 0, 5, 9, "door")
     p.pix(14, 4, "brass")
     p.window(5, 6, 4, 4)
@@ -181,6 +185,7 @@ def townhouse():
     p.roof(1, 28, 24, "roof", 6)
     p.rect(19, 33, 4, 7, "stone")
     p.rect(19, 33, 1, 7, "stonedk")
+    p.marks["smoke"] = (20, 41)
     for x in (4, 18):
         p.window(x, 19, 4, 6)
         p.rect(x - 1, 19, 1, 6, "green")
@@ -248,6 +253,7 @@ def blacksmith():
         p.rect(0, 12 + i, 26, 1, "roof")
     p.rect(19, 17, 4, 10, "stone")
     p.rect(19, 17, 1, 10, "stonedk")
+    p.marks["smoke"] = (20, 28)
     p.rect(18, 0, 6, 6, "stone")
     p.rect(19, 1, 4, 3, "glow")
     p.rect(0, 0, 2, 12, "wood1")
