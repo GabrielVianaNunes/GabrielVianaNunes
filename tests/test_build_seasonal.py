@@ -183,7 +183,7 @@ class EveryDayOfTheYearBuilds(unittest.TestCase):
             sid = bs.choose(config, "", day)
             if sid not in seen:
                 seen.add(sid)
-                bs.build(sid)
+                bs.build(sid, day)
             day += datetime.timedelta(days=1)
         self.assertGreaterEqual(len(seen), 8)              # default plus the seven seasons
 

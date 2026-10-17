@@ -39,6 +39,10 @@ class Decor:
     id = None
     name = None
 
+    def with_date(self, day):
+        """A copy of the decoration for a given date. Most seasons do not depend on it."""
+        return self
+
     def banner(self):
         return None
 
