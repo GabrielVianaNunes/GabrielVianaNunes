@@ -109,20 +109,92 @@ def light_string(width, y0=0, sag=3, step=6):
     return wire.paths() + '<g class="tw1">%s</g><g class="tw2">%s</g>' % (bulbs[0], bulbs[1])
 
 
-def santa_and_bells():
-    """Rider coordinates: a red cap with a white band over the hat, and bells that jingle on the horse."""
+def santa_cap():
+    """The rider's Santa cap, in the rider's own coordinates. It REPLACES the cowboy hat: it covers the
+    hat's pixels exactly (crown x5 to 9 on rows -22 and -21, brim x4 to 10 on row -20) and never goes
+    above row -22, which is the top edge of the footer, so it is never cut off."""
     cap = Grid()
+    cap.rect(4, -20, 8, 1, SNOW)         # white fur band, wider than the head like a real cap
+    cap.rect(5, -21, 6, 1, RED)
     cap.rect(5, -22, 5, 1, RED)
-    cap.rect(5, -21, 5, 1, SNOW)
-    cap.rect(5, -23, 4, 1, RED)
-    cap.rect(6, -24, 3, 1, RED)
-    cap.rect(7, -25, 2, 1, RED)
-    cap.rect(9, -25, 2, 2, SNOW)
+    cap.rect(10, -22, 2, 2, SNOW)        # the pompom, hanging to the side
+    return cap
+
+
+def santa_and_bells():
+    """The Santa cap and the bells that jingle on the horse."""
     bells = Grid()
     bells.set(11, -9, GOLD)
     bells.set(13, -8, GOLD)
     bells.set(10, -7, GOLD)
-    return cap.paths() + '<g class="tw1">%s</g>' % bells.paths()
+    return santa_cap().paths() + '<g class="tw1">%s</g>' % bells.paths()
+
+
+def portrait_headwear(r, p, cx):
+    """Replaces the cowboy hat in the poster portrait with a full Santa cap, hair and a fur band."""
+    shade, light = "#a82520", "#e04a43"
+    r(cx - 8, 15, 16, 3, "#2a1a10")                    # hair under the cap
+    rows = {13: (-7, 6), 12: (-7, 6), 11: (-6, 7), 10: (-5, 8), 9: (-4, 9), 8: (-2, 10), 7: (0, 11),
+            6: (3, 12), 5: (7, 13)}
+    for y, (a, b) in rows.items():
+        r(cx + a, y, b - a + 1, 1, RED)
+        if y >= 10:
+            r(cx + a, y, 2, 1, light)
+            r(cx + b - 1, y, 2, 1, shade)
+    r(cx - 9, 14, 18, 3, SNOW)                          # fur band
+    r(cx - 9, 16, 18, 1, SNOW_SHADE)
+    r(cx + 12, 2, 4, 4, SNOW)                           # pompom
+    r(cx + 15, 3, 1, 3, SNOW_SHADE)
+
+
+def pine_garland_border(w, h):
+    """A pine garland running along all four edges of the poster, with ornaments, bows and twinkling lights.
+    Returns (static pixels as a Grid, twinkling lights as SVG)."""
+    g = Grid()
+
+    def wave(i):
+        return int(round(1.2 * math.sin(i * 0.35)))
+
+    def needles(x, y, horizontal, i):
+        g.set(x, y, GREEN)
+        g.set(x + (0 if horizontal else 1), y + (1 if horizontal else 0), GREEN)
+        g.set(x + (0 if horizontal else 2), y + (2 if horizontal else 0), DARK_GREEN)
+        if i % 3 == 0:                                   # needles sticking out
+            g.set(x + (0 if horizontal else -1), y + (-1 if horizontal else 0), GREEN)
+
+    inset = 2
+    for i in range(w):
+        needles(i, inset + wave(i), True, i)                       # top
+        needles(i, h - inset - 3 + wave(i), True, i)               # bottom
+    for i in range(h):
+        needles(inset + wave(i), i, False, i)                      # left
+        needles(w - inset - 3 + wave(i), i, False, i)              # right
+    # ornaments and lights, spaced along the four edges
+    colors = [RED, GOLD, BLUE]
+    for k, i in enumerate(range(10, w - 10, 13)):
+        for (x, y) in ((i, inset + wave(i) + 1), (i, h - inset - 2 + wave(i))):
+            g.rect(x, y, 2, 2, colors[k % 3])
+    for k, i in enumerate(range(12, h - 12, 13)):
+        for (x, y) in ((inset + wave(i) + 1, i), (w - inset - 2 + wave(i), i)):
+            g.rect(x, y, 2, 2, colors[(k + 1) % 3])
+    for x in range(6, w - 6, 5):                                    # snow on the top band
+        g.set(x, inset + wave(x) - 1, SNOW)
+    # twinkling lights as separate groups
+    tw = [Grid(), Grid()]
+    for k, i in enumerate(range(16, w - 14, 13)):
+        tw[k % 2].set(i, inset + wave(i) + 3, BULBS[k % 4])
+        tw[k % 2].set(i, h - inset - 3 + wave(i) - 1, BULBS[(k + 2) % 4])
+    for k, i in enumerate(range(18, h - 14, 13)):
+        tw[k % 2].set(inset + wave(i) + 3, i, BULBS[(k + 1) % 4])
+        tw[k % 2].set(w - inset - 3 + wave(i) - 1, i, BULBS[(k + 3) % 4])
+    for x, y in ((1, 1), (w - 9, 1), (1, h - 7), (w - 9, h - 7)):   # red bows in the corners
+        g.rect(x, y + 1, 3, 3, RED)
+        g.rect(x + 5, y + 1, 3, 3, RED)
+        g.rect(x + 3, y + 1, 2, 3, GOLD)
+        g.rect(x + 2, y + 4, 1, 2, RED)
+        g.rect(x + 5, y + 4, 1, 2, RED)
+    svg = '<g class="tw1">%s</g><g class="tw2">%s</g>' % (tw[0].paths(), tw[1].paths())
+    return g, svg
 
 
 CSS = """
@@ -164,28 +236,16 @@ class Christmas(Decor):
         return Layers(text="MERRY TRAILS", ground=ground, front=front, rider_extra=santa_and_bells(),
                       css=CSS + snow_css(30))
 
+    POSTER_W, POSTER_H = 120, 156
+
     def poster(self):
-        def holly(x, y, flip=1):
-            g = Grid()
-            for dx, dy in ((0, 1), (1, 0), (2, 1), (3, 0), (4, 1), (1, 2), (3, 2)):
-                g.set(x + flip * dx, y + dy, GREEN)
-            for dx, dy in ((2, 2), (2, 3), (3, 3)):
-                g.set(x + flip * dx, y + dy, RED)
-            return g
+        garland, lights = pine_garland_border(self.POSTER_W, self.POSTER_H)
 
         def draw(g):
-            g.px.update(holly(3, 3, 1).px)
-            g.px.update(holly(116, 3, -1).px)
-            for x in range(8, 112, 3):                            # snow along the top border
-                g.set(x, 2, SNOW)
-                g.set(x + 1, 3, SNOW)
-            cx, ox, oy = 29, 31, 35                               # a Santa cap on the portrait's hat
-            g.rect(ox + cx - 6, oy + 2, 12, 1, RED)
-            g.rect(ox + cx - 4, oy + 1, 8, 1, RED)
-            g.rect(ox + cx - 2, oy + 0, 4, 1, RED)
-            g.rect(ox + cx - 5, oy + 3, 10, 1, SNOW)
-            g.rect(ox + cx + 2, oy - 1, 2, 2, SNOW)
-        return Layers(draw=draw, css=SELF_CSS)
+            g.px.update(garland.px)
+
+        return Layers(draw=draw, headwear=portrait_headwear, front=lights, css=SELF_CSS,
+                      label="Christmas pine garland around the poster and a Santa cap on the portrait")
 
     def strip(self):
         """Replaces the divider above the 3D graph: a pine garland, exactly the divider's size (160 by 10)."""
