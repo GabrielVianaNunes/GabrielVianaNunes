@@ -13,7 +13,8 @@
 <td width="300" align="center" valign="top">
 <img src="assets/wanted.svg" alt="Wanted poster for Gabriel Nunes, reward: one clean merge" width="280">
 <br>
-<img src="https://hits.sh/github.com/GabrielVianaNunes/GabrielVianaNunes.svg?style=for-the-badge&label=Riders%20who%20passed%20by&color=c98b4a&labelColor=3b2a1e" alt="Profile views">
+<img src="https://hits.sh/github.com/GabrielVianaNunes/GabrielVianaNunes.svg?view=today-total&style=flat-square&label=Riders%20passed%20by&color=c98b4a&labelColor=3b2a1e" alt="Profile views, today and total">
+<br><sub>views today / total</sub>
 </td>
 <td valign="top">
 
@@ -51,6 +52,12 @@ I like code that does its job without making noise.
   <img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/western-town-day.svg" alt="Pixel art western town built from my GitHub contributions of the last year. Each lot is one week and busier weeks are bigger buildings." width="100%">
 </picture>
 <sub>One lot per week, oldest on the back street. Busier weeks grow bigger buildings. Rebuilt every day.</sub>
+
+<details>
+<summary>Classic 3D view of the same year</summary>
+<br>
+<img src="https://raw.githubusercontent.com/GabrielVianaNunes/GabrielVianaNunes/output/profile-3d-contrib/profile-night-view.svg" alt="Classic 3D view of my GitHub contributions" width="100%">
+</details>
 </div>
 
 <img src="assets/divider.svg" alt="" width="100%">
