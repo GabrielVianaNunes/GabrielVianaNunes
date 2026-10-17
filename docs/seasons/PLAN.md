@@ -92,6 +92,6 @@ The owner only reviews designs and approves.
 | New Year | Approved | Built, waiting for its days (31 Dec and 1 Jan) |
 | Easter | Approved | Built, waiting for its window (25 to 31 Mar 2027) |
 | National Day of the Cowboy | Approved | Built, waiting for its window (21 to 27 Jul 2027) |
-| Programmers' Day | Not started | Not started |
+| Programmers' Day | Approved | Built, waiting for its window (12 to 14 Sep 2027) |
 
 How a release works, step by step: `docs/seasons/RELEASE.md`.

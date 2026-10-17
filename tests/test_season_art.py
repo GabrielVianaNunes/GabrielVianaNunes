@@ -66,7 +66,7 @@ class Registry(unittest.TestCase):
             del season_art._load()["draft-test"]
 
     def test_the_approved_seasons_are_exactly_the_ones_the_owner_approved(self):
-        self.assertEqual(season_art.ids("approved"), ["birthday", "christmas", "cowboy-day", "easter", "halloween", "new-year"])
+        self.assertEqual(season_art.ids("approved"), ["birthday", "christmas", "cowboy-day", "easter", "halloween", "new-year", "programmers-day"])
 
     def test_every_season_with_art_is_a_season_in_the_calendar(self):
         import seasons
