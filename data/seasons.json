@@ -1,0 +1,19 @@
+{
+  "timezone": "America/Sao_Paulo",
+  "seasons": [
+    {"id": "halloween", "name": "Halloween", "priority": 10,
+     "rule": {"kind": "range", "start": "10-24", "end": "11-02"}},
+    {"id": "christmas", "name": "Christmas", "priority": 10,
+     "rule": {"kind": "range", "start": "11-03", "end": "12-25"}},
+    {"id": "birthday", "name": "Birthday", "priority": 20,
+     "rule": {"kind": "day", "date": "12-28"}},
+    {"id": "new-year", "name": "New Year", "priority": 10,
+     "rule": {"kind": "range", "start": "12-31", "end": "01-01"}},
+    {"id": "easter", "name": "Easter", "priority": 10,
+     "rule": {"kind": "easter", "before": 3, "after": 3}},
+    {"id": "cowboy-day", "name": "National Day of the Cowboy", "priority": 10,
+     "rule": {"kind": "nth_weekday", "month": 7, "weekday": "saturday", "n": 4, "before": 3, "after": 3}},
+    {"id": "programmers-day", "name": "Programmers' Day", "priority": 10,
+     "rule": {"kind": "day_of_year", "day": 256, "before": 1, "after": 1}}
+  ]
+}
