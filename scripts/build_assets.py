@@ -329,7 +329,7 @@ def build_banner(deco=None):
 
 
 # ---------------------------------------------------------------- wanted poster
-def draw_cowboy(g, ox, oy, iw=58, ih=58):
+def draw_cowboy(g, ox, oy, iw=58, ih=58, headwear=None):
     """Pixel art bust of the cowboy facing the viewer, drawn inside an iw x ih frame at (ox, oy).
 
     The figure is symmetric around the vertical line between columns cx-1 and cx.
@@ -419,22 +419,25 @@ def draw_cowboy(g, ox, oy, iw=58, ih=58):
     r(cx - 3, 33, 6, 1, dark)
     r(cx - 2, 29, 4, 1, "#7a3b2b")      # mouth
 
-    # hat: crown, band, wide curved brim
-    r(cx - 9, 6, 18, 9, hat)
-    r(cx - 8, 5, 16, 1, hat)
-    r(cx - 7, 4, 14, 1, hat)
-    r(cx - 5, 3, 10, 1, hat)
-    r(cx - 9, 6, 3, 9, hat_hi)
-    r(cx + 5, 6, 4, 9, hat_sh)
-    r(cx - 1, 4, 2, 4, hat_sh)          # crease
-    r(cx - 9, 12, 18, 2, dark)          # band
-    r(cx - 17, 15, 34, 2, hat_sh)       # brim
-    r(cx - 15, 14, 30, 1, hat)
-    r(cx - 19, 13, 3, 2, hat)           # upturned tips
-    r(cx + 16, 13, 3, 2, hat)
-    r(cx - 19, 12, 1, 1, hat)
-    r(cx + 18, 12, 1, 1, hat)
-    r(cx - 15, 17, 30, 1, hat_sh)       # brim underside
+    # hat: crown, band, wide curved brim (a season may replace it with its own headwear)
+    if headwear is not None:
+        headwear(r, p, cx)
+    else:
+        r(cx - 9, 6, 18, 9, hat)
+        r(cx - 8, 5, 16, 1, hat)
+        r(cx - 7, 4, 14, 1, hat)
+        r(cx - 5, 3, 10, 1, hat)
+        r(cx - 9, 6, 3, 9, hat_hi)
+        r(cx + 5, 6, 4, 9, hat_sh)
+        r(cx - 1, 4, 2, 4, hat_sh)          # crease
+        r(cx - 9, 12, 18, 2, dark)          # band
+        r(cx - 17, 15, 34, 2, hat_sh)       # brim
+        r(cx - 15, 14, 30, 1, hat)
+        r(cx - 19, 13, 3, 2, hat)           # upturned tips
+        r(cx + 16, 13, 3, 2, hat)
+        r(cx - 19, 12, 1, 1, hat)
+        r(cx + 18, 12, 1, 1, hat)
+        r(cx - 15, 17, 30, 1, hat_sh)       # brim underside
 
 
 def build_wanted(deco=None):
@@ -461,7 +464,7 @@ def build_wanted(deco=None):
     center("WANTED", 12, ink, 3)
     # portrait frame (inner area 58 x 58)
     g.rect(30, 34, 60, 60, edge)
-    draw_cowboy(g, 31, 35)
+    draw_cowboy(g, 31, 35, headwear=(L.headwear if L else None))
 
     center("GABRIEL NUNES", 101, ink)
     center("SOFTWARE ENGINEER", 111, ink)
@@ -499,7 +502,8 @@ def build_footer(deco=None):
         body.append(L.ground)
     if L and L.sky:
         body.append(L.sky)
-    body.append(f'<g transform="translate(100 22)">{rider_group("ride", L.rider_extra if L else "")}</g>')
+    dy = L.rider_dy if L else 0
+    body.append(f'<g transform="translate(100 {22 + dy})">{rider_group("ride", L.rider_extra if L else "")}</g>')
     if L and L.front:
         body.append(L.front)
     style = STYLE_COMMON + """

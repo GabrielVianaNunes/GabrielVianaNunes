@@ -49,7 +49,13 @@ class DefaultLookIsUntouched(unittest.TestCase):
 class Registry(unittest.TestCase):
     def test_known_and_unknown_seasons(self):
         self.assertEqual(season_art.get("halloween").id, "halloween")
-        self.assertIsNone(season_art.get("christmas"))
+        self.assertIsNone(season_art.get("easter"))
+        self.assertIsNone(season_art.get("easter", drafts=True))
+
+    def test_a_draft_can_be_previewed_but_is_never_live(self):
+        self.assertIsNone(season_art.get("christmas"))                       # not approved yet
+        self.assertEqual(season_art.get("christmas", drafts=True).id, "christmas")
+        self.assertFalse(set(season_art.MODULES) & set(season_art.DRAFT_MODULES))
         self.assertIsNone(season_art.get("nope"))
 
     def test_layers_reject_unknown_fields(self):
@@ -114,6 +120,75 @@ class HalloweenAssets(unittest.TestCase):
         d = season_art.get("halloween")
         self.assertEqual(self.svgs["banner"], ba.build_banner(d))
         self.assertEqual(self.svgs["poster"], ba.build_wanted(d))
+
+
+class ChristmasDraft(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        import season_art.christmas as xm
+        cls.xm = xm
+        cls.deco = season_art.get("christmas", drafts=True)
+
+    def test_the_santa_cap_is_never_cut_off_by_the_top_of_the_footer(self):
+        cap = self.xm.santa_cap()
+        # the rider stands at y 22 in the 30 pixel high footer, so row -22 is the top row, row 0
+        self.assertGreaterEqual(min(y for _, y in cap.px), -23)
+
+    def test_the_cap_stays_inside_the_footer_in_both_frames_of_the_bob_animation(self):
+        """The rider moves up 1 pixel on every other step (the bob keyframes), so check that frame too."""
+        import re as _re
+        css = ba.STYLE_COMMON
+        bob = int(_re.search(r"@keyframes bob\{0%\{transform:translateY\(0\)\}50%\{transform:translateY\((-?\d+)px\)", css).group(1))
+        dy = self.deco.footer().rider_dy
+        top = 22 + dy + min(y for _, y in self.xm.santa_cap().px) + bob       # topmost pixel row, raised frame
+        self.assertGreaterEqual(top, 0)
+        self.assertLessEqual(22 + dy, 24)                                     # and the hooves are at most 2 pixels into the sand
+
+    def test_the_default_footer_rider_does_not_move(self):
+        self.assertIn('translate(100 22)', ba.build_footer())
+        self.assertIn('translate(100 24)', ba.build_footer(self.deco))
+
+    def test_the_cap_replaces_the_cowboy_hat_instead_of_sitting_on_it(self):
+        common = ba.rider()[0]
+        hat_pixels = {(x, y) for (x, y), c in common.px.items() if c == ba.INK and -22 <= y <= -20 and 4 <= x <= 10}
+        self.assertTrue(hat_pixels)
+        self.assertLessEqual(hat_pixels - set(self.xm.santa_cap().px), set())      # every hat pixel is covered
+
+    def test_the_portrait_hat_is_replaced_with_a_santa_cap(self):
+        default, santa = ba.Grid(), ba.Grid()
+        ba.draw_cowboy(default, 31, 35)
+        ba.draw_cowboy(santa, 31, 35, headwear=self.xm.portrait_headwear)
+        tip = (31 + 29 - 19, 35 + 13)                      # the upturned left tip of the cowboy hat's brim
+        self.assertEqual(default.px[tip], "#5a3a22")
+        self.assertNotEqual(santa.px[tip], "#5a3a22")
+        reds = [1 for c in santa.px.values() if c == self.xm.RED]
+        self.assertGreater(len(reds), 40)
+
+    def test_the_poster_has_a_garland_on_all_four_edges(self):
+        g, lights = self.xm.pine_garland_border(120, 156)
+        greens = {c for c in (self.xm.GREEN, self.xm.DARK_GREEN)}
+
+        def has_green(x0, x1, y0, y1):
+            return any(g.px.get((x, y)) in greens for x in range(x0, x1) for y in range(y0, y1))
+        self.assertTrue(has_green(40, 80, 0, 6))            # top
+        self.assertTrue(has_green(40, 80, 150, 156))        # bottom
+        self.assertTrue(has_green(0, 6, 60, 100))           # left
+        self.assertTrue(has_green(114, 120, 60, 100))       # right
+        self.assertIn("tw1", lights)
+
+    def test_the_garland_leaves_the_text_and_the_portrait_alone(self):
+        g, _ = self.xm.pine_garland_border(120, 156)
+        for (x, y) in g.px:
+            inside_text_or_portrait = 12 <= x <= 107 and 12 <= y <= 144
+            self.assertFalse(inside_text_or_portrait, (x, y))
+
+    def test_the_christmas_assets_are_valid_and_the_footer_text_changes(self):
+        footer = ba.build_footer(self.deco)
+        parse(footer)
+        self.assertIn("Merry trails", footer)
+        for svg in (ba.build_banner(self.deco), ba.build_wanted(self.deco), ba.build_strip(self.deco)):
+            parse(svg)
+            self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
 
 
 if __name__ == "__main__":
