@@ -78,7 +78,7 @@ Unique buildings: sheriff office 1, bank 1, church up to 2, water tower 1. See `
 
 Percentiles are computed from the non empty weeks only. With today's data they are about 10, 39 and 73.
 
-### Open risks, to check in the fetch issue
+### Risks, resolved in the fetch issue
 
-- Private contributions are counted in the calendar only when the profile setting allows it. The token used by the Action may see a different total than a logged in user. If it does, the fallback is a personal access token stored as a secret.
-- The first and last weeks are partial. Both are kept, since showing the current week is the point.
+- **Private contributions and the Action token: not a problem.** With a real run on 2026-10-17 the API total for the owner (988) was identical to the total of the public contribution graph that an anonymous visitor sees (988). The profile setting that shows private activity as anonymous counts is on, so any viewer, including the built in `GITHUB_TOKEN`, sees the same numbers. No personal access token is needed.
+- **Partial weeks:** the first and last weeks are partial. Both are kept, since showing the current week is the point.
