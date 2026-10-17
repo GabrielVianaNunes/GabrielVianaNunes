@@ -1,6 +1,6 @@
 """Easter: spring comes to the western town. Pastel mood, flowers and grass, painted eggs hidden around, a basket,
-chicks, a bunny hopping across, butterflies, falling petals, an Easter bonnet for the cowboy and a flower garland
-for the horse, and HAPPY EASTER on pastel bunting that replaces the divider."""
+chicks, a bunny hopping across, butterflies, falling petals, an Easter bonnet for the cowboy (the horse is
+left exactly as it is by default), and HAPPY EASTER on pastel bunting that replaces the divider."""
 import math
 import os
 import random
@@ -112,24 +112,20 @@ def hopping(sprite_grid, name, dur, delay=0):
             % (name, dur, delay, sprite_grid.paths()))
 
 
-def bonnet_and_garland():
-    """The Easter bonnet REPLACES the cowboy hat (covers its pixels exactly, never above row -23). The horse gets
-    a flower garland on its neck, and nothing on its head. Rider coordinates."""
+def easter_bonnet():
+    """The Easter bonnet REPLACES the cowboy hat (covers its pixels exactly, never above row -23). The horse is
+    left exactly as it is by default, ears included. Rider coordinates."""
     hat = Grid()
     hat.rect(5, -22, 5, 2, "#ffe9a8")
     hat.rect(4, -20, 7, 1, "#f7d27a")
     hat.rect(5, -21, 5, 1, PINK)                       # the ribbon
     for x, c in ((5, PINK), (7, BLUE), (9, LILAC)):    # flowers on top
         hat.set(x, -23, c)
-    garland = Grid()
-    for i, (x, y) in enumerate(((12, -12), (13, -11), (14, -10), (13, -9), (12, -8))):
-        garland.set(x, y, PASTELS[i % 5])
-    return hat, garland
+    return hat
 
 
 def rider_extra():
-    hat, garland = bonnet_and_garland()
-    return hat.paths() + garland.paths()
+    return easter_bonnet().paths()
 
 
 def bonnet_headwear(r, p, cx):
