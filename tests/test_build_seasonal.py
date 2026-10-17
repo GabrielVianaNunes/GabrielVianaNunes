@@ -78,6 +78,31 @@ class HalloweenDays(unittest.TestCase):
                 self.assertEqual(read(a, name), read(b, name))
 
 
+class ChristmasDays(unittest.TestCase):
+    def decorated_as(self, day):
+        with tempfile.TemporaryDirectory() as d:
+            _, out, _ = run("--out", d, "--date", day)
+            return out.splitlines()[0].split(": ", 1)[1]
+
+    def test_the_window_from_halloween_to_the_25th(self):
+        self.assertEqual(self.decorated_as("2026-11-02"), "halloween decoration")
+        self.assertEqual(self.decorated_as("2026-11-03"), "christmas decoration")
+        self.assertEqual(self.decorated_as("2026-12-01"), "christmas decoration")
+        self.assertEqual(self.decorated_as("2026-12-25"), "christmas decoration")
+
+    def test_the_default_look_returns_on_the_26th_and_27th(self):
+        self.assertIn("default look", self.decorated_as("2026-12-26"))
+        self.assertIn("default look", self.decorated_as("2026-12-27"))
+
+    def test_the_christmas_footer_says_merry_trails_and_the_rider_is_lowered(self):
+        with tempfile.TemporaryDirectory() as d:
+            run("--out", d, "--date", "2026-12-10")
+            footer = read(d, "footer.svg")
+            self.assertIn("Merry trails", footer)
+            self.assertIn("translate(100 24)", footer)
+            self.assertIn("translate(100 22)", committed("footer-dusk.svg"))   # the default one is untouched
+
+
 class Forcing(unittest.TestCase):
     def test_forcing_a_season_wins_over_the_date(self):
         with tempfile.TemporaryDirectory() as d:

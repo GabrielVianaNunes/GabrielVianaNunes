@@ -53,9 +53,13 @@ class Registry(unittest.TestCase):
         self.assertIsNone(season_art.get("easter", drafts=True))
 
     def test_a_draft_can_be_previewed_but_is_never_live(self):
-        self.assertIsNone(season_art.get("christmas"))                       # not approved yet
-        self.assertEqual(season_art.get("christmas", drafts=True).id, "christmas")
-        self.assertFalse(set(season_art.MODULES) & set(season_art.DRAFT_MODULES))
+        season_art.DRAFT_MODULES["draft-test"] = "christmas"            # stands in for a design waiting for approval
+        try:
+            self.assertIsNone(season_art.get("draft-test"))                     # not approved: never built
+            self.assertEqual(season_art.get("draft-test", drafts=True).id, "christmas")
+            self.assertFalse(set(season_art.MODULES) & set(season_art.DRAFT_MODULES))
+        finally:
+            del season_art.DRAFT_MODULES["draft-test"]
         self.assertIsNone(season_art.get("nope"))
 
     def test_layers_reject_unknown_fields(self):
