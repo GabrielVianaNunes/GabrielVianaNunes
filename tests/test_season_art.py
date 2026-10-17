@@ -202,8 +202,8 @@ class BirthdayDraft(unittest.TestCase):
         cls.bd = bd
         cls.deco = season_art.get("birthday", drafts=True)
 
-    def test_it_is_a_draft_until_approved(self):
-        self.assertIsNone(season_art.get("birthday"))
+    def test_it_is_an_approved_season_now(self):
+        self.assertEqual(season_art.get("birthday").id, "birthday")
         self.assertIsNotNone(self.deco)
 
     def test_the_crown_replaces_the_hat_and_stays_inside_the_footer_in_the_raised_frame(self):

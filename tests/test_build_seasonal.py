@@ -103,6 +103,32 @@ class ChristmasDays(unittest.TestCase):
             self.assertIn("translate(100 22)", committed("footer-dusk.svg"))   # the default one is untouched
 
 
+class BirthdayDays(unittest.TestCase):
+    def decorated_as(self, day):
+        with tempfile.TemporaryDirectory() as d:
+            _, out, _ = run("--out", d, "--date", day)
+            return out.splitlines()[0].split(": ", 1)[1]
+
+    def test_only_the_28th_has_the_birthday_decoration(self):
+        self.assertEqual(self.decorated_as("2026-12-28"), "birthday decoration")
+        self.assertEqual(self.decorated_as("2027-12-28"), "birthday decoration")
+        for day in ("2026-12-26", "2026-12-27", "2026-12-29", "2026-12-30"):
+            with self.subTest(day):
+                self.assertIn("default look", self.decorated_as(day))
+
+    def test_the_29th_goes_back_to_the_default_look_not_to_christmas(self):
+        with tempfile.TemporaryDirectory() as d:
+            run("--out", d, "--date", "2026-12-29")
+            self.assertEqual(read(d, "banner.svg"), committed("banner.svg"))
+
+    def test_the_birthday_footer_says_happy_birthday_and_shows_no_digits_in_its_text(self):
+        with tempfile.TemporaryDirectory() as d:
+            run("--out", d, "--date", "2026-12-28")
+            footer = read(d, "footer.svg")
+            self.assertIn("Happy birthday", footer)
+            self.assertIn("translate(100 24)", footer)
+
+
 class Forcing(unittest.TestCase):
     def test_forcing_a_season_wins_over_the_date(self):
         with tempfile.TemporaryDirectory() as d:
