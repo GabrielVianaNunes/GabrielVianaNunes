@@ -350,21 +350,23 @@ class EasterDraft(unittest.TestCase):
         self.assertIsNone(season_art.get("easter"))
 
     def test_the_bonnet_replaces_the_cowboy_hat_and_stays_inside_the_footer_in_the_raised_frame(self):
-        hat = self.ea.easter_bonnet()
+        hat, garland = self.ea.bonnet_and_garland()
         self.assertEqual(self.kit.covers_hat(hat.px, ba.rider()[0], ba.INK), set())
         dy = self.deco.footer().rider_dy
-        top = min(y for _, y in hat.px)
+        top = min(y for _, y in list(hat.px) + list(garland.px))
         self.assertGreaterEqual(22 + dy + top - 1, 0)                              # the raised frame of the bob animation
 
-    def test_the_horse_is_exactly_as_it_is_by_default_with_its_own_ears(self):
-        """The owner wants the standard horse: the decoration draws nothing on it, and its two ear pixels remain."""
-        hat = self.ea.easter_bonnet()
-        self.assertEqual({(x, y) for x, y in hat.px if x >= 11}, set())                  # everything stays on the rider
+    def test_the_horse_keeps_its_own_ears_and_only_gets_a_garland_on_its_neck(self):
+        """The owner wants the standard ears (no long bunny ears) and kept the flower garland on the neck."""
+        hat, garland = self.ea.bonnet_and_garland()
+        self.assertEqual({(x, y) for x, y in hat.px if x >= 11}, set())                  # the bonnet stays on the rider
+        head_zone = {(x, y) for x in range(14, 20) for y in range(-19, -13)}              # where the ears are and were
+        self.assertEqual(head_zone & set(garland.px), set())                              # nothing covers or replaces the ears
+        self.assertTrue(garland.px)
+        self.assertTrue(all(12 <= x <= 14 and -12 <= y <= -8 for x, y in garland.px))     # only on the neck
         common = ba.rider()[0]
         for ear in ((15, -14), (16, -14)):
-            self.assertEqual(common.px[ear], ba.INK)                                       # the default ear pixels
-        self.assertEqual(self.deco.footer().rider_extra, self.deco.banner().rider_extra)
-        self.assertNotIn("garland", self.deco.banner().rider_extra)
+            self.assertEqual(common.px[ear], ba.INK)                                       # the default ear pixels remain
 
     def test_the_poster_portrait_gets_a_bonnet_instead_of_the_cowboy_hat(self):
         default, easter = ba.Grid(), ba.Grid()
