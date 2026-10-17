@@ -512,10 +512,11 @@ def build_footer(deco=None):
 
 # ---------------------------------------------------------------- seasonal strip
 def build_strip(deco=None):
-    """A slim decorative strip above the 3D graph. Empty (one transparent pixel) when no season is active."""
+    """The divider above "The town". It is the normal divider unless a season decorates it, so with no
+    season the page looks exactly as it does today."""
     L = deco.strip() if deco else None
     if not L:
-        return wrap_svg(1, 1, 1, "", "", "")
+        return build_divider()
     return wrap_svg(L.width, L.height, L.scale, L.body, L.css, L.label)
 
 

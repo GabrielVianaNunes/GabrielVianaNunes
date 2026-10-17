@@ -43,6 +43,17 @@ python scripts/seasons.py --year 2027        # every window of a year
 
 To change a window, edit `data/seasons.json`. No code change is needed. The tests check the moving dates for every year up to 2099.
 
+## Seasonal assets
+
+```bash
+python scripts/build_seasonal.py --out dist                     # today's season
+python scripts/build_seasonal.py --out dist --date 2026-10-31   # a given day
+python scripts/build_seasonal.py --out dist --season halloween  # force a season
+python scripts/build_season_preview.py halloween --out docs/seasons/halloween  # design preview
+```
+
+Writes `banner.svg`, `footer.svg`, `wanted.svg` and `divider-town.svg`. Everything is checked before anything is written.
+
 ## Previewing
 
 Open an SVG in a browser. Load animated ones through an `img` tag so the CSS animation runs.

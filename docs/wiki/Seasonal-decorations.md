@@ -40,7 +40,9 @@ data/seasons.json -> scripts/seasons.py (which season is active today)
 - Windows live in `data/seasons.json`, so changing a date does not need code.
 - Window kinds: date range, single day, range across the new year, relative to Easter, nth weekday of a month with a margin, and day of the year with a margin.
 - Easter uses the Gregorian algorithm (Meeus, Jones and Butcher), exact for every year, and is tested against the known dates for 2025 to 2040.
-- A season can be tried without going live: run the workflow with a `season` input and the `output-preview` target.
+- A season can be tried without going live: run the workflow "Seasonal assets" with a `season` input and the `output-preview` target.
+- A season only decorates four files: `banner.svg`, `footer.svg`, `wanted.svg` and the divider above "The town" (`divider-town.svg`). That divider replaces the normal one and has exactly its size, so the layout never moves.
+- A season with no art yet, or no season at all, gives the default look.
 
 ## Approval process
 
@@ -57,7 +59,7 @@ The birthday decoration makes the day and month of the birthday public. The year
 
 | Group | Issues |
 |---|---|
-| Infrastructure | 40 calendar engine, 41 layers for the banner, footer and poster, 42 strip above the 3D graph, 43 daily workflow, 44 previews and docs |
+| Infrastructure | 40 calendar engine, 41 layers for the banner, footer and poster, 42 divider above the 3D graph, 43 daily workflow, 44 previews and docs |
 | Halloween | 45 design, 46 build |
 | Christmas | 47 design, 48 build |
 | Birthday | 49 design, 50 build |
@@ -79,3 +81,17 @@ The owner only reviews designs and approves.
 | 2 Feb to 1 Mar 2027 | Easter |
 | 1 Jun to 1 Jul 2027 | National Day of the Cowboy |
 | 2 Aug to 30 Aug 2027 | Programmers' Day |
+
+## Status
+
+| Season | Design | Build |
+|---|---|---|
+| Halloween | Approved | Built, waiting for the release |
+| Christmas | Not started | Not started |
+| Birthday | Not started | Not started |
+| New Year | Not started | Not started |
+| Easter | Not started | Not started |
+| National Day of the Cowboy | Not started | Not started |
+| Programmers' Day | Not started | Not started |
+
+How a release works, step by step: `docs/seasons/RELEASE.md`.

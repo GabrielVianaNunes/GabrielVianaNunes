@@ -31,22 +31,26 @@ docs/wiki/            source of the wiki pages
 | `build_stack.py` | The stack row as one image |
 | `update_quote.py` | The quote of the week |
 | `seasons.py` | Which seasonal decoration is active on a date, with moving dates computed |
+| `build_seasonal.py` | Builds the four seasonal files for a date or a forced season |
+| `season_art/` | One module per season with its decoration (Halloween so far) |
+| `build_season_preview.py` | Builds a season for review, with the default look next to it |
 
 ## Workflows
 
 | Workflow | When | What |
 |---|---|---|
 | Tests | Pull requests and pushes | `python -m unittest discover -s tests`, read only |
+| Seasonal assets | Daily 03:05 UTC (00:05 in Sao Paulo), manual | Banner, footer, poster and the divider above the graph to `output`, decorated on special dates |
 | Weekly quote | Mondays 12:00 UTC, manual | Quote card to `output` |
 | Profile 3D contributions | Daily 18:00 UTC | The 3D contribution graph to `output` |
 | Delete merged branch | Merged pull request | Deletes `feature/`, `hotfix/` and `bugfix/` branches |
 
 All third party actions are pinned to full commit SHAs and updated by Dependabot. Workflows publish only to `output`, so `main` never receives bot commits.
 
-## Seasonal decorations (in progress)
+## Seasonal decorations
 
 ```
-data/seasons.json -> seasons.py -> season layers -> build_assets -> output branch -> README
+data/seasons.json -> seasons.py -> season_art -> build_seasonal -> output branch -> README
 ```
 
 See [Seasonal decorations](Seasonal-decorations) for the calendar, the time zone rule and the approval process.
