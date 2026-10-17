@@ -50,7 +50,7 @@ class DefaultLookIsUntouched(unittest.TestCase):
 class Registry(unittest.TestCase):
     def test_known_and_unknown_seasons(self):
         self.assertEqual(season_art.get("halloween").id, "halloween")
-        self.assertIsNone(season_art.get("easter"))
+        self.assertIsNone(season_art.get("no-such-season"))
         self.assertIsNone(season_art.get("no-such-season", drafts=True))
 
     def test_a_draft_can_be_previewed_but_is_never_live(self):
@@ -66,7 +66,7 @@ class Registry(unittest.TestCase):
             del season_art._load()["draft-test"]
 
     def test_the_approved_seasons_are_exactly_the_ones_the_owner_approved(self):
-        self.assertEqual(season_art.ids("approved"), ["birthday", "christmas", "halloween", "new-year"])
+        self.assertEqual(season_art.ids("approved"), ["birthday", "christmas", "easter", "halloween", "new-year"])
 
     def test_every_season_with_art_is_a_season_in_the_calendar(self):
         import seasons
@@ -345,9 +345,9 @@ class EasterDraft(unittest.TestCase):
         cls.ea, cls.kit = ea, kit
         cls.deco = season_art.get("easter", drafts=True)
 
-    def test_it_is_a_draft_until_approved(self):
-        self.assertEqual(self.deco.status, "draft")
-        self.assertIsNone(season_art.get("easter"))
+    def test_it_is_an_approved_season_now(self):
+        self.assertEqual(self.deco.status, "approved")
+        self.assertEqual(season_art.get("easter").id, "easter")
 
     def test_the_bonnet_replaces_the_cowboy_hat_and_stays_inside_the_footer_in_the_raised_frame(self):
         hat, garland = self.ea.bonnet_and_garland()
@@ -405,12 +405,11 @@ class EasterDraft(unittest.TestCase):
             self.assertLess(len(svg.encode("utf-8")), MAX_BYTES)
             self.assertIsNone(re.search(r"<script|<image|https?://(?!www\.w3\.org)", svg))
 
-    def test_it_never_goes_live_before_approval(self):
-        import tempfile
+    def test_the_build_uses_it_inside_its_window(self):
         import build_seasonal as bs
         files, deco = bs.build("easter", datetime.date(2027, 3, 28))
-        self.assertIsNone(deco)                                                         # the build ignores the draft
-        self.assertEqual(files["banner.svg"], committed("banner.svg"))
+        self.assertIsNotNone(deco)
+        self.assertNotEqual(files["banner.svg"], committed("banner.svg"))
 
 
 if __name__ == "__main__":

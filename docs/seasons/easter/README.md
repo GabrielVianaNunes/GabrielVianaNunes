@@ -31,12 +31,14 @@ python scripts/build_season_preview.py easter --out docs/seasons/easter
 ## Rules followed
 
 - With no season the builders return exactly the current assets (a test checks it).
-- It is a draft: the daily build ignores it until the owner approves (a test checks that too).
+- It was a draft until the owner approved it.
 - No scripts and no external references, all animation stops with reduced motion.
 - Every file is under 150 KB.
 
 ## Approval
 
-- [ ] Owner reviewed the preview
-- [ ] Owner commented "approved" on issue 53, or asked for changes
-- [ ] Window confirmed: 7 days around Easter, calculated every year
+- [x] Owner reviewed the preview
+- [x] Owner approved on issue 53
+- [x] Window confirmed: 7 days around Easter, calculated every year
+
+Built in issue 54: registered as an approved season, so the daily workflow publishes it in the 7 days around each year's Easter.

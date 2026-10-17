@@ -90,7 +90,7 @@ The owner only reviews designs and approves.
 | Christmas | Approved | Built, waiting for its window (3 Nov) |
 | Birthday | Approved | Built, waiting for its day (28 Dec) |
 | New Year | Approved | Built, waiting for its days (31 Dec and 1 Jan) |
-| Easter | Preview ready, waiting for approval | Not started |
+| Easter | Approved | Built, waiting for its window (25 to 31 Mar 2027) |
 | National Day of the Cowboy | Not started | Not started |
 | Programmers' Day | Not started | Not started |
 

@@ -166,6 +166,7 @@ SELF_CSS = COMMON_CSS + REDUCED
 
 
 class Easter(Decor):
+    status = "approved"
     id = "easter"
     name = "Easter"
 

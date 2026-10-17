@@ -44,9 +44,9 @@ class DefaultDays(unittest.TestCase):
 
     def test_an_active_season_without_art_still_gives_the_default_look(self):
         with tempfile.TemporaryDirectory() as d:
-            code, out, _ = run("--out", d, "--date", "2027-03-28")      # Easter has no art yet
+            code, out, _ = run("--out", d, "--date", "2027-07-24")      # National Day of the Cowboy has no art yet
             self.assertEqual(code, 0)
-            self.assertIn("easter is active but has no art yet", out)
+            self.assertIn("cowboy-day is active but has no art yet", out)
             self.assertEqual(read(d, "banner.svg"), committed("banner.svg"))
 
 
