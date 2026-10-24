@@ -1,6 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 10" width="800" height="50" shape-rendering="crispEdges" role="img" aria-label="Divider">
-<title>Divider</title>
-<style></style>
-<path fill="#c98b4a" d="M10 5h1v1h-1zM14 5h1v1h-1zM18 5h1v1h-1zM22 5h1v1h-1zM26 5h1v1h-1zM30 5h1v1h-1zM34 5h1v1h-1zM38 5h1v1h-1zM42 5h1v1h-1zM46 5h1v1h-1zM50 5h1v1h-1zM54 5h1v1h-1zM58 5h1v1h-1zM62 5h1v1h-1zM66 5h1v1h-1zM92 5h1v1h-1zM96 5h1v1h-1zM100 5h1v1h-1zM104 5h1v1h-1zM108 5h1v1h-1zM112 5h1v1h-1zM116 5h1v1h-1zM120 5h1v1h-1zM124 5h1v1h-1zM128 5h1v1h-1zM132 5h1v1h-1zM136 5h1v1h-1zM140 5h1v1h-1zM144 5h1v1h-1zM148 5h1v1h-1z"/>
-<path fill="#3b6b47" d="M79 1h2v1h-2zM83 1h1v1h-1zM76 2h1v1h-1zM79 2h2v1h-2zM83 2h1v1h-1zM76 3h1v1h-1zM79 3h5v1h-5zM76 4h5v1h-5zM79 5h2v1h-2zM79 6h2v1h-2zM79 7h2v1h-2zM79 8h2v1h-2z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 10" width="800" height="50" shape-rendering="crispEdges" role="img" aria-label="Halloween garland with flags, lanterns and cobwebs">
+<title>Halloween garland with flags, lanterns and cobwebs</title>
+<style>
+.flk{animation:flk 1.6s steps(1) infinite}
+.spd{animation:spd 4s ease-in-out infinite}
+@keyframes flk{0%,100%{opacity:1}30%{opacity:.55}55%{opacity:.9}75%{opacity:.5}}
+@keyframes spd{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important}}
+</style>
+<path fill="#3b2414" d="M0 1h13v1h-13zM147 1h13v1h-13zM15 2h28v1h-28zM117 2h28v1h-28zM43 3h74v1h-74z"/>
+<path fill="#f28a1f" d="M10 2h5v1h-5zM145 2h5v1h-5zM11 3h3v1h-3zM37 3h5v1h-5zM118 3h5v1h-5zM146 3h3v1h-3zM12 4h1v1h-1zM38 4h4v1h-4zM64 4h5v1h-5zM91 4h5v1h-5zM119 4h3v1h-3zM147 4h1v1h-1zM39 5h3v1h-3zM65 5h3v1h-3zM92 5h3v1h-3zM119 5h3v1h-3zM66 6h1v1h-1zM93 6h1v1h-1z"/>
+<path fill="#8e5bc0" d="M19 3h5v1h-5zM127 3h5v1h-5zM20 4h3v1h-3zM46 4h5v1h-5zM73 4h5v1h-5zM100 4h5v1h-5zM128 4h3v1h-3zM21 5h1v1h-1zM47 5h3v1h-3zM74 5h3v1h-3zM101 5h3v1h-3zM129 5h1v1h-1zM48 6h1v1h-1zM75 6h1v1h-1zM102 6h1v1h-1z"/>
+<path fill="#e8e0d0" d="M28 3h5v1h-5zM136 3h5v1h-5zM29 4h3v1h-3zM55 4h5v1h-5zM82 4h5v1h-5zM109 4h5v1h-5zM137 4h3v1h-3zM30 5h1v1h-1zM56 5h3v1h-3zM83 5h3v1h-3zM110 5h3v1h-3zM138 5h1v1h-1zM57 6h1v1h-1zM84 6h1v1h-1zM111 6h1v1h-1z"/><g class="flk"><path fill="#ffe29a" d="M40 4h1v1h-1z"/></g><g class="flk"><path fill="#ffe29a" d="M120 4h1v1h-1z"/></g><path fill="#8d8da0" d="M0 0h10v1h-10zM0 1h6v1h-6zM8 1h1v1h-1zM0 2h3v1h-3zM5 2h4v1h-4zM0 3h2v1h-2zM3 3h2v1h-2zM8 3h1v1h-1zM0 4h2v1h-2zM3 4h2v1h-2zM7 4h1v1h-1zM0 5h4v1h-4zM5 5h3v1h-3zM0 6h1v1h-1zM2 6h1v1h-1zM5 6h2v1h-2zM0 7h1v1h-1zM2 7h1v1h-1zM4 7h2v1h-2zM0 8h4v1h-4zM0 9h1v1h-1z"/><path fill="#8d8da0" d="M150 0h10v1h-10zM151 1h1v1h-1zM154 1h6v1h-6zM151 2h4v1h-4zM157 2h3v1h-3zM151 3h1v1h-1zM155 3h2v1h-2zM158 3h2v1h-2zM152 4h1v1h-1zM155 4h2v1h-2zM158 4h2v1h-2zM152 5h3v1h-3zM156 5h4v1h-4zM153 6h2v1h-2zM157 6h1v1h-1zM159 6h1v1h-1zM154 7h2v1h-2zM157 7h1v1h-1zM159 7h1v1h-1zM156 8h4v1h-4zM159 9h1v1h-1z"/>
 </svg>
